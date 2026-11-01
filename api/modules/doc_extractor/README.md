@@ -19,3 +19,4 @@ Run unit tests for this module:
 ```bash
 pytest modules/doc_extractor/tests/ -v
 ```
+

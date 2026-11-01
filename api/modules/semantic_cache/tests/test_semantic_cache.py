@@ -22,3 +22,4 @@ def test_cache_stats():
     data = res.json()
     assert "total_entries" in data
     assert "hit_rate" in data
+

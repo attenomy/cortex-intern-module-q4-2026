@@ -13,3 +13,4 @@ def health_check_endpoint():
 @router.get("/metrics", response_class=PlainTextResponse)
 def prometheus_metrics_endpoint():
     return service.get_metrics_prometheus()
+

@@ -11,3 +11,4 @@ class ExtractionResponse(BaseModel):
     extracted_fields: Dict[str, Any]
     schema_valid: bool
     latency_ms: float
+

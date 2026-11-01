@@ -17,3 +17,4 @@ Run unit tests for this module:
 ```bash
 pytest modules/telemetry_obs/tests/ -v
 ```
+

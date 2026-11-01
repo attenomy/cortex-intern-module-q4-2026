@@ -18,3 +18,4 @@ def test_metrics_endpoint():
     text = res.text
     assert "cortex_uptime_seconds" in text
     assert "cortex_requests_total" in text
+

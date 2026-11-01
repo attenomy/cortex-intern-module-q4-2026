@@ -20,3 +20,4 @@ The `/api/v1/extract` endpoint in `api/modules/doc_extractor/service.py` current
 ## 3. Pull Request Submission
 * Open PR to `staging` using `.github/PULL_REQUEST_TEMPLATE.md`.
 * Include terminal pytest output and 60-90s demo video link.
+

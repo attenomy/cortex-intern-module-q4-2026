@@ -16,3 +16,4 @@ class CacheStatsResponse(BaseModel):
     total_entries: int
     hit_rate: float
     redis_connected: bool
+

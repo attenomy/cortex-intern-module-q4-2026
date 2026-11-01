@@ -6,3 +6,4 @@ class HealthResponse(BaseModel):
     version: str
     model_loaded: bool
     uptime_seconds: float
+

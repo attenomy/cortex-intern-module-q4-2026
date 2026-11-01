@@ -26,3 +26,4 @@ class DocumentExtractor:
             "schema_valid": True,
             "latency_ms": elapsed_ms
         }
+

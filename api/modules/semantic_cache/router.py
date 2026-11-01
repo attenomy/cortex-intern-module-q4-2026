@@ -14,3 +14,4 @@ def lookup_cache_endpoint(req: CacheLookupRequest):
 @router.get("/stats", response_model=CacheStatsResponse)
 def get_cache_stats_endpoint():
     return service.get_stats()
+

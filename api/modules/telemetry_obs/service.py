@@ -29,3 +29,4 @@ class TelemetryService:
             "# TYPE cortex_latency_p95_ms gauge\n"
             "cortex_latency_p95_ms 32.4\n"
         )
+

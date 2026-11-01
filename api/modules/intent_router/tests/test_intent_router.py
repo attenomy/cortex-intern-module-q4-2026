@@ -35,3 +35,4 @@ def test_intent_router_empty_query_400():
 def test_intent_router_whitespace_400():
     res = client.post("/api/v1/router", json={"query": "   \n\t  "})
     assert res.status_code == 400
+

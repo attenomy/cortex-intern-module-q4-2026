@@ -34,3 +34,4 @@ def test_extract_missing_type_422():
     }
     res = client.post("/api/v1/extract", json=payload)
     assert res.status_code == 422
+

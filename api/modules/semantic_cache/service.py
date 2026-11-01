@@ -43,3 +43,4 @@ class SemanticCacheService:
             "hit_rate": 0.62,
             "redis_connected": self.is_connected
         }
+

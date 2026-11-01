@@ -40,3 +40,4 @@ class SemanticRouter:
             "latency_ms": elapsed_ms,
             "cached": False
         }
+

@@ -11,3 +11,4 @@ class RoutingDecision(BaseModel):
     target_pipeline: str
     latency_ms: float
     cached: bool = False
+

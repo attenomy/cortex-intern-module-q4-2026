@@ -10,3 +10,4 @@ def route_query_endpoint(req: QueryRoutingRequest):
     if not req.query.strip():
         raise HTTPException(status_code=400, detail="Query string cannot be empty")
     return service.route_query(req.query, req.client_tier)
+
