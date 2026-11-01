@@ -1,7 +1,7 @@
 # Attenomy Cortex Engineering Roadmap: Weeks 3 & 4 (Product Contribution Phase)
 
 > **Organisation**: Attenomy, Udyam-registered MSME (UDYAM-TS-02-0279596)  
-> **Repository**: `attenomy/attenomy-cortex`  
+> **Repository**: `attenomy/cortex-intern-module`  
 > **Target Environment**: Production Release Readiness (v1.0.0)  
 > **Program Phase**: Product Contribution Phase (Days 11 to 21)  
 > **Author**: Saad Md. (`saad@attenomy.com`), Chief People Officer & Lead  
@@ -12,7 +12,7 @@
 
 Following the completion of the trial practice phase in Weeks 1 and 2 (data cleaning, exploratory data analysis, and baseline anti-fraud pipelines in the student sandbox), engineering interns transition directly into the **Live Product Contribution Phase** on **Attenomy Cortex**.
 
-Instead of writing toy code in an isolated folder, interns operate as production engineers on the live `attenomy/attenomy-cortex` repository. They pick up active tickets, develop in domain-scoped modules, submit Evidence-Driven Pull Requests (EDPRs), and defend their systems before executive engineering leadership.
+Instead of writing toy code in an isolated folder, interns operate as production engineers on the live `attenomy/cortex-intern-module` repository. They pick up active tickets, develop in domain-scoped modules, submit Evidence-Driven Pull Requests (EDPRs), and defend their systems before executive engineering leadership.
 
 ---
 
@@ -84,7 +84,7 @@ Days 16-18: Pre-Warmed Lifespan & CI Tests -> Days 19-20: Docker & EDPR -> Day 2
   * **Prometheus Metrics**: Expose `GET /metrics` returning request counts and tail latency percentiles (p50, p95, p99).
   * **Latency Profiling**: Execute local load benchmark using Locust or cProfile, capturing verifiable proof that p95 latency remains strictly `< 50ms` on CPU.
   * **Video Walkthrough**: Record a 60-90 second Loom demo walking through terminal test execution, curl endpoint responses, and error-handling paths.
-  * **Open Evidence-Driven PR (EDPR)**: Open PR against `staging` on GitHub (`attenomy/attenomy-cortex`) filling out all 5 sections of [.github/PULL_REQUEST_TEMPLATE.md](file:///C:/Users/UwU/Desktop/@attenomy/apps/attenomy-cortex/.github/PULL_REQUEST_TEMPLATE.md).
+  * **Open Evidence-Driven PR (EDPR)**: Open PR against `staging` on GitHub (`attenomy/cortex-intern-module`) filling out all 5 sections of [.github/PULL_REQUEST_TEMPLATE.md](file:///C:/Users/UwU/Desktop/@attenomy/apps/attenomy-cortex/.github/PULL_REQUEST_TEMPLATE.md).
 
 * **Day 21 (Fri-Sun): Executive Final Report, Capstone Presentation & Production Merge**
   * **Deliver Final Technical Report**: Publish a formal 6-10 page technical report covering executive summary, data architecture, baseline vs advanced model comparisons, ablation studies, and production latency.
