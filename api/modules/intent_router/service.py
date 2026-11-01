@@ -10,9 +10,9 @@ INTENT_MAPPINGS = {
 }
 
 class SemanticRouter:
+    """Semantic query routing engine for Attenomy Cortex."""
     def __init__(self):
         self.is_ready = True
-        print("SemanticRouter initialized with sub-50ms latency engine.")
 
     def route_query(self, query: str, client_tier: str = "Enterprise") -> Dict[str, Any]:
         t0 = time.perf_counter()
@@ -30,7 +30,7 @@ class SemanticRouter:
                     matched_intent = intent
 
         target_pipe = INTENT_MAPPINGS[matched_intent][0]
-        # Simulate neural inference latency (sub-50ms target)
+        # Baseline simulation latency (replaced by real neural model in CTX-001)
         elapsed_ms = round((time.perf_counter() - t0) * 1000 + random.uniform(8.0, 22.0), 2)
 
         return {

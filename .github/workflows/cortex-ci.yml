@@ -35,3 +35,4 @@ jobs:
         working-directory: ./api
         run: |
           pytest -v --cov=services --cov=main --cov-report=term-missing
+

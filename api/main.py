@@ -1,11 +1,17 @@
-import time
-from fastapi import FastAPI, HTTPException
+import os
+import sys
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from schemas import QueryRoutingRequest, RoutingDecision, DocumentExtractionRequest, ExtractionResponse, HealthResponse
-from services.router import SemanticRouter
 
-start_time = time.time()
-router = SemanticRouter()
+# Ensure API directory is accessible in sys.path
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+
+from modules.intent_router.router import router as intent_router
+from modules.doc_extractor.router import router as doc_extractor_router
+from modules.semantic_cache.router import router as semantic_cache_router
+from modules.telemetry_obs.router import router as telemetry_router
 
 app = FastAPI(
     title="Attenomy Cortex Engine API",
@@ -21,43 +27,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/health", response_model=HealthResponse)
-def health_check():
-    return {
-        "status": "healthy",
-        "service": "attenomy-cortex-engine",
-        "version": "1.0.0",
-        "model_loaded": router.is_ready,
-        "uptime_seconds": round(time.time() - start_time, 2)
-    }
-
-@app.post("/api/v1/router", response_model=RoutingDecision)
-def route_query_endpoint(req: QueryRoutingRequest):
-    if not req.query.strip():
-        raise HTTPException(status_code=400, detail="Query string cannot be empty")
-    return router.route_query(req.query, req.client_tier)
-
-@app.post("/api/v1/extract", response_model=ExtractionResponse)
-def extract_document_endpoint(req: DocumentExtractionRequest):
-    t0 = time.perf_counter()
-    # Cognitive document extractor mock/pipeline
-    extracted = {
-        "doc_type": req.document_type,
-        "extracted_entities": {
-            "vendor_name": "Attenomy Systems",
-            "invoice_number": "INV-2026-9021",
-            "net_amount": 4500.00,
-            "currency": "USD",
-            "confidence_score": 0.965
-        }
-    }
-    elapsed_ms = round((time.perf_counter() - t0) * 1000 + 42.0, 2)
-    return {
-        "document_id": req.document_id,
-        "extracted_fields": extracted,
-        "schema_valid": True,
-        "latency_ms": elapsed_ms
-    }
+# Mount Modular Routers
+app.include_router(intent_router, prefix="/api/v1")
+app.include_router(doc_extractor_router, prefix="/api/v1")
+app.include_router(semantic_cache_router, prefix="/api/v1")
+app.include_router(telemetry_router)
 
 if __name__ == "__main__":
     import uvicorn
