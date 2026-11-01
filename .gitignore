@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Unit test / coverage reports
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Large model weights (store in S3 or release tags)
+*.pt
+*.bin
+*.onnx
+*.safetensors
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

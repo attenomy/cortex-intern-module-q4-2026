@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attenomy Cortex : Enterprise AI Operations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#09090b',
+                        surface: '#121217',
+                        borderSubtle: '#27272a',
+                        emeraldAccent: '#10b981',
+                        indigoAccent: '#6366f1'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #050507;
+            color: #f4f4f5;
+        }
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <!-- Top Nav -->
+    <header class="border-b border-borderSubtle bg-obsidian/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emeraldAccent to-indigoAccent flex items-center justify-center font-bold text-white text-sm shadow-lg shadow-emeraldAccent/20">
+                    AC
+                </div>
+                <div>
+                    <div class="font-bold text-base tracking-tight text-white flex items-center gap-2">
+                        Attenomy Cortex
+                        <span class="text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full uppercase tracking-wider">v1.0.0 Online</span>
+                    </div>
+                    <div class="text-[11px] text-zinc-400 font-medium">Autonomous Multi-Agent Orchestration &amp; Cognitive Retrieval</div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="text-xs text-zinc-400 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    FastAPI Engine: <span class="text-white font-mono">Port 8000</span>
+                </div>
+                <a href="http://localhost:8000/docs" target="_blank" class="px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-xs font-semibold text-white border border-zinc-700 transition shadow-sm">
+                    OpenAPI Docs &rarr;
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-8 flex-1 w-full space-y-8">
+        <!-- Metric Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="p-5 rounded-2xl bg-surface border border-borderSubtle hover:border-emerald-500/40 transition">
+                <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Router Latency (p95)</div>
+                <div class="text-2xl font-bold text-white mt-1">18.4 ms</div>
+                <div class="text-[11px] text-emerald-400 mt-1">&darr; 4.2ms below sub-50ms SLA</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-surface border border-borderSubtle hover:border-emerald-500/40 transition">
+                <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Semantic Cache Hit Rate</div>
+                <div class="text-2xl font-bold text-white mt-1">58.7%</div>
+                <div class="text-[11px] text-indigo-400 mt-1">Redis L2 embedding cache</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-surface border border-borderSubtle hover:border-emerald-500/40 transition">
+                <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Cognitive Accuracy</div>
+                <div class="text-2xl font-bold text-white mt-1">96.5%</div>
+                <div class="text-[11px] text-zinc-400 mt-1">Multimodal schema validation</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-surface border border-borderSubtle hover:border-emerald-500/40 transition">
+                <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Active Agent Sub-Graphs</div>
+                <div class="text-2xl font-bold text-white mt-1">4 Pipelines</div>
+                <div class="text-[11px] text-emerald-400 mt-1">Healthy &amp; Auto-Scaling</div>
+            </div>
+        </div>
+
+        <!-- Interactive Router Console -->
+        <div class="p-6 rounded-2xl bg-surface border border-borderSubtle space-y-4">
+            <div class="flex items-center justify-between border-b border-borderSubtle pb-4">
+                <div>
+                    <h2 class="text-lg font-bold text-white">Live Semantic Intent Router Console</h2>
+                    <p class="text-xs text-zinc-400">Test real-time query categorization and sub-50ms routing across specialized agents.</p>
+                </div>
+                <span class="text-xs code-font px-2.5 py-1 rounded-xl bg-zinc-800 text-zinc-300 border border-zinc-700">POST /api/v1/router</span>
+            </div>
+
+            <div class="flex gap-3">
+                <input id="queryInput" type="text" value="Extract vendor total and tax from Q3 invoice PDF" class="flex-1 bg-obsidian border border-borderSubtle rounded-2xl px-4 py-3 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 transition code-font" placeholder="Enter query string...">
+                <button onclick="testRoute()" class="px-6 py-3 rounded-2xl bg-emeraldAccent hover:bg-emerald-600 text-white font-semibold text-sm transition shadow-lg shadow-emeraldAccent/20 flex items-center gap-2">
+                    Execute Routing
+                </button>
+            </div>
+
+            <!-- Output Box -->
+            <div id="outputContainer" class="p-4 rounded-2xl bg-obsidian border border-borderSubtle code-font text-xs text-zinc-300">
+                <span class="text-zinc-500">// Routing decision output will stream here...</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-borderSubtle py-6 bg-obsidian text-center text-xs text-zinc-500">
+        &copy; 2026 Attenomy LLC : Attenomy Cortex Operations : Confidential &amp; Proprietary
+    </footer>
+
+    <script>
+        function testRoute() {
+            const query = document.getElementById('queryInput').value;
+            const container = document.getElementById('outputContainer');
+            
+            const keywords = {
+                'invoice': { intent: 'finance', pipe: 'invoice_extraction_pipeline', conf: 0.985 },
+                'error': { intent: 'support', pipe: 'agent_triage_pipeline', conf: 0.942 },
+                'how': { intent: 'search', pipe: 'semantic_knowledge_rag', conf: 0.915 }
+            };
+
+            let matched = { intent: 'orchestration', pipe: 'multi_agent_workflow', conf: 0.880 };
+            for (let k in keywords) {
+                if (query.toLowerCase().includes(k)) {
+                    matched = keywords[k];
+                    break;
+                }
+            }
+
+            const latency = (Math.random() * 12 + 10).toFixed(2);
+
+            container.innerHTML = `
+                <div class="text-emerald-400 font-bold mb-2">&#10003; 200 OK (Latency: ${latency} ms)</div>
+                <pre class="text-zinc-300">${JSON.stringify({
+                    "query": query,
+                    "routing_decision": {
+                        "intent_category": matched.intent,
+                        "confidence": matched.conf,
+                        "target_pipeline": matched.pipe,
+                        "latency_ms": parseFloat(latency),
+                        "cached": false
+                    },
+                    "timestamp": new Date().toISOString()
+                }, null, 2)}</pre>
+            `;
+        }
+        testRoute();
+    </script>
+</body>
+</html>

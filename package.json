@@ -1,0 +1,11 @@
+{
+  "name": "attenomy-cortex",
+  "version": "1.0.0",
+  "description": "Enterprise Autonomous Multi-Agent Orchestration & Cognitive Knowledge Retrieval Engine",
+  "scripts": {
+    "api:dev": "cd api && uvicorn main:app --reload",
+    "web:dev": "python -m http.server 3000 --directory web"
+  },
+  "author": "Attenomy LLC",
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  cortex-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: attenomy-cortex-api
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - REDIS_URL=redis://cortex-redis:6379/0
+      - LOG_LEVEL=info
+    depends_on:
+      - cortex-redis
+    restart: always
+
+  cortex-redis:
+    image: redis:7-alpine
+    container_name: attenomy-cortex-redis
+    ports:
+      - "6379:6379"
+    restart: always
