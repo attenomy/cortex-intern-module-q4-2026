@@ -11,6 +11,7 @@ if BASE_DIR not in sys.path:
 from modules.intent_router.router import router as intent_router
 from modules.doc_extractor.router import router as doc_extractor_router
 from modules.semantic_cache.router import router as semantic_cache_router
+from modules.doc_ingestion.router import router as doc_ingestion_router
 from modules.telemetry_obs.router import router as telemetry_router
 
 app = FastAPI(
@@ -31,6 +32,7 @@ app.add_middleware(
 app.include_router(intent_router, prefix="/api/v1")
 app.include_router(doc_extractor_router, prefix="/api/v1")
 app.include_router(semantic_cache_router, prefix="/api/v1")
+app.include_router(doc_ingestion_router, prefix="/api/v1")
 app.include_router(telemetry_router)
 
 if __name__ == "__main__":

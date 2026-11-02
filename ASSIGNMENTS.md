@@ -3,79 +3,80 @@
 > **Organisation**: Attenomy, Udyam-registered MSME (UDYAM-TS-02-0279596)  
 > **Repository**: apps/attenomy-cortex  
 > **Engineering Protocol**: Attenomy SOP-04 & Evidence-Driven PR Protocol  
-> **Lead / Signatory**: Saad Md. (`saad@attenomy.com`)  
+> **Lead / Signatory**: Saad Md. (`saad@attenomy.com`), Founder & CPO  
 
 ---
 
 ## 1. Executive Summary & Modular Ownership Model
 To eliminate merge conflicts, avoid cross-team blockers, and enforce true engineering ownership, **Attenomy Cortex** is partitioned into encapsulated domain modules. Each intern owns one complete operational slice: schema definitions, service logic, test suites, latency profiling, and runbooks.
 
+To combat the shallow "10-minute intern" AI prompting trap, each issue is scoped across a rigorous **5-day operational lifecycle (Monday - Friday / Days 11 - 15)**. Interns must design contracts before prompting, enforce defensive test ratios (>60% negative tests), conduct hyperparameter tuning, profile CPU latencies under load, and defend their code in a live 2-minute walkthrough.
+
 ---
 
 ## 2. Cohort 2026 Q4 Intern Assignments Matrix
 
-| Assigned Intern | GitHub Handle | Assigned Module Path | Ticket ID | Target Branch | Status |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Abhishek Adbhute** | `@abhishekadbhute-create` | `api/modules/intent_router/` | `[CTX-001]` | `feature/CTX-001-intent-router` | **ASSIGNED** |
-| **Abhinav Singh** | `@Abhinav55849` | `api/modules/doc_extractor/` | `[CTX-002]` | `feature/CTX-002-doc-extractor` | **ASSIGNED** |
-| **Yakshith Anandapu** | `@YAKSHITH684` | `api/modules/semantic_cache/` | `[CTX-003]` | `feature/CTX-003-semantic-cache` | **ASSIGNED** |
-| **Cohort Collaboration** | All Selects | `api/modules/telemetry_obs/` | `[CTX-004]` | `feature/CTX-004-observability-ci` | **WEEK 4 CAPSTONE** |
+| Assigned Intern | GitHub Handle | Assigned Module Path | Ticket ID | Target Branch | Phase | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Abhishek Adbhute** | `@abhishekadbhute-create` | `api/modules/intent_router/` | `[CTX-001]` | `feature/CTX-001-intent-router` | Week 3 | **ASSIGNED** |
+| **Abhinav Singh** | `@Abhinav55849` | `api/modules/doc_extractor/` | `[CTX-002]` | `feature/CTX-002-doc-extractor` | Week 3 | **ASSIGNED** |
+| **Yakshith Anandapu** | `@YAKSHITH684` | `api/modules/semantic_cache/` | `[CTX-003]` | `feature/CTX-003-semantic-cache` | Week 3 | **ASSIGNED** |
+| **Mala Kumari** | `@mala9311` | `api/modules/doc_ingestion/` | `[CTX-005]` | `feature/CTX-005-doc-ingestion` | Week 3 | **ASSIGNED** |
+| **Cohort Collaboration** | All Selects | `api/modules/telemetry_obs/` | `[CTX-004]` | `feature/CTX-004-observability-ci` | Week 4 Capstone | **PLANNED** |
 
 ---
 
-## 3. End-to-End Contributor Workflow (From Assignment to Merged PR)
+## 3. Mandatory 5-Day Operational Engineering Lifecycle (Mon - Fri)
 
-Every assigned intern must execute the following structured 6-step lifecycle:
+Every assigned intern must execute the following structured 5-day engineering roadmap:
 
 ```
-[1. Branch from staging] -> [2. Develop in Module] -> [3. Local Pytest & Profiling]
-                                                                  │
-                                                                  ▼
-[6. Production Merge]   <- [5. 2-Min Code Defense] <- [4. Open Evidence-Driven PR]
+[Monday: Spec-First Design] ──> [Tuesday: Core Architecture & ONNX] ──> [Wednesday: Defensive Edge Tests]
+                                                                                       │
+                                                                                       ▼
+[Merged to Staging] <── [Live 2-Min Defense] <── [Friday: Diagnostic Memo & EDPR] <── [Thursday: Tuning & Latency Profile]
 ```
 
-### Step 1: Branch Creation
-Interns clone or pull the `attenomy-cortex` repository and checkout a fresh branch off `staging`:
-```bash
-git checkout staging
-git pull origin staging
-git checkout -b feature/<TICKET-ID>-<slug>
-# Example for Abhishek:
-# git checkout -b feature/CTX-001-intent-router
-```
+### Day 11 (Monday): Spec-First Data Contracts & Schema Architecture
+* Author `FEATURE_SPEC.md` inside your module directory.
+* Define Pydantic models, validation rules, and error states.
+* Formalize the edge-case failure matrix (minimum 10 distinct negative conditions).
+* Review specification with Lead / CPO before writing implementation.
 
-### Step 2: Isolated Module Development
-Interns develop exclusively inside their assigned module directory. They do not edit other modules:
-* Abhishek develops in `api/modules/intent_router/`
-* Abhinav develops in `api/modules/doc_extractor/`
-* Yakshith develops in `api/modules/semantic_cache/`
+### Day 12 (Tuesday): Core Model Architecture & Optimized Implementation
+* Implement core service logic in `service.py`.
+* For ML modules: model quantization, ONNX export, and lifespan warm-up on boot.
+* For Systems/ETL modules: non-blocking asynchronous processing, backpressure, and chunking.
+* Wire endpoints into the modular FastAPI router.
 
-### Step 3: Local Verification & Latency Profiling
-Before opening a PR, the intern must run their module test suite and benchmark execution speed:
-```bash
-# Run module unit tests
-pytest modules/<module_name>/tests/ -v
+### Day 13 (Wednesday): Defensive Verification & Edge-Case Test Suite
+* Build comprehensive test suite in `tests/`. Minimum 12-15 unit and integration tests.
+* **Defensive Engineering Rule**: Minimum 60% of tests must target negative and boundary conditions (empty strings, corrupt payloads, dimension mismatches, network drops).
+* Verify 100% green test pass rate across the full API regression suite.
 
-# Run full API regression suite
-pytest -v
-```
-* **Latency Requirement**: The feature must demonstrate a median latency `< 25ms` and p95 `< 50ms` on CPU.
+### Day 14 (Thursday): Hyperparameter Tuning & High-Concurrency Latency Profiling
+* Perform systematic tuning experiments across at least 6 runs (batch sizes, quantization, thresholds). Document in `reports/tuning_experiments.md`.
+* Run high-concurrency profiling with `cProfile` and load tests (Locust or async worker harness).
+* Verify SLA constraints: median latency < 25ms, p95 < 50ms strictly on CPU.
+* Memory profiling with `tracemalloc` across 5,000 requests to prove zero memory leaks.
 
-### Step 4: Open Evidence-Driven Pull Request (EDPR)
-Interns push their feature branch and open a PR against `staging` using the repository's PR template:
-* Title: `feat(<module>): [CTX-XXX] <clear-actionable-summary>` (e.g. `feat(router): [CTX-001] neural intent router with sub-50ms ONNX execution (#1)`)
-* Fill out all 5 EDPR sections:
-  1. Architectural Decisions (ADR)
-  2. Raw terminal test execution output
-  3. Latency profiling proof (cProfile / Locust output)
-  4. 60-90s Loom / video demonstration link
-  5. Contributor Code Defense checklist
+### Day 15 (Friday): Diagnostic Error Analysis, Operational Runbook & EDPR
+* Author `reports/diagnostic_error_analysis.md` and operational runbook `RUNBOOK.md`.
+* Open Evidence-Driven Pull Request (EDPR) against `staging` with all 5 mandatory sections:
+  1. Architectural Decision Record (ADR)
+  2. Raw terminal test execution logs
+  3. Latency percentile proof (cProfile / Locust output)
+  4. 60-90s Loom video walkthrough
+  5. Contributor Code Defense prep checklist
+* Complete live 2-minute code defense walkthrough with Lead / CPO Saad Md.
 
-### Step 5: The 2-Minute Live Code Defense
-The intern defends their pull request live with Lead / CPO Saad Md. during weekend 1-on-1 review:
-* The lead probes error handling, concurrency safety, and model memory footprints.
-* Unchecked AI-generated code the intern cannot explain will cause immediate rejection.
+---
 
-### Step 6: Merge to Staging & Production Release
-Once the PR receives lead approval and passes automated GitHub Actions CI, it is merged into `staging`.
+## 4. Production Engineering Productivity Scorecard
 
+| Metric Name | Mathematical Definition | Target Benchmark | Operational Focus |
+| :--- | :--- | :--- | :--- |
+| **Defect Escape Rate** | `(Bugs found in Staging or Prod / Total Bugs Logged) * 100` | Under 5% | True verification rigor before merging |
+| **Edge-Case Test Ratio** | `Number of Negative & Edge Tests / Total Tests Written` | Greater than 60% | Defensive engineering and failure testing |
+| **Code Defense Pass Rate** | `Successful Live Code Explanations / Total Defenses Conducted` | 100% | Full comprehension of committed logic |
+| **CPU Latency SLA** | p95 latency under concurrent load on CPU | Under 50ms | Real-time performance without GPU cost |
