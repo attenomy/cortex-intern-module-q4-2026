@@ -62,3 +62,4 @@ def test_ingest_health_endpoint():
     data = response.json()
     assert data["status"] == "healthy"
     assert data["module"] == "doc_ingestion"
+

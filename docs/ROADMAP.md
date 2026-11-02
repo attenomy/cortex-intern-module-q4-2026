@@ -51,6 +51,12 @@ Days 11-12: NumPy MLP & Gradients -> Days 13-14: Module Implementation -> Day 15
       * Ensures cache hits return in `< 5ms` with `cached: true`.
       * Implements fail-open resilience: if Redis disconnects, falls back cleanly to live neural inference without raising 500 errors.
 
+    * **Mala Kumari ([CTX-005] / eature/CTX-005-doc-ingestion):
+      * Develops in [api/modules/doc_ingestion/](file:///C:/Users/UwU/Desktop/@attenomy/apps/attenomy-cortex/api/modules/doc_ingestion/).
+      * Implements asynchronous multi-source document ingestion (PDF, Markdown, web streams).
+      * Enforces sliding-window chunking with SHA-256 deduplication hashing.
+      * Implements security filters against prompt injections, script tags, and null bytes.
+      * Guarantees CPU processing latency median < 25ms and p95 < 50ms.
 * **Day 15 (Fri): Experiment Tracking, Error Analysis Memo & Gate 3 Defense**
   * Log at least 6 distinct training runs in MLflow or Weights & Biases (varying learning rate, batch size, dropout, and backbone unfreezing schedules).
   * Author `reports/week3_dl_analysis.md` documenting the 3 most impactful improvements and 3 largest failure modes.

@@ -87,3 +87,4 @@ class AsyncDocumentIngestionService:
             chunks=chunks,
             latency_ms=elapsed_ms
         )
+

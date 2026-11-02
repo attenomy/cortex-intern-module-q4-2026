@@ -27,3 +27,4 @@ async def ingestion_health(service: AsyncDocumentIngestionService = Depends(get_
         "module": "doc_ingestion",
         "service": "AsyncDocumentIngestionService"
     }
+

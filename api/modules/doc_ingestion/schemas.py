@@ -50,3 +50,4 @@ class DocumentIngestResponse(BaseModel):
     sanitization_flags: List[str]
     chunks: List[DocumentChunk]
     latency_ms: float
+
