@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+
 from .schemas import QueryRoutingRequest, RoutingDecision
 from .service import SemanticRouter
 

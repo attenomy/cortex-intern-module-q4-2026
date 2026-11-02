@@ -1,12 +1,13 @@
 import time
-from typing import Dict, Any
+from typing import Any
+
 
 class DocumentExtractor:
     """Cognitive document layout extraction pipeline for Attenomy Cortex."""
     def __init__(self):
         self.is_ready = True
 
-    def extract_document(self, doc_id: str, doc_type: str, raw_content: str) -> Dict[str, Any]:
+    def extract_document(self, doc_id: str, doc_type: str, raw_content: str) -> dict[str, Any]:
         t0 = time.perf_counter()
         # Baseline extractor logic (replaced with fine-tuned MobileNetV3 in CTX-002)
         extracted = {

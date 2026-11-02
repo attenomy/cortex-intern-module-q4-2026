@@ -1,5 +1,6 @@
 import os
 import sys
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -8,10 +9,10 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
-from modules.intent_router.router import router as intent_router
 from modules.doc_extractor.router import router as doc_extractor_router
-from modules.semantic_cache.router import router as semantic_cache_router
 from modules.doc_ingestion.router import router as doc_ingestion_router
+from modules.intent_router.router import router as intent_router
+from modules.semantic_cache.router import router as semantic_cache_router
 from modules.telemetry_obs.router import router as telemetry_router
 
 app = FastAPI(

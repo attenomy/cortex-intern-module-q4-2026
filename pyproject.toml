@@ -1,0 +1,20 @@
+[project]
+name = "attenomy-cortex"
+version = "1.0.0"
+description = "Enterprise Autonomous Multi-Agent Orchestration & Cognitive Knowledge Retrieval Engine"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4"]
+ignore = ["E501", "B008", "BLE001", "E402", "N805", "B904"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-v --tb=short"
+testpaths = ["api/tests", "api/modules"]
+python_files = ["test_*.py"]

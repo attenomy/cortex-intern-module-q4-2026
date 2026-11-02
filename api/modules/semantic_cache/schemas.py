@@ -1,5 +1,7 @@
+from typing import Any
+
 from pydantic import BaseModel, Field
-from typing import Dict, Any, Optional
+
 
 class CacheLookupRequest(BaseModel):
     query: str = Field(..., description="Query to search in semantic cache")
@@ -7,9 +9,9 @@ class CacheLookupRequest(BaseModel):
 
 class CacheLookupResponse(BaseModel):
     hit: bool
-    matched_query: Optional[str] = None
-    similarity_score: Optional[float] = None
-    cached_payload: Optional[Dict[str, Any]] = None
+    matched_query: str | None = None
+    similarity_score: float | None = None
+    cached_payload: dict[str, Any] | None = None
     latency_ms: float
 
 class CacheStatsResponse(BaseModel):

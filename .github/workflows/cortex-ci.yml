@@ -32,7 +32,5 @@ jobs:
           ruff check api/
 
       - name: Run Pytest Test Suite
-        working-directory: ./api
         run: |
-          pytest -v --cov=services --cov=main --cov-report=term-missing
-
+          pytest -v --cov=api/modules --cov-report=term-missing

@@ -1,14 +1,15 @@
 import time
-from typing import Dict, Any, Optional
+from typing import Any
+
 
 class SemanticCacheService:
     """Redis-backed vector semantic cache service for Attenomy Cortex."""
-    def __init__(self, redis_url: Optional[str] = None):
+    def __init__(self, redis_url: str | None = None):
         self.redis_url = redis_url
         self.is_connected = False
-        self._local_cache: Dict[str, Dict[str, Any]] = {}
+        self._local_cache: dict[str, dict[str, Any]] = {}
 
-    def lookup(self, query: str, threshold: float = 0.95) -> Dict[str, Any]:
+    def lookup(self, query: str, threshold: float = 0.95) -> dict[str, Any]:
         t0 = time.perf_counter()
         query_norm = query.strip().lower()
 
@@ -33,11 +34,11 @@ class SemanticCacheService:
             "latency_ms": elapsed_ms
         }
 
-    def store(self, query: str, payload: Dict[str, Any]) -> None:
+    def store(self, query: str, payload: dict[str, Any]) -> None:
         query_norm = query.strip().lower()
         self._local_cache[query_norm] = payload
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         return {
             "total_entries": len(self._local_cache),
             "hit_rate": 0.62,

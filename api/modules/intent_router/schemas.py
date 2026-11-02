@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 
+
 class QueryRoutingRequest(BaseModel):
     query: str = Field(..., description="User search query or agent input prompt")
     client_tier: str = Field(default="Enterprise", description="Client tier (Starter, Pro, Enterprise, VIP)")

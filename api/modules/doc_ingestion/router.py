@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
+
 from .schemas import DocumentIngestRequest, DocumentIngestResponse
 from .service import AsyncDocumentIngestionService
 
@@ -18,7 +19,7 @@ async def ingest_document(
     except ValueError as ve:
         raise HTTPException(status_code=400, detail=str(ve))
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Ingestion pipeline failure: {str(exc)}")
+        raise HTTPException(status_code=500, detail=f"Ingestion pipeline failure: {exc!s}")
 
 @router.get("/ingest/health")
 async def ingestion_health(service: AsyncDocumentIngestionService = Depends(get_ingestion_service)):

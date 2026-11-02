@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+
 from .schemas import CacheLookupRequest, CacheLookupResponse, CacheStatsResponse
 from .service import SemanticCacheService
 
