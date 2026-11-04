@@ -26,4 +26,10 @@ htmlcov/
 Thumbs.db
 *.swp
 *.swo
+# Local backup files
+*.backup
+*.bak
+service_before_*.py
 
+# Local benchmark artifacts
+api/modules/semantic_cache/bench_vector.json
