@@ -2,17 +2,20 @@
 import hashlib
 import json
 import os
+import secrets
+import threading
 import time
 import uuid
-import threading
-from typing import Any, Dict, Optional
+
+from contextlib import contextmanager
+from typing import Any, Dict, Optional, Iterator
 
 import numpy as np
 import redis
 
 
 class SemanticCacheService:
-    """Redis-backed semantic cache with performance instrumentation."""
+    """Redis-backed semantic cache with distributed query locking."""
 
     def __init__(self, redis_url: Optional[str] = None):
         self.redis_url = redis_url or os.getenv(
@@ -33,9 +36,32 @@ class SemanticCacheService:
             os.getenv("SEMANTIC_CACHE_TTL_SECONDS", "3600")
         )
 
+        self.lock_ttl = int(
+            os.getenv("SEMANTIC_CACHE_LOCK_TTL_SECONDS", "30")
+        )
+
+        self.lock_wait_timeout = float(
+            os.getenv("SEMANTIC_CACHE_LOCK_WAIT_SECONDS", "2")
+        )
+
+        self.lock_poll_interval = float(
+            os.getenv("SEMANTIC_CACHE_LOCK_POLL_SECONDS", "0.05")
+        )
+
+        if self.lock_ttl <= 0:
+            raise ValueError("Lock TTL must be positive.")
+
+        if self.lock_wait_timeout < 0:
+            raise ValueError("Lock wait timeout cannot be negative.")
+
+        if self.lock_poll_interval <= 0:
+            raise ValueError("Lock polling interval must be positive.")
+
         self.vector_key = "semantic_cache:vectors"
         self.entry_prefix = "semantic_cache:entry:"
         self.exact_prefix = "semantic_cache:exact:"
+        self.lock_prefix = "semantic_cache:lock:"
+
         self.hits_key = "semantic_cache:stats:hits"
         self.misses_key = "semantic_cache:stats:misses"
 
@@ -60,14 +86,183 @@ class SemanticCacheService:
     def _normalize_query(query: str) -> str:
         return " ".join(query.casefold().split())
 
-    def _exact_key(self, query: str) -> str:
+    def _query_hash(self, query: str) -> str:
         normalized = self._normalize_query(query)
 
-        query_hash = hashlib.sha256(
+        return hashlib.sha256(
             normalized.encode("utf-8")
         ).hexdigest()
 
-        return self.exact_prefix + query_hash
+    def _exact_key(self, query: str) -> str:
+        return self.exact_prefix + self._query_hash(query)
+
+    def _lock_key(self, query: str) -> str:
+        return self.lock_prefix + self._query_hash(query)
+
+    # --------------------------------------------------
+    # DISTRIBUTED QUERY LOCKING
+    # --------------------------------------------------
+
+    def acquire_query_lock(
+        self,
+        query: str,
+        ttl_seconds: Optional[int] = None,
+        wait_timeout_seconds: Optional[float] = None,
+        poll_interval_seconds: Optional[float] = None
+    ) -> Optional[str]:
+        """
+        Acquire a distributed Redis lock for a normalized query.
+
+        Returns:
+            Unique ownership token if acquired.
+            None if the lock is unavailable or Redis fails.
+
+        Redis SET NX EX provides atomic lock acquisition.
+        """
+
+        normalized = self._normalize_query(query)
+
+        if not normalized:
+            raise ValueError("Query cannot be empty.")
+
+        ttl = (
+            self.lock_ttl
+            if ttl_seconds is None
+            else ttl_seconds
+        )
+
+        wait_timeout = (
+            self.lock_wait_timeout
+            if wait_timeout_seconds is None
+            else wait_timeout_seconds
+        )
+
+        poll_interval = (
+            self.lock_poll_interval
+            if poll_interval_seconds is None
+            else poll_interval_seconds
+        )
+
+        if ttl <= 0:
+            raise ValueError("Lock TTL must be positive.")
+
+        if wait_timeout < 0:
+            raise ValueError("Wait timeout cannot be negative.")
+
+        if poll_interval <= 0:
+            raise ValueError("Poll interval must be positive.")
+
+        lock_key = self._lock_key(normalized)
+        ownership_token = secrets.token_urlsafe(32)
+
+        deadline = time.monotonic() + wait_timeout
+
+        while True:
+            try:
+                acquired = self.redis_client.set(
+                    lock_key,
+                    ownership_token,
+                    nx=True,
+                    ex=ttl
+                )
+
+                self.is_connected = True
+
+                if acquired:
+                    return ownership_token
+
+            except Exception:
+                # Fail open: inference can continue without a lock.
+                self.is_connected = False
+                return None
+
+            remaining = deadline - time.monotonic()
+
+            if remaining <= 0:
+                return None
+
+            time.sleep(
+                min(poll_interval, remaining)
+            )
+
+    def release_query_lock(
+        self,
+        query: str,
+        ownership_token: str
+    ) -> bool:
+        """
+        Release a lock only when the supplied token owns it.
+
+        Lua makes ownership verification and deletion atomic.
+        """
+
+        normalized = self._normalize_query(query)
+
+        if not normalized or not ownership_token:
+            return False
+
+        lock_key = self._lock_key(normalized)
+
+        release_script = """
+            if redis.call('GET', KEYS[1]) == ARGV[1] then
+                return redis.call('DEL', KEYS[1])
+            end
+
+            return 0
+        """
+
+        try:
+            result = self.redis_client.execute_command(
+                "EVAL",
+                release_script,
+                1,
+                lock_key,
+                ownership_token
+            )
+
+            self.is_connected = True
+
+            return int(result or 0) == 1
+
+        except Exception:
+            # An expired lock will eventually disappear through TTL.
+            self.is_connected = False
+            return False
+
+    @contextmanager
+    def query_lock(
+        self,
+        query: str,
+        ttl_seconds: Optional[int] = None,
+        wait_timeout_seconds: Optional[float] = None,
+        poll_interval_seconds: Optional[float] = None
+    ) -> Iterator[bool]:
+        """
+        Context manager for distributed query coordination.
+
+        The yielded value is True when the lock is acquired.
+
+        False means the caller should continue in fail-open mode.
+        """
+
+        token = self.acquire_query_lock(
+            query=query,
+            ttl_seconds=ttl_seconds,
+            wait_timeout_seconds=wait_timeout_seconds,
+            poll_interval_seconds=poll_interval_seconds
+        )
+
+        acquired = token is not None
+
+        try:
+            yield acquired
+
+        finally:
+            if acquired:
+                self.release_query_lock(
+                    query,
+                    token
+                )
 
     # --------------------------------------------------
     # EMBEDDING MODEL
@@ -80,8 +275,6 @@ class SemanticCacheService:
             with self._model_lock:
                 if self._model is None:
 
-                    # Lazy import: avoids loading ML dependencies
-                    # when the service only needs Redis.
                     from sentence_transformers import SentenceTransformer
 
                     model = SentenceTransformer(
@@ -387,7 +580,6 @@ class SemanticCacheService:
                     KeyError,
                     OverflowError
                 ):
-                    # Remove stale or corrupted vector entries.
                     expired_ids.append(entry_id)
                     continue
 
@@ -437,8 +629,6 @@ class SemanticCacheService:
             )
 
             self.is_connected = True
-
-            # Calculate Redis operation latency.
 
             redis_latency_ms = round(
                 timings["exact_lookup_ms"]
@@ -528,8 +718,6 @@ class SemanticCacheService:
         entry_id = str(uuid.uuid4())
 
         try:
-            # Generate embedding.
-
             embedding = self._embed(query)
 
             created_at = time.time()
@@ -583,8 +771,6 @@ class SemanticCacheService:
                     pipe.execute()
 
             except Exception:
-                # Roll back vector if metadata storage fails.
-
                 self.redis_client.execute_command(
                     "VREM",
                     self.vector_key,

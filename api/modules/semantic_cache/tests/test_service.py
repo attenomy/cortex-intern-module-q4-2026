@@ -1,5 +1,8 @@
 
 import json
+import threading
+from concurrent.futures import ThreadPoolExecutor
+
 import numpy as np
 import pytest
 
@@ -11,14 +14,38 @@ class FakeRedis:
         self.data = {}
         self.vectors = {}
         self.counters = {}
+        self.expiries = {}
+        self._lock = threading.Lock()
+
+    def _remove_expired(self, key):
+        expiry = self.expiries.get(key)
+        if expiry is not None:
+            import time
+            if time.monotonic() >= expiry:
+                self.data.pop(key, None)
+                self.expiries.pop(key, None)
 
     def execute_command(self, *args):
         command = str(args[0]).upper()
 
         if command == "EVAL":
+            script = str(args[1]).upper()
             key = args[3]
+
+            # Token-safe distributed lock release.
+            if "DEL" in script and "GET" in script:
+                token = args[4]
+                with self._lock:
+                    self._remove_expired(key)
+                    if self.data.get(key) == token:
+                        self.data.pop(key, None)
+                        self.expiries.pop(key, None)
+                        return 1
+                    return 0
+
+            # Existing exact-query lookup.
             counter = args[4]
-            value = self.data.get(key)
+            value = self.get(key)
 
             if value:
                 self.incr(counter)
@@ -59,11 +86,27 @@ class FakeRedis:
         raise NotImplementedError(command)
 
     def get(self, key):
-        return self.data.get(key)
+        with self._lock:
+            self._remove_expired(key)
+            return self.data.get(key)
 
-    def set(self, key, value, ex=None):
-        self.data[key] = value
-        return True
+    def set(self, key, value, ex=None, nx=False):
+        import time
+
+        with self._lock:
+            self._remove_expired(key)
+
+            if nx and key in self.data:
+                return None
+
+            self.data[key] = value
+
+            if ex is not None:
+                self.expiries[key] = time.monotonic() + ex
+            else:
+                self.expiries.pop(key, None)
+
+            return True
 
     def incr(self, key):
         self.counters[key] = self.counters.get(key, 0) + 1
@@ -72,8 +115,8 @@ class FakeRedis:
     def scan_iter(self, match=None, count=None):
         prefix = match.replace("*", "")
         return iter(
-            key for key in self.data
-            if key.startswith(prefix)
+            key for key in list(self.data)
+            if key.startswith(prefix) and self.get(key) is not None
         )
 
     def pipeline(self, transaction=False):
@@ -104,8 +147,8 @@ class FakePipeline:
             if command[0] == "get":
                 results.append(self.redis.get(command[1]))
             else:
-                _, key, value, _ttl = command
-                self.redis.set(key, value)
+                _, key, value, ttl = command
+                self.redis.set(key, value, ex=ttl)
                 results.append(True)
 
         return results
@@ -118,6 +161,10 @@ def cache():
     service.dimensions = 3
     return service
 
+
+# --------------------------------------------------
+# Existing semantic-cache tests
+# --------------------------------------------------
 
 def test_normalize_query():
     assert SemanticCacheService._normalize_query(
@@ -215,6 +262,8 @@ def test_stats_returns_connection_status(cache):
 
     assert result["redis_connected"] is True
     assert result["total_entries"] == 0
+
+
 def test_corrupted_metadata_does_not_crash_lookup(cache, monkeypatch):
     cache.redis_client.execute_command = lambda *args: (
         ["broken-entry", "0.99"]
@@ -269,3 +318,130 @@ def test_expired_vector_is_removed_when_metadata_missing(cache, monkeypatch):
 
     assert result["hit"] is False
     assert entry_id not in cache.redis_client.vectors[cache.vector_key]
+
+
+# --------------------------------------------------
+# Distributed-lock tests
+# --------------------------------------------------
+
+def test_query_lock_acquires_successfully(cache):
+    token = cache.acquire_query_lock(
+        "hello",
+        wait_timeout_seconds=0
+    )
+
+    assert token is not None
+    assert cache.redis_client.get(cache._lock_key("hello")) == token
+
+
+def test_query_lock_prevents_duplicate_acquisition(cache):
+    first = cache.acquire_query_lock(
+        "hello",
+        wait_timeout_seconds=0
+    )
+
+    second = cache.acquire_query_lock(
+        "hello",
+        wait_timeout_seconds=0
+    )
+
+    assert first is not None
+    assert second is None
+
+
+def test_different_queries_have_independent_locks(cache):
+    first = cache.acquire_query_lock(
+        "hello",
+        wait_timeout_seconds=0
+    )
+
+    second = cache.acquire_query_lock(
+        "good morning",
+        wait_timeout_seconds=0
+    )
+
+    assert first is not None
+    assert second is not None
+
+
+def test_lock_release_requires_correct_token(cache):
+    token = cache.acquire_query_lock(
+        "hello",
+        wait_timeout_seconds=0
+    )
+
+    assert token is not None
+
+    wrong_result = cache.release_query_lock(
+        "hello",
+        "incorrect-token"
+    )
+
+    assert wrong_result is False
+    assert cache.redis_client.get(cache._lock_key("hello")) == token
+
+    correct_result = cache.release_query_lock("hello", token)
+
+    assert correct_result is True
+    assert cache.redis_client.get(cache._lock_key("hello")) is None
+
+
+def test_query_lock_context_manager_releases_lock(cache):
+    with cache.query_lock(
+        "hello",
+        wait_timeout_seconds=0
+    ) as acquired:
+        assert acquired is True
+        assert cache.redis_client.get(cache._lock_key("hello")) is not None
+
+    assert cache.redis_client.get(cache._lock_key("hello")) is None
+
+
+def test_query_lock_wait_timeout(cache):
+    first = cache.acquire_query_lock(
+        "hello",
+        wait_timeout_seconds=0
+    )
+
+    assert first is not None
+
+    second = cache.acquire_query_lock(
+        "hello",
+        wait_timeout_seconds=0.05,
+        poll_interval_seconds=0.01
+    )
+
+    assert second is None
+
+
+def test_query_lock_handles_redis_failure(cache):
+    def fail(*args, **kwargs):
+        raise ConnectionError("Redis unavailable")
+
+    cache.redis_client.set = fail
+
+    token = cache.acquire_query_lock(
+        "hello",
+        wait_timeout_seconds=0
+    )
+
+    assert token is None
+    assert cache.is_connected is False
+
+
+def test_concurrent_lock_acquisition_allows_only_one_owner(cache):
+    workers = 8
+
+    def attempt_lock(_):
+        return cache.acquire_query_lock(
+            "same query",
+            wait_timeout_seconds=0
+        )
+
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        results = list(executor.map(attempt_lock, range(workers)))
+
+    successful_tokens = [token for token in results if token is not None]
+
+    assert len(successful_tokens) == 1
+    assert len(set(successful_tokens)) == 1
