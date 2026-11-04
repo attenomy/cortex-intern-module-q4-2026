@@ -9,7 +9,7 @@
       "orchestration"
     ],
     "total": 280,
-    "split_method": "grouped by topic, per intent: 10 train / 2 validation / 2 test groups",
+    "split_method": "grouped by topic, per intent: 10 train / 2 validation / 2 test groups; the ambiguous group of each intent is held out of train (finance, search -> validation; support, orchestration -> test)",
     "split_totals": {
       "validation": 40,
       "test": 40,
@@ -35,6 +35,11 @@
         "orchestration": 50
       }
     },
+    "ambiguous_per_split": {
+      "validation": 10,
+      "test": 10,
+      "train": 0
+    },
     "note": "Noise, gibberish and injection strings are NOT in this file; they are a separate stress set for tests."
   },
   "samples": [
@@ -43,1960 +48,2240 @@
       "text": "Extract the line items from this invoice",
       "label": "finance",
       "group": "finance-01",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "fin-01-2",
       "text": "Pull the total amount and due date from the attached bill",
       "label": "finance",
       "group": "finance-01",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "fin-01-3",
       "text": "Can you read the vendor name and invoice number from this PDF?",
       "label": "finance",
       "group": "finance-01",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "fin-01-4",
       "text": "Parse invoice INV-2048 into a table",
       "label": "finance",
       "group": "finance-01",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "fin-01-5",
       "text": "Invoice se total amount nikaalo",
       "label": "finance",
       "group": "finance-01",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "fin-02-1",
       "text": "Generate a billing report for last quarter",
       "label": "finance",
       "group": "finance-02",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "fin-02-2",
       "text": "Show me the monthly billing summary for October",
       "label": "finance",
       "group": "finance-02",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "fin-02-3",
       "text": "I need a breakdown of charges by customer",
       "label": "finance",
       "group": "finance-02",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "fin-02-4",
       "text": "Create a revenue report for the third quarter",
       "label": "finance",
       "group": "finance-02",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "fin-02-5",
       "text": "Give me an itemized statement for account 4471",
       "label": "finance",
       "group": "finance-02",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "fin-03-1",
       "text": "Which invoices are still unpaid?",
       "label": "finance",
       "group": "finance-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-03-2",
       "text": "List all overdue payments from vendors",
       "label": "finance",
       "group": "finance-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-03-3",
       "text": "Has the payment for PO 8812 been received?",
       "label": "finance",
       "group": "finance-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-03-4",
       "text": "Show pending payables due this week",
       "label": "finance",
       "group": "finance-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-03-5",
       "text": "¿Cuántas facturas están pendientes de pago?",
       "label": "finance",
       "group": "finance-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-04-1",
       "text": "Extract the amount from this receipt",
       "label": "finance",
       "group": "finance-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-04-2",
       "text": "Categorize my travel expenses from the last trip",
       "label": "finance",
       "group": "finance-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-04-3",
       "text": "Scan this restaurant receipt and log the expense",
       "label": "finance",
       "group": "finance-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-04-4",
       "text": "What is the total of all receipts uploaded today?",
       "label": "finance",
       "group": "finance-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-04-5",
       "text": "Add this taxi bill to my expense report",
       "label": "finance",
       "group": "finance-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-05-1",
       "text": "Match this purchase order to the supplier invoice",
       "label": "finance",
       "group": "finance-05",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-05-2",
       "text": "Read the quantities and unit prices from the PO",
       "label": "finance",
       "group": "finance-05",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-05-3",
       "text": "Is the PO total the same as the invoice total?",
       "label": "finance",
       "group": "finance-05",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-05-4",
       "text": "Extract the shipping address and items from this purchase order",
       "label": "finance",
       "group": "finance-05",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-05-5",
       "text": "Create a summary of all open purchase orders",
       "label": "finance",
       "group": "finance-05",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-06-1",
       "text": "Calculate the GST on this invoice",
       "label": "finance",
       "group": "finance-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-06-2",
       "text": "What is the tax amount charged on the bill?",
       "label": "finance",
       "group": "finance-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-06-3",
       "text": "Pull the VAT number from this document",
       "label": "finance",
       "group": "finance-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-06-4",
       "text": "Prepare the tax summary for the quarter",
       "label": "finance",
       "group": "finance-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-06-5",
       "text": "GST ka amount kitna hai is bill mein",
       "label": "finance",
       "group": "finance-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-07-1",
       "text": "Reconcile the bank statement with the ledger",
       "label": "finance",
       "group": "finance-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-07-2",
       "text": "Find mismatches between invoices and payments",
       "label": "finance",
       "group": "finance-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-07-3",
       "text": "Flag duplicate invoices from the same vendor",
       "label": "finance",
       "group": "finance-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-07-4",
       "text": "Check whether any invoice was billed twice",
       "label": "finance",
       "group": "finance-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-07-5",
       "text": "Compare vendor statements against our records",
       "label": "finance",
       "group": "finance-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-08-1",
       "text": "Process a refund for order 5521",
       "label": "finance",
       "group": "finance-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-08-2",
       "text": "Issue a credit note for the returned goods",
       "label": "finance",
       "group": "finance-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-08-3",
       "text": "How much do we owe this customer after the refund?",
       "label": "finance",
       "group": "finance-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-08-4",
       "text": "Show all credit notes from September",
       "label": "finance",
       "group": "finance-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-08-5",
       "text": "Calculate the prorated refund for a cancelled subscription",
       "label": "finance",
       "group": "finance-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-09-1",
       "text": "Why was I charged twice this month?",
       "label": "finance",
       "group": "finance-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-09-2",
       "text": "Explain the extra charge on my latest bill",
       "label": "finance",
       "group": "finance-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-09-3",
       "text": "What is the billing cycle for the enterprise plan?",
       "label": "finance",
       "group": "finance-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-09-4",
       "text": "When is my next invoice due?",
       "label": "finance",
       "group": "finance-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-09-5",
       "text": "Send me a copy of last month's invoice",
       "label": "finance",
       "group": "finance-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-10-1",
       "text": "Summarize the profit and loss statement",
       "label": "finance",
       "group": "finance-10",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-10-2",
       "text": "Extract the balance sheet figures from the annual report",
       "label": "finance",
       "group": "finance-10",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-10-3",
       "text": "What were total operating expenses in Q2?",
       "label": "finance",
       "group": "finance-10",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-10-4",
       "text": "Pull the net income from this financial statement",
       "label": "finance",
       "group": "finance-10",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-10-5",
       "text": "Compare this year's expenses with last year's",
       "label": "finance",
       "group": "finance-10",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-11-1",
       "text": "What are the payment terms in this vendor contract?",
       "label": "finance",
       "group": "finance-11",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "fin-11-2",
       "text": "Extract the penalty clause amounts from the agreement",
       "label": "finance",
       "group": "finance-11",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "fin-11-3",
       "text": "Find the net 30 terms in this supplier document",
       "label": "finance",
       "group": "finance-11",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "fin-11-4",
       "text": "How much is the late fee on this invoice?",
       "label": "finance",
       "group": "finance-11",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "fin-11-5",
       "text": "Read the total contract value from the document",
       "label": "finance",
       "group": "finance-11",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "fin-12-1",
       "text": "Extract the salary components from this payslip",
       "label": "finance",
       "group": "finance-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-12-2",
       "text": "Calculate total payroll cost for the month",
       "label": "finance",
       "group": "finance-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-12-3",
       "text": "Show the deductions listed on this pay slip",
       "label": "finance",
       "group": "finance-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-12-4",
       "text": "Summarize reimbursements paid to employees in March",
       "label": "finance",
       "group": "finance-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-12-5",
       "text": "Process the vendor payment batch for Friday",
       "label": "finance",
       "group": "finance-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-13-1",
       "text": "Convert the invoice total from USD to INR",
       "label": "finance",
       "group": "finance-13",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-13-2",
       "text": "What is the invoice amount in euros?",
       "label": "finance",
       "group": "finance-13",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-13-3",
       "text": "Sum the amounts in column D of this bill",
       "label": "finance",
       "group": "finance-13",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-13-4",
       "text": "Round the invoice subtotal and show the discount applied",
       "label": "finance",
       "group": "finance-13",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-13-5",
       "text": "List invoices above 50,000 rupees",
       "label": "finance",
       "group": "finance-13",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "fin-14-1",
       "text": "Generate the Q3 billing report and tell me if the export failed",
       "label": "finance",
       "group": "finance-14",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": true
     },
     {
       "id": "fin-14-2",
       "text": "Extract the invoice total and then notify the finance team",
       "label": "finance",
       "group": "finance-14",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": true
     },
     {
       "id": "fin-14-3",
       "text": "Pull the billing data and also tell me who handled it",
       "label": "finance",
       "group": "finance-14",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": true
     },
     {
       "id": "fin-14-4",
       "text": "Pay the invoice and look for a similar earlier bill",
       "label": "finance",
       "group": "finance-14",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": true
     },
     {
       "id": "fin-14-5",
       "text": "Download the billing report, the app was slow earlier",
       "label": "finance",
       "group": "finance-14",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": true
     },
     {
       "id": "sup-01-1",
       "text": "The app crashes every time I open settings",
       "label": "support",
       "group": "support-01",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sup-01-2",
       "text": "Mobile app freezes on the checkout screen",
       "label": "support",
       "group": "support-01",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sup-01-3",
       "text": "Fix the crash bug in the login module",
       "label": "support",
       "group": "support-01",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sup-01-4",
       "text": "The dashboard keeps closing unexpectedly",
       "label": "support",
       "group": "support-01",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sup-01-5",
       "text": "La aplicación se cierra sola al abrir",
       "label": "support",
       "group": "support-01",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sup-02-1",
       "text": "I can't log in to my account",
       "label": "support",
       "group": "support-02",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sup-02-2",
       "text": "Password reset email never arrives",
       "label": "support",
       "group": "support-02",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sup-02-3",
       "text": "My two-factor code is not working",
       "label": "support",
       "group": "support-02",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sup-02-4",
       "text": "Account locked after too many attempts",
       "label": "support",
       "group": "support-02",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sup-02-5",
       "text": "Mera login nahi ho raha hai",
       "label": "support",
       "group": "support-02",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sup-03-1",
       "text": "I am getting a 500 error on the upload page",
       "label": "support",
       "group": "support-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-03-2",
       "text": "API returns 403 forbidden for valid tokens",
       "label": "support",
       "group": "support-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-03-3",
       "text": "Page shows a blank screen after sign in",
       "label": "support",
       "group": "support-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-03-4",
       "text": "Stack trace shows a null pointer exception in the payment service",
       "label": "support",
       "group": "support-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-03-5",
       "text": "Timeout error when saving the form",
       "label": "support",
       "group": "support-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-04-1",
       "text": "The website is extremely slow today",
       "label": "support",
       "group": "support-04",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-04-2",
       "text": "Reports take over a minute to load",
       "label": "support",
       "group": "support-04",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-04-3",
       "text": "Search results are lagging badly",
       "label": "support",
       "group": "support-04",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-04-4",
       "text": "Why is the app using so much memory?",
       "label": "support",
       "group": "support-04",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-04-5",
       "text": "Response times doubled after the last release",
       "label": "support",
       "group": "support-04",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-05-1",
       "text": "Is the service down right now?",
       "label": "support",
       "group": "support-05",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-05-2",
       "text": "Our whole team cannot access the platform",
       "label": "support",
       "group": "support-05",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-05-3",
       "text": "Production API has been unreachable since morning",
       "label": "support",
       "group": "support-05",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-05-4",
       "text": "Users report intermittent downtime",
       "label": "support",
       "group": "support-05",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-05-5",
       "text": "Check the incident status for the email system",
       "label": "support",
       "group": "support-05",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-06-1",
       "text": "Open a support ticket for a broken export button",
       "label": "support",
       "group": "support-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-06-2",
       "text": "Escalate ticket 3321 to the engineering team",
       "label": "support",
       "group": "support-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-06-3",
       "text": "Assign this customer complaint to the right team",
       "label": "support",
       "group": "support-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-06-4",
       "text": "Prioritize the open bug reports by severity",
       "label": "support",
       "group": "support-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-06-5",
       "text": "Close the ticket, the issue is resolved",
       "label": "support",
       "group": "support-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-07-1",
       "text": "Report a bug: dates show the wrong timezone",
       "label": "support",
       "group": "support-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-07-2",
       "text": "Notifications are sent twice to users",
       "label": "support",
       "group": "support-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-07-3",
       "text": "The save button does nothing when clicked",
       "label": "support",
       "group": "support-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-07-4",
       "text": "Uploaded images appear rotated",
       "label": "support",
       "group": "support-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-07-5",
       "text": "Dropdown menu is not showing all options",
       "label": "support",
       "group": "support-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-08-1",
       "text": "The Slack integration stopped syncing",
       "label": "support",
       "group": "support-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-08-2",
       "text": "Webhook events are not being delivered",
       "label": "support",
       "group": "support-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-08-3",
       "text": "Email notifications are not arriving",
       "label": "support",
       "group": "support-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-08-4",
       "text": "Calendar sync fails with an authentication error",
       "label": "support",
       "group": "support-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-08-5",
       "text": "My API key suddenly stopped working",
       "label": "support",
       "group": "support-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-09-1",
       "text": "I want to complain about the poor service I received",
       "label": "support",
       "group": "support-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-09-2",
       "text": "Customer says the product arrived damaged",
       "label": "support",
       "group": "support-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-09-3",
       "text": "Client is angry about repeated outages",
       "label": "support",
       "group": "support-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-09-4",
       "text": "Help me respond to a frustrated user",
       "label": "support",
       "group": "support-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-09-5",
       "text": "The user is asking why their request is still pending",
       "label": "support",
       "group": "support-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-10-1",
       "text": "How do I fix the sync error on my phone?",
       "label": "support",
       "group": "support-10",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-10-2",
       "text": "Troubleshoot why the printer connection fails",
       "label": "support",
       "group": "support-10",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-10-3",
       "text": "Steps to clear cache and restore the app",
       "label": "support",
       "group": "support-10",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-10-4",
       "text": "Reinstalling did not solve the problem, what next?",
       "label": "support",
       "group": "support-10",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-10-5",
       "text": "Installation fails at 90 percent",
       "label": "support",
       "group": "support-10",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-11-1",
       "text": "My uploaded file is corrupted after download",
       "label": "support",
       "group": "support-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-11-2",
       "text": "Export to CSV produces empty rows",
       "label": "support",
       "group": "support-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-11-3",
       "text": "The report shows wrong numbers after the update",
       "label": "support",
       "group": "support-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-11-4",
       "text": "Data disappeared from my dashboard",
       "label": "support",
       "group": "support-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-11-5",
       "text": "Profile photo will not upload",
       "label": "support",
       "group": "support-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-12-1",
       "text": "The latest deployment broke the build",
       "label": "support",
       "group": "support-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-12-2",
       "text": "CI pipeline fails on the unit tests",
       "label": "support",
       "group": "support-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-12-3",
       "text": "Rollback the release, users cannot sign in",
       "label": "support",
       "group": "support-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-12-4",
       "text": "Memory leak detected in the worker service",
       "label": "support",
       "group": "support-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-12-5",
       "text": "Investigate the spike in error logs",
       "label": "support",
       "group": "support-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sup-13-1",
       "text": "App won't install on my Android phone",
       "label": "support",
       "group": "support-13",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sup-13-2",
       "text": "Push notifications stopped on iOS",
       "label": "support",
       "group": "support-13",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sup-13-3",
       "text": "Screen turns black during video calls",
       "label": "support",
       "group": "support-13",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sup-13-4",
       "text": "Bluetooth pairing keeps failing",
       "label": "support",
       "group": "support-13",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sup-13-5",
       "text": "Camera does not open inside the app",
       "label": "support",
       "group": "support-13",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sup-14-1",
       "text": "The invoice page crashes when I open it",
       "label": "support",
       "group": "support-14",
-      "split": "test"
+      "split": "test",
+      "ambiguous": true
     },
     {
       "id": "sup-14-2",
       "text": "I need help, the search bar stopped working",
       "label": "support",
       "group": "support-14",
-      "split": "test"
+      "split": "test",
+      "ambiguous": true
     },
     {
       "id": "sup-14-3",
       "text": "Billing portal shows an error on login",
       "label": "support",
       "group": "support-14",
-      "split": "test"
+      "split": "test",
+      "ambiguous": true
     },
     {
       "id": "sup-14-4",
       "text": "Workflow fails with a timeout, please check the logs",
       "label": "support",
       "group": "support-14",
-      "split": "test"
+      "split": "test",
+      "ambiguous": true
     },
     {
       "id": "sup-14-5",
       "text": "Fix the crash and then let me know",
       "label": "support",
       "group": "support-14",
-      "split": "test"
+      "split": "test",
+      "ambiguous": true
     },
     {
       "id": "sea-01-1",
       "text": "What is our remote work policy?",
       "label": "search",
       "group": "search-01",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sea-01-2",
       "text": "Find the leave policy for new employees",
       "label": "search",
       "group": "search-01",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sea-01-3",
       "text": "Where can I read the code of conduct?",
       "label": "search",
       "group": "search-01",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sea-01-4",
       "text": "What does the handbook say about travel reimbursement?",
       "label": "search",
       "group": "search-01",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sea-01-5",
       "text": "¿Cuál es la política de vacaciones de la empresa?",
       "label": "search",
       "group": "search-01",
-      "split": "validation"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "sea-02-1",
       "text": "Find documents about the Q3 roadmap",
       "label": "search",
       "group": "search-02",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-02-2",
       "text": "Search the wiki for onboarding guides",
       "label": "search",
       "group": "search-02",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-02-3",
       "text": "Show me the latest architecture overview",
       "label": "search",
       "group": "search-02",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-02-4",
       "text": "Look up the design doc for the payments service",
       "label": "search",
       "group": "search-02",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-02-5",
       "text": "Find meeting notes from last Tuesday's planning",
       "label": "search",
       "group": "search-02",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-03-1",
       "text": "Who is the head of the legal department?",
       "label": "search",
       "group": "search-03",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-03-2",
       "text": "When was our company founded?",
       "label": "search",
       "group": "search-03",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-03-3",
       "text": "How many offices do we have in Europe?",
       "label": "search",
       "group": "search-03",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-03-4",
       "text": "What products does Attenomy offer?",
       "label": "search",
       "group": "search-03",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-03-5",
       "text": "Hamari company ka mission kya hai",
       "label": "search",
       "group": "search-03",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-04-1",
       "text": "How does our refund approval process work?",
       "label": "search",
       "group": "search-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-04-2",
       "text": "Explain how single sign-on is set up internally",
       "label": "search",
       "group": "search-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-04-3",
       "text": "What is the escalation process for security incidents?",
       "label": "search",
       "group": "search-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-04-4",
       "text": "Describe the data retention rules we follow",
       "label": "search",
       "group": "search-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-04-5",
       "text": "How are customer tickets prioritized here?",
       "label": "search",
       "group": "search-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-05-1",
       "text": "What is the difference between SLA and SLO?",
       "label": "search",
       "group": "search-05",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sea-05-2",
       "text": "Define churn rate as used in our reports",
       "label": "search",
       "group": "search-05",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sea-05-3",
       "text": "What does the term ARR mean?",
       "label": "search",
       "group": "search-05",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sea-05-4",
       "text": "Explain what a vector database is",
       "label": "search",
       "group": "search-05",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sea-05-5",
       "text": "Meaning of RAG in simple words",
       "label": "search",
       "group": "search-05",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sea-06-1",
       "text": "Summarize what we know about competitor pricing",
       "label": "search",
       "group": "search-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-06-2",
       "text": "What are best practices for API versioning?",
       "label": "search",
       "group": "search-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-06-3",
       "text": "Find research on customer retention strategies",
       "label": "search",
       "group": "search-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-06-4",
       "text": "Give me background on the GDPR requirements",
       "label": "search",
       "group": "search-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-06-5",
       "text": "What are the main points in the security whitepaper?",
       "label": "search",
       "group": "search-06",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-07-1",
       "text": "Who owns the semantic cache module?",
       "label": "search",
       "group": "search-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-07-2",
       "text": "Which team handles vendor onboarding?",
       "label": "search",
       "group": "search-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-07-3",
       "text": "Find the contact for the infrastructure team",
       "label": "search",
       "group": "search-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-07-4",
       "text": "Who wrote the incident postmortem for March?",
       "label": "search",
       "group": "search-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-07-5",
       "text": "List members of the data science group",
       "label": "search",
       "group": "search-07",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-08-1",
       "text": "What changed in the last release notes?",
       "label": "search",
       "group": "search-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-08-2",
       "text": "Show the history of the pricing page",
       "label": "search",
       "group": "search-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-08-3",
       "text": "When did we update the privacy policy?",
       "label": "search",
       "group": "search-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-08-4",
       "text": "Find previous discussions about moving to Kubernetes",
       "label": "search",
       "group": "search-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-08-5",
       "text": "Which decisions were made in the Q2 review?",
       "label": "search",
       "group": "search-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-09-1",
       "text": "What are the office working hours?",
       "label": "search",
       "group": "search-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-09-2",
       "text": "How do I request a new laptop?",
       "label": "search",
       "group": "search-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-09-3",
       "text": "What is the process to book a meeting room?",
       "label": "search",
       "group": "search-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-09-4",
       "text": "Where do I find the holiday calendar?",
       "label": "search",
       "group": "search-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-09-5",
       "text": "Is there a guide for setting up VPN access?",
       "label": "search",
       "group": "search-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-10-1",
       "text": "What is the capital of France?",
       "label": "search",
       "group": "search-10",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sea-10-2",
       "text": "Explain how transformers work in machine learning",
       "label": "search",
       "group": "search-10",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sea-10-3",
       "text": "What is the time complexity of quicksort?",
       "label": "search",
       "group": "search-10",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sea-10-4",
       "text": "Tell me about the history of the internet",
       "label": "search",
       "group": "search-10",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sea-10-5",
       "text": "How tall is Mount Everest?",
       "label": "search",
       "group": "search-10",
-      "split": "test"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "sea-11-1",
       "text": "What are our data privacy obligations?",
       "label": "search",
       "group": "search-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-11-2",
       "text": "Find the contract template for new clients",
       "label": "search",
       "group": "search-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-11-3",
       "text": "What does the NDA cover?",
       "label": "search",
       "group": "search-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-11-4",
       "text": "Look up the compliance checklist for audits",
       "label": "search",
       "group": "search-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-11-5",
       "text": "Which regulations apply to storing customer data?",
       "label": "search",
       "group": "search-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-12-1",
       "text": "What features are included in the enterprise plan?",
       "label": "search",
       "group": "search-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-12-2",
       "text": "Does the platform support single sign-on?",
       "label": "search",
       "group": "search-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-12-3",
       "text": "Which file formats can the extractor read?",
       "label": "search",
       "group": "search-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-12-4",
       "text": "How many users can one workspace have?",
       "label": "search",
       "group": "search-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-12-5",
       "text": "What integrations are available?",
       "label": "search",
       "group": "search-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-13-1",
       "text": "Compare our two pricing tiers",
       "label": "search",
       "group": "search-13",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-13-2",
       "text": "What are the pros and cons of ONNX versus PyTorch?",
       "label": "search",
       "group": "search-13",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-13-3",
       "text": "Show articles related to zero-trust security",
       "label": "search",
       "group": "search-13",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-13-4",
       "text": "Find similar past projects to this one",
       "label": "search",
       "group": "search-13",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-13-5",
       "text": "Recommend reading about prompt engineering",
       "label": "search",
       "group": "search-13",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "sea-14-1",
       "text": "onboarding guide",
       "label": "search",
       "group": "search-14",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": true
     },
     {
       "id": "sea-14-2",
       "text": "security policy",
       "label": "search",
       "group": "search-14",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": true
     },
     {
       "id": "sea-14-3",
       "text": "Tell me about the refund policy",
       "label": "search",
       "group": "search-14",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": true
     },
     {
       "id": "sea-14-4",
       "text": "Any docs on the API rate limits?",
       "label": "search",
       "group": "search-14",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": true
     },
     {
       "id": "sea-14-5",
       "text": "Account settings documentation",
       "label": "search",
       "group": "search-14",
-      "split": "train"
+      "split": "validation",
+      "ambiguous": true
     },
     {
       "id": "orc-01-1",
       "text": "Run the employee onboarding workflow",
       "label": "orchestration",
       "group": "orchestration-01",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-01-2",
       "text": "Start the monthly close process",
       "label": "orchestration",
       "group": "orchestration-01",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-01-3",
       "text": "Execute the data refresh pipeline now",
       "label": "orchestration",
       "group": "orchestration-01",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-01-4",
       "text": "Kick off the weekly reporting workflow",
       "label": "orchestration",
       "group": "orchestration-01",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-01-5",
       "text": "Lanza el flujo de trabajo de aprobación",
       "label": "orchestration",
       "group": "orchestration-01",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-02-1",
       "text": "Schedule the report generation every Monday at 9 am",
       "label": "orchestration",
       "group": "orchestration-02",
-      "split": "test"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "orc-02-2",
       "text": "Run the backup job every night at midnight",
       "label": "orchestration",
       "group": "orchestration-02",
-      "split": "test"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "orc-02-3",
       "text": "Set up a recurring sync between CRM and warehouse",
       "label": "orchestration",
       "group": "orchestration-02",
-      "split": "test"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "orc-02-4",
       "text": "Trigger the cleanup task at the end of each month",
       "label": "orchestration",
       "group": "orchestration-02",
-      "split": "test"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "orc-02-5",
       "text": "Har subah 8 baje yeh workflow chalao",
       "label": "orchestration",
       "group": "orchestration-02",
-      "split": "test"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "orc-03-1",
       "text": "Extract the invoice, then validate it, then send it for approval",
       "label": "orchestration",
       "group": "orchestration-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-03-2",
       "text": "First ingest the documents, after that index them",
       "label": "orchestration",
       "group": "orchestration-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-03-3",
       "text": "Run extraction, then route the result to finance",
       "label": "orchestration",
       "group": "orchestration-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-03-4",
       "text": "Chain the classifier and the summarizer agents together",
       "label": "orchestration",
       "group": "orchestration-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-03-5",
       "text": "When the file arrives, parse it and notify the team",
       "label": "orchestration",
       "group": "orchestration-03",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-04-1",
       "text": "Automate the daily status email",
       "label": "orchestration",
       "group": "orchestration-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-04-2",
       "text": "Create an automation that tags new leads",
       "label": "orchestration",
       "group": "orchestration-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-04-3",
       "text": "Build a workflow that archives old tickets",
       "label": "orchestration",
       "group": "orchestration-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-04-4",
       "text": "Set up auto-assignment for incoming requests",
       "label": "orchestration",
       "group": "orchestration-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-04-5",
       "text": "Automatically escalate unresolved cases after 48 hours",
       "label": "orchestration",
       "group": "orchestration-04",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-05-1",
       "text": "Coordinate the research agent and the writing agent",
       "label": "orchestration",
       "group": "orchestration-05",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-05-2",
       "text": "Assign this task to the planning agent",
       "label": "orchestration",
       "group": "orchestration-05",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-05-3",
       "text": "Have the agents collaborate to prepare the board deck",
       "label": "orchestration",
       "group": "orchestration-05",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-05-4",
       "text": "Spin up three agents to process the batch in parallel",
       "label": "orchestration",
       "group": "orchestration-05",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-05-5",
       "text": "Hand over the output to the review agent",
       "label": "orchestration",
       "group": "orchestration-05",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-06-1",
       "text": "Trigger the deployment pipeline for staging",
       "label": "orchestration",
       "group": "orchestration-06",
-      "split": "test"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "orc-06-2",
       "text": "Start the document ingestion pipeline for the new folder",
       "label": "orchestration",
       "group": "orchestration-06",
-      "split": "test"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "orc-06-3",
       "text": "Fire the nightly ETL job",
       "label": "orchestration",
       "group": "orchestration-06",
-      "split": "test"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "orc-06-4",
       "text": "Launch the model retraining pipeline",
       "label": "orchestration",
       "group": "orchestration-06",
-      "split": "test"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "orc-06-5",
       "text": "Restart the failed pipeline run from step three",
       "label": "orchestration",
       "group": "orchestration-06",
-      "split": "test"
+      "split": "validation",
+      "ambiguous": false
     },
     {
       "id": "orc-07-1",
       "text": "If the invoice is over 10k, send it to a manager for approval",
       "label": "orchestration",
       "group": "orchestration-07",
-      "split": "train"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "orc-07-2",
       "text": "When a ticket is marked urgent, notify the on-call engineer",
       "label": "orchestration",
       "group": "orchestration-07",
-      "split": "train"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "orc-07-3",
       "text": "Run step two only if step one succeeds",
       "label": "orchestration",
       "group": "orchestration-07",
-      "split": "train"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "orc-07-4",
       "text": "Branch the workflow based on document type",
       "label": "orchestration",
       "group": "orchestration-07",
-      "split": "train"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "orc-07-5",
       "text": "Retry the failed task three times, then alert me",
       "label": "orchestration",
       "group": "orchestration-07",
-      "split": "train"
+      "split": "test",
+      "ambiguous": false
     },
     {
       "id": "orc-08-1",
       "text": "Prepare the quarterly review: collect data, build slides, email the team",
       "label": "orchestration",
       "group": "orchestration-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-08-2",
       "text": "Plan and execute the product launch checklist",
       "label": "orchestration",
       "group": "orchestration-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-08-3",
       "text": "Run the full compliance audit workflow",
       "label": "orchestration",
       "group": "orchestration-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-08-4",
       "text": "Orchestrate the end-to-end hiring process",
       "label": "orchestration",
       "group": "orchestration-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-08-5",
       "text": "Execute all steps for the customer offboarding",
       "label": "orchestration",
       "group": "orchestration-08",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-09-1",
       "text": "Pause the onboarding workflow",
       "label": "orchestration",
       "group": "orchestration-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-09-2",
       "text": "Show the status of all running workflows",
       "label": "orchestration",
       "group": "orchestration-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-09-3",
       "text": "Cancel the scheduled export job",
       "label": "orchestration",
       "group": "orchestration-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-09-4",
       "text": "Resume the paused pipeline from where it stopped",
       "label": "orchestration",
       "group": "orchestration-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-09-5",
       "text": "Which workflows are currently queued?",
       "label": "orchestration",
       "group": "orchestration-09",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-10-1",
       "text": "Sync the CRM contacts to the marketing tool and send a summary",
       "label": "orchestration",
       "group": "orchestration-10",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-10-2",
       "text": "Move new form submissions into the database and alert sales",
       "label": "orchestration",
       "group": "orchestration-10",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-10-3",
       "text": "Connect the inbox to the ticketing system with a rule",
       "label": "orchestration",
       "group": "orchestration-10",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-10-4",
       "text": "Post the daily metrics to Slack automatically",
       "label": "orchestration",
       "group": "orchestration-10",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-10-5",
       "text": "Push the approved report to the shared drive",
       "label": "orchestration",
       "group": "orchestration-10",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-11-1",
       "text": "Process all 500 documents in parallel",
       "label": "orchestration",
       "group": "orchestration-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-11-2",
       "text": "Run the same analysis for every region simultaneously",
       "label": "orchestration",
       "group": "orchestration-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-11-3",
       "text": "Batch the pending tasks and run them overnight",
       "label": "orchestration",
       "group": "orchestration-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-11-4",
       "text": "Fan out the request to all available agents",
       "label": "orchestration",
       "group": "orchestration-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-11-5",
       "text": "Split the job into chunks and merge the results",
       "label": "orchestration",
       "group": "orchestration-11",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-12-1",
       "text": "Route this request through legal, then finance",
       "label": "orchestration",
       "group": "orchestration-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-12-2",
       "text": "Send the draft to the manager and wait for approval",
       "label": "orchestration",
       "group": "orchestration-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-12-3",
       "text": "Hand the ticket to the next team after review",
       "label": "orchestration",
       "group": "orchestration-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-12-4",
       "text": "Create an approval flow for expense claims",
       "label": "orchestration",
       "group": "orchestration-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-12-5",
       "text": "Loop in the security agent before deployment",
       "label": "orchestration",
       "group": "orchestration-12",
-      "split": "train"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-13-1",
       "text": "Run workflow 7",
       "label": "orchestration",
       "group": "orchestration-13",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-13-2",
       "text": "Execute pipeline daily_sync",
       "label": "orchestration",
       "group": "orchestration-13",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-13-3",
       "text": "Start the agents",
       "label": "orchestration",
       "group": "orchestration-13",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-13-4",
       "text": "Lance le pipeline d'ingestion maintenant",
       "label": "orchestration",
       "group": "orchestration-13",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-13-5",
       "text": "Workflow shuru karo",
       "label": "orchestration",
       "group": "orchestration-13",
-      "split": "validation"
+      "split": "train",
+      "ambiguous": false
     },
     {
       "id": "orc-14-1",
       "text": "Search the policy docs and then run the approval workflow",
       "label": "orchestration",
       "group": "orchestration-14",
-      "split": "train"
+      "split": "test",
+      "ambiguous": true
     },
     {
       "id": "orc-14-2",
       "text": "Check the invoice and trigger the payment flow",
       "label": "orchestration",
       "group": "orchestration-14",
-      "split": "train"
+      "split": "test",
+      "ambiguous": true
     },
     {
       "id": "orc-14-3",
       "text": "Investigate the error and restart the pipeline",
       "label": "orchestration",
       "group": "orchestration-14",
-      "split": "train"
+      "split": "test",
+      "ambiguous": true
     },
     {
       "id": "orc-14-4",
       "text": "Look up the vendor, then start the onboarding workflow",
       "label": "orchestration",
       "group": "orchestration-14",
-      "split": "train"
+      "split": "test",
+      "ambiguous": true
     },
     {
       "id": "orc-14-5",
       "text": "Find the latest report and email it to the team automatically",
       "label": "orchestration",
       "group": "orchestration-14",
-      "split": "train"
+      "split": "test",
+      "ambiguous": true
     }
   ]
 }

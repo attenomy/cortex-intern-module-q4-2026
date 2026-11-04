@@ -419,6 +419,14 @@ DATA = {
 }
 
 N_TRAIN_GROUPS, N_VAL_GROUPS, N_TEST_GROUPS = 10, 2, 2
+HARD = 13  # index of the mixed / ambiguous group in every intent (14th group)
+# Ambiguous groups never go to train; they are used to calibrate and to test fallback.
+HARD_SPLIT = {
+    "finance": "validation",
+    "search": "validation",
+    "support": "test",
+    "orchestration": "test",
+}
 
 
 def build():
@@ -428,13 +436,15 @@ def build():
         assert len(groups) == 14, f"{intent}: expected 14 groups, got {len(groups)}"
         for g in groups:
             assert len(g) == 5, f"{intent}: every group needs 5 queries"
-        order = list(range(len(groups)))
+        # shuffle only the 13 normal groups; the ambiguous group is placed explicitly
+        order = [i for i in range(len(groups)) if i != HARD]
         rng.shuffle(order)
-        split_of = {}
+        n_val = N_VAL_GROUPS - (HARD_SPLIT[intent] == "validation")
+        split_of = {HARD: HARD_SPLIT[intent]}
         for pos, gi in enumerate(order):
             if pos < N_TRAIN_GROUPS:
                 split_of[gi] = "train"
-            elif pos < N_TRAIN_GROUPS + N_VAL_GROUPS:
+            elif pos < N_TRAIN_GROUPS + n_val:
                 split_of[gi] = "validation"
             else:
                 split_of[gi] = "test"
@@ -447,6 +457,7 @@ def build():
                         "label": intent,
                         "group": f"{intent}-{gi + 1:02d}",
                         "split": split_of[gi],
+                        "ambiguous": gi == HARD,
                     }
                 )
     return samples
@@ -464,6 +475,8 @@ def validate(samples):
     for s in samples:
         group_splits.setdefault(s["group"], set()).add(s["split"])
     assert all(len(v) == 1 for v in group_splits.values()), "group leaked across splits"
+    assert not any(s["ambiguous"] and s["split"] == "train" for s in samples), \
+        "ambiguous queries must not be in train"
 
 
 def summarize(samples):
@@ -480,22 +493,31 @@ def main():
     validate(samples)
     counts = summarize(samples)
     totals = {k: sum(v.values()) for k, v in counts.items()}
+    n_ambiguous = {
+        sp: sum(1 for s in samples if s["split"] == sp and s["ambiguous"])
+        for sp in totals
+    }
     doc = {
         "meta": {
             "ticket": "CTX-001",
             "seed": SEED,
             "labels": list(DATA.keys()),
             "total": len(samples),
-            "split_method": "grouped by topic, per intent: 10 train / 2 validation / 2 test groups",
+            "split_method": (
+                "grouped by topic, per intent: 10 train / 2 validation / 2 test groups; "
+                "the ambiguous group of each intent is held out of train "
+                "(finance, search -> validation; support, orchestration -> test)"
+            ),
             "split_totals": totals,
             "per_split_per_label": counts,
+            "ambiguous_per_split": n_ambiguous,
             "note": "Noise, gibberish and injection strings are NOT in this file; they are a separate stress set for tests.",
         },
         "samples": samples,
     }
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"wrote {out}  total={len(samples)}  splits={totals}")
+    print(f"wrote {out}  total={len(samples)}  splits={totals}  ambiguous={n_ambiguous}")
     for split, per in counts.items():
         print(f"  {split}: {per}")
 
