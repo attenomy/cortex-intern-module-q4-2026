@@ -2,3 +2,5 @@ fastapi>=0.109.0
 uvicorn>=0.27.0
 pydantic>=2.6.0
 numpy>=1.24.0
+onnxruntime>=1.17.0
+tokenizers>=0.15.0

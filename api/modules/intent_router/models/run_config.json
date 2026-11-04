@@ -1,0 +1,103 @@
+{
+  "config": {
+    "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+    "seed": 42,
+    "max_len": 64,
+    "batch_size": 16,
+    "epochs": 10,
+    "patience": 4,
+    "lr_encoder": 5e-05,
+    "lr_head": 0.001,
+    "weight_decay": 0.01,
+    "dropout": 0.1
+  },
+  "hardware": {
+    "device": "cuda",
+    "gpu": "Tesla T4",
+    "cpu_count": 2,
+    "ram_gb": 13.6,
+    "python": "3.13.16",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.22.0"
+  },
+  "best_epoch": 10,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.3499524307250976,
+      "val_loss": 1.002369004514566,
+      "val_acc": 0.8
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.7862661325931549,
+      "val_loss": 0.3844462570359184,
+      "val_acc": 0.9
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.25439996242523194,
+      "val_loss": 0.14890989033333885,
+      "val_acc": 0.9333333333333333
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.09644024923443795,
+      "val_loss": 0.09735780916520163,
+      "val_acc": 0.9333333333333333
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.019643095694482325,
+      "val_loss": 0.07817069090459723,
+      "val_acc": 0.9666666666666667
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.007261148951947689,
+      "val_loss": 0.07389813282672578,
+      "val_acc": 0.9666666666666667
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.004135154467076063,
+      "val_loss": 0.0738887699341006,
+      "val_acc": 0.9666666666666667
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.002803511433303356,
+      "val_loss": 0.07080967885838858,
+      "val_acc": 0.9666666666666667
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.0024685158208012582,
+      "val_loss": 0.0666610944652908,
+      "val_acc": 0.9666666666666667
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.0019845716562122105,
+      "val_loss": 0.06591739354511708,
+      "val_acc": 0.9666666666666667
+    }
+  ],
+  "val_clean": {
+    "argmax_acc": 0.9666666666666667,
+    "final_acc": 0.9666666666666667,
+    "fallback_rate": 0.0,
+    "mean_top1": 0.9817927217059468
+  },
+  "val_ambiguous": {
+    "argmax_acc": 0.9,
+    "final_acc": 0.8,
+    "fallback_rate": 0.1,
+    "mean_top1": 0.9470813432333507
+  },
+  "ood": {
+    "fallback_rate": 0.25,
+    "routed_to_search": 0.3333333333333333
+  },
+  "onnx_parity_max_abs_diff": 2.86102294921875e-06
+}
