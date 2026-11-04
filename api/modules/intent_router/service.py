@@ -11,6 +11,7 @@ per-request is stored on ``self``.
 import json
 import logging
 import os
+import threading
 import time
 from pathlib import Path
 from typing import Any
@@ -55,8 +56,24 @@ class SemanticRouter:
         self.max_len = 64
         self._session = None
         self._tokenizer = None
+        self._load_attempted = False
+        self._load_lock = threading.Lock()
 
     # ------------------------------------------------------------------ startup
+    def ensure_loaded(self) -> None:
+        """Safety net for callers that never ran the app lifespan (e.g. a plain
+        ``TestClient(app)``): load once on first use. Production loads at startup, so this
+        is a no-op there. A failed load is not retried on every request."""
+        if self.is_ready or self._load_attempted:
+            return
+        with self._load_lock:
+            if self.is_ready or self._load_attempted:
+                return
+            try:
+                self.load()
+            except Exception:
+                logger.exception("lazy model load failed; requests will get 503")
+
     def load(self) -> None:
         """Load model + tokenizer once, then warm up. Called from the router lifespan."""
         # Imported here so that importing this module never fails (and never breaks the
@@ -64,6 +81,7 @@ class SemanticRouter:
         import onnxruntime as ort
         from tokenizers import Tokenizer
 
+        self._load_attempted = True
         self.is_ready = False
         t0 = time.perf_counter()
         d = self.model_dir

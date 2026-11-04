@@ -28,6 +28,7 @@ router = APIRouter(prefix="/router", tags=["Intent Routing"], lifespan=lifespan)
 def route_query_endpoint(req: QueryRoutingRequest):
     if not req.query.strip():
         raise HTTPException(status_code=400, detail="Query string cannot be empty")
+    service.ensure_loaded()   # no-op once the lifespan has loaded the model
     try:
         return service.route_query(req.query, req.client_tier, req.max_routing_candidates)
     except ModelNotReady:
