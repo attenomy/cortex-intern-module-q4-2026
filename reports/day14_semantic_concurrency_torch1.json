@@ -1,0 +1,88 @@
+{
+  "run_id": "eacfeb83b0b7431f941967c1fff27498",
+  "timestamp_utc": "2026-11-05T02:25:23.147742+00:00",
+  "model_device": "cpu",
+  "threshold": 0.7,
+  "concurrency": {
+    "1": {
+      "requests": 20,
+      "median_ms": 18.526,
+      "p95_ms": 27.575,
+      "min_ms": 11.741,
+      "max_ms": 29.531,
+      "workers": 1,
+      "total_requests": 20,
+      "hits": 20,
+      "misses": 0,
+      "hit_rate_percent": 100.0,
+      "wall_time_seconds": 0.383,
+      "throughput_requests_per_second": 52.16,
+      "embedding_median_ms": 13.111,
+      "redis_median_ms": 3.394
+    },
+    "4": {
+      "requests": 80,
+      "median_ms": 41.7,
+      "p95_ms": 66.049,
+      "min_ms": 22.746,
+      "max_ms": 72.14,
+      "workers": 4,
+      "total_requests": 80,
+      "hits": 80,
+      "misses": 0,
+      "hit_rate_percent": 100.0,
+      "wall_time_seconds": 0.962,
+      "throughput_requests_per_second": 83.15,
+      "embedding_median_ms": 36.075,
+      "redis_median_ms": 5.565
+    },
+    "8": {
+      "requests": 160,
+      "median_ms": 270.692,
+      "p95_ms": 303.439,
+      "min_ms": 62.979,
+      "max_ms": 334.323,
+      "workers": 8,
+      "total_requests": 160,
+      "hits": 160,
+      "misses": 0,
+      "hit_rate_percent": 100.0,
+      "wall_time_seconds": 5.177,
+      "throughput_requests_per_second": 30.9,
+      "embedding_median_ms": 248.517,
+      "redis_median_ms": 19.544
+    },
+    "16": {
+      "requests": 320,
+      "median_ms": 472.221,
+      "p95_ms": 562.782,
+      "min_ms": 176.938,
+      "max_ms": 603.794,
+      "workers": 16,
+      "total_requests": 320,
+      "hits": 320,
+      "misses": 0,
+      "hit_rate_percent": 100.0,
+      "wall_time_seconds": 7.941,
+      "throughput_requests_per_second": 40.3,
+      "embedding_median_ms": 437.231,
+      "redis_median_ms": 27.779
+    }
+  },
+  "profiling": {},
+  "baseline": {
+    "elapsed_ms": 19.26815400020132,
+    "hit": true,
+    "score": 0.785749,
+    "timings": {
+      "exact_lookup_ms": 1.541,
+      "vsim_ms": 3.28,
+      "metadata_pipeline_ms": 1.091,
+      "similarity_calculation_ms": 0.187,
+      "counter_update_ms": 0.522,
+      "cleanup_ms": 0.0
+    },
+    "embedding_latency_ms": 12.28,
+    "redis_latency_ms": 6.434
+  }
+}

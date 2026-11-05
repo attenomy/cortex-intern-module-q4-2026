@@ -1,0 +1,64 @@
+{
+  "timestamp_utc": "2026-11-05T02:29:28.665777+00:00",
+  "device": "cpu",
+  "torch_intra_op_threads": 6,
+  "query_count": 96,
+  "trials": 3,
+  "experiments": {
+    "1": {
+      "batch_size": 1,
+      "trial_durations_ms": [
+        491.415,
+        476.48,
+        651.877
+      ],
+      "median_total_ms": 491.415,
+      "median_per_query_ms": 5.119,
+      "throughput_queries_per_second": 195.35
+    },
+    "4": {
+      "batch_size": 4,
+      "trial_durations_ms": [
+        409.849,
+        439.265,
+        378.879
+      ],
+      "median_total_ms": 409.849,
+      "median_per_query_ms": 4.269,
+      "throughput_queries_per_second": 234.23
+    },
+    "8": {
+      "batch_size": 8,
+      "trial_durations_ms": [
+        220.853,
+        239.158,
+        227.998
+      ],
+      "median_total_ms": 227.998,
+      "median_per_query_ms": 2.375,
+      "throughput_queries_per_second": 421.06
+    },
+    "16": {
+      "batch_size": 16,
+      "trial_durations_ms": [
+        203.167,
+        193.272,
+        194.113
+      ],
+      "median_total_ms": 194.113,
+      "median_per_query_ms": 2.022,
+      "throughput_queries_per_second": 494.56
+    },
+    "32": {
+      "batch_size": 32,
+      "trial_durations_ms": [
+        172.822,
+        181.281,
+        172.448
+      ],
+      "median_total_ms": 172.822,
+      "median_per_query_ms": 1.8,
+      "throughput_queries_per_second": 555.49
+    }
+  }
+}

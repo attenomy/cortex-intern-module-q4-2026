@@ -1,0 +1,133 @@
+{
+  "run_id": "1c2b72f1e5764ffda92c1de09920da7f",
+  "timestamp_utc": "2026-11-05T01:34:25.345415+00:00",
+  "experiments": {
+    "0.7": {
+      "requests": 30,
+      "median_ms": 9.535,
+      "p95_ms": 11.311,
+      "min_ms": 8.271,
+      "max_ms": 11.948,
+      "threshold": 0.7,
+      "hits": 30,
+      "hit_rate_percent": 100.0,
+      "semantic_similarity_score": 0.785749
+    },
+    "0.75": {
+      "requests": 30,
+      "median_ms": 8.719,
+      "p95_ms": 11.459,
+      "min_ms": 7.378,
+      "max_ms": 11.901,
+      "threshold": 0.75,
+      "hits": 30,
+      "hit_rate_percent": 100.0,
+      "semantic_similarity_score": 0.785749
+    },
+    "0.8": {
+      "requests": 30,
+      "median_ms": 9.411,
+      "p95_ms": 11.033,
+      "min_ms": 7.604,
+      "max_ms": 11.79,
+      "threshold": 0.8,
+      "hits": 0,
+      "hit_rate_percent": 0.0,
+      "semantic_similarity_score": 0.785749
+    },
+    "0.85": {
+      "requests": 30,
+      "median_ms": 9.619,
+      "p95_ms": 11.316,
+      "min_ms": 7.204,
+      "max_ms": 13.447,
+      "threshold": 0.85,
+      "hits": 0,
+      "hit_rate_percent": 0.0,
+      "semantic_similarity_score": 0.785749
+    },
+    "0.9": {
+      "requests": 30,
+      "median_ms": 9.814,
+      "p95_ms": 10.858,
+      "min_ms": 8.729,
+      "max_ms": 13.792,
+      "threshold": 0.9,
+      "hits": 0,
+      "hit_rate_percent": 0.0,
+      "semantic_similarity_score": 0.785749
+    },
+    "0.95": {
+      "requests": 30,
+      "median_ms": 9.746,
+      "p95_ms": 11.247,
+      "min_ms": 8.024,
+      "max_ms": 13.229,
+      "threshold": 0.95,
+      "hits": 0,
+      "hit_rate_percent": 0.0,
+      "semantic_similarity_score": 0.785749
+    }
+  },
+  "concurrency": {
+    "1": {
+      "requests": 100,
+      "median_ms": 0.42,
+      "p95_ms": 0.713,
+      "min_ms": 0.336,
+      "max_ms": 0.969,
+      "workers": 1,
+      "total_requests": 100,
+      "wall_time_seconds": 0.047,
+      "throughput_requests_per_second": 2130.32
+    },
+    "4": {
+      "requests": 400,
+      "median_ms": 1.12,
+      "p95_ms": 1.985,
+      "min_ms": 0.399,
+      "max_ms": 4.781,
+      "workers": 4,
+      "total_requests": 400,
+      "wall_time_seconds": 0.127,
+      "throughput_requests_per_second": 3143.09
+    },
+    "8": {
+      "requests": 800,
+      "median_ms": 2.216,
+      "p95_ms": 4.458,
+      "min_ms": 0.367,
+      "max_ms": 9.407,
+      "workers": 8,
+      "total_requests": 800,
+      "wall_time_seconds": 0.253,
+      "throughput_requests_per_second": 3157.79
+    },
+    "16": {
+      "requests": 1600,
+      "median_ms": 4.382,
+      "p95_ms": 9.329,
+      "min_ms": 0.303,
+      "max_ms": 27.61,
+      "workers": 16,
+      "total_requests": 1600,
+      "wall_time_seconds": 0.504,
+      "throughput_requests_per_second": 3172.68
+    }
+  },
+  "memory": {
+    "requests": 5000,
+    "before_current_bytes": 0,
+    "after_current_bytes": 58,
+    "net_growth_bytes": 58,
+    "peak_traced_bytes": 76855
+  },
+  "profiling": {
+    "requests": 1000,
+    "median_ms": 0.507,
+    "p95_ms": 0.633,
+    "min_ms": 0.364,
+    "max_ms": 0.971,
+    "profile_file": "../reports/day14_cprofile.txt"
+  }
+}
