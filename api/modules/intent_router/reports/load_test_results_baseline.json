@@ -1,0 +1,66 @@
+{
+  "mode": "baseline",
+  "settings": {},
+  "hardware": {
+    "python": "3.12.10",
+    "os": "Windows-11-10.0.26300-SP0",
+    "cpu": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+    "logical_cpus": 12,
+    "ram_gb": 16.8,
+    "onnxruntime": "1.31.1"
+  },
+  "server_peak_rss_mb": 59.92448,
+  "levels": [
+    {
+      "concurrency": 1,
+      "requests": 2000,
+      "status_codes": {
+        "200": 2000
+      },
+      "throughput_rps": 1085.3729390044746,
+      "client": {
+        "n": 2000,
+        "p50": 0.7775500416755676,
+        "p90": 1.2134400429204106,
+        "p95": 1.3749999925494194,
+        "p99": 1.6364730044733733,
+        "max": 9.55780001822859
+      },
+      "server": null
+    },
+    {
+      "concurrency": 10,
+      "requests": 2000,
+      "status_codes": {
+        "200": 2000
+      },
+      "throughput_rps": 1966.1184702027301,
+      "client": {
+        "n": 2000,
+        "p50": 4.761349991895258,
+        "p90": 5.362279969267547,
+        "p95": 5.787775060161947,
+        "p99": 13.02596899564378,
+        "max": 14.94939997792244
+      },
+      "server": null
+    },
+    {
+      "concurrency": 50,
+      "requests": 2000,
+      "status_codes": {
+        "200": 2000
+      },
+      "throughput_rps": 2097.608212630516,
+      "client": {
+        "n": 2000,
+        "p50": 21.033150085713714,
+        "p90": 24.666380009148277,
+        "p95": 41.23080993886105,
+        "p99": 68.71621205937117,
+        "max": 72.28820002637804
+      },
+      "server": null
+    }
+  ]
+}

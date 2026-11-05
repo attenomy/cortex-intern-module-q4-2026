@@ -58,6 +58,7 @@ class SemanticRouter:
         self._tokenizer = None
         self._load_attempted = False
         self._load_lock = threading.Lock()
+        self._gate = None          # optional cap on concurrent inferences (INTENT_ROUTER_MAX_CONCURRENCY)
 
     # ------------------------------------------------------------------ startup
     def ensure_loaded(self) -> None:
@@ -101,6 +102,11 @@ class SemanticRouter:
         opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
         opts.intra_op_num_threads = int(os.getenv("INTENT_ROUTER_THREADS", min(4, os.cpu_count() or 1)))
         opts.inter_op_num_threads = 1
+        if os.getenv("INTENT_ROUTER_SPIN", "1") == "0":
+            # ORT's worker threads busy-wait by default; turning that off can help when many requests overlap
+            opts.add_session_config_entry("session.intra_op.allow_spinning", "0")
+        max_conc = int(os.getenv("INTENT_ROUTER_MAX_CONCURRENCY", "0"))   # 0 = unlimited (default)
+        self._gate = threading.BoundedSemaphore(max_conc) if max_conc > 0 else None
         session = ort.InferenceSession(
             str(d / "model.onnx"), sess_options=opts, providers=["CPUExecutionProvider"]
         )
@@ -122,7 +128,12 @@ class SemanticRouter:
         enc = self._tokenizer.encode(query)          # truncated to max_len tokens
         ids = np.asarray([enc.ids], dtype=np.int64)
         mask = np.asarray([enc.attention_mask], dtype=np.int64)
-        out = self._session.run(["logits"], {"input_ids": ids, "attention_mask": mask})[0]
+        feeds = {"input_ids": ids, "attention_mask": mask}
+        if self._gate is None:
+            out = self._session.run(["logits"], feeds)[0]
+        else:                                           # extra requests wait here instead of oversubscribing the CPU
+            with self._gate:
+                out = self._session.run(["logits"], feeds)[0]
         return np.asarray(out[0], dtype=np.float64)
 
     def route_query(self, query: str, client_tier: str = "Enterprise", max_candidates: int = 3) -> dict[str, Any]:

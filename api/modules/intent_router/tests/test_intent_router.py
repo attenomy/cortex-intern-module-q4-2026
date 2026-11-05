@@ -237,6 +237,19 @@ def test_ensure_loaded_does_not_retry_after_a_failed_load(tmp_path, monkeypatch)
     assert router.is_ready is False
 
 
+@pytest.mark.parametrize("flags", [{"INTENT_ROUTER_MAX_CONCURRENCY": "2"}, {"INTENT_ROUTER_SPIN": "0"}])
+def test_performance_flags_do_not_change_decisions(ready_client, monkeypatch, flags):
+    for key, value in flags.items():
+        monkeypatch.setenv(key, value)
+    router = SemanticRouter()
+    router.load()
+    got, expected = router.route_query(FINANCE_Q), service.route_query(FINANCE_Q)
+    got.pop("latency_ms")
+    expected.pop("latency_ms")
+    assert got == expected                                   # tuning flags change speed, never answers
+    assert (router._gate is not None) == ("INTENT_ROUTER_MAX_CONCURRENCY" in flags)
+
+
 def test_non_finite_logits_fall_back(ready_client, monkeypatch):
     monkeypatch.setattr(service, "_logits", lambda q: np.array([np.nan, 1.0, 2.0, 3.0]))
     res = post(ready_client, "anything")
