@@ -1,0 +1,8 @@
+
+# SROIE dataset
+data/sroie/sroie.zip
+data/sroie/extracted/
+data/sroie/processed/
+
+# Unverified model weights
+modules/doc_extractor/models/*.pth
