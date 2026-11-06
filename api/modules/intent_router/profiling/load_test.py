@@ -11,6 +11,9 @@ Modes
   --inprocess    no HTTP: N threads call SemanticRouter.route_query directly (the model-serving core)
 Options
   --threads K    INTENT_ROUTER_THREADS (ONNX intra-op threads)
+  --workers N    uvicorn worker processes (each loads its own copy of the model)
+  --seconds S    closed loop for S seconds per level instead of a fixed request count
+                 (e.g. --levels 50 --seconds 60 = "50 concurrent requests over 60 seconds")
   --env K=V ...  any other environment variable for the server / router, e.g.
                  --env INTENT_ROUTER_MAX_CONCURRENCY=2 --env INTENT_ROUTER_SPIN=0
 
@@ -43,12 +46,13 @@ PORT = 8765
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
-def start_server(app_target, cwd, env_extra):
+def start_server(app_target, cwd, env_extra, workers=1):
     env = dict(os.environ)
     env.update(env_extra)
-    return subprocess.Popen(
-        [sys.executable, "-m", "uvicorn", app_target, "--host", "127.0.0.1", "--port", str(PORT), "--log-level", "warning"],
-        cwd=cwd, env=env)
+    cmd = [sys.executable, "-m", "uvicorn", app_target, "--host", "127.0.0.1", "--port", str(PORT), "--log-level", "warning"]
+    if workers > 1:
+        cmd += ["--workers", str(workers)]          # each worker process loads its own copy of the model
+    return subprocess.Popen(cmd, cwd=cwd, env=env)
 
 
 def wait_ready(url, timeout=120):
@@ -122,6 +126,25 @@ async def run_level_http(url, concurrency, total, pool):
     return summarize(concurrency, total, wall, client_ms, server_ms, codes)
 
 
+async def run_timed_http(url, concurrency, seconds, pool):
+    """Closed loop for a fixed time (e.g. 50 clients for 60 s)."""
+    client_ms, server_ms, codes = [], [], {}
+    counter = {"i": 0}
+    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(limit=concurrency),
+                                     timeout=aiohttp.ClientTimeout(total=120)) as session:
+        deadline = time.perf_counter() + seconds
+
+        async def worker():
+            while time.perf_counter() < deadline:
+                i = counter["i"]
+                counter["i"] += 1
+                await post(session, url, pool[i % len(pool)], codes, client_ms, server_ms, time.perf_counter())
+        t0 = time.perf_counter()
+        await asyncio.gather(*(worker() for _ in range(concurrency)))
+        wall = time.perf_counter() - t0
+    return summarize(concurrency, counter["i"], wall, client_ms, server_ms, codes)
+
+
 async def run_rate_http(url, rate, duration, pool):
     client_ms, server_ms, codes = [], [], {}
     total = int(rate * duration)
@@ -175,6 +198,8 @@ def main():
     ap.add_argument("--requests", type=int, default=2000, help="requests per concurrency level")
     ap.add_argument("--rates", type=int, nargs="+", default=None, help="open-loop test at these req/s (HTTP modes)")
     ap.add_argument("--duration", type=int, default=10, help="seconds per rate for --rates")
+    ap.add_argument("--seconds", type=int, default=None, help="closed loop: run each concurrency level for this many seconds")
+    ap.add_argument("--workers", type=int, default=1, help="uvicorn worker processes (each loads the model)")
     mode = ap.add_mutually_exclusive_group()
     mode.add_argument("--baseline", action="store_true", help="web stack without the model")
     mode.add_argument("--inprocess", action="store_true", help="threads call route_query directly (no HTTP)")
@@ -200,7 +225,7 @@ def main():
     else:
         target, cwd, path = ("baseline_app:app", HERE, "/echo") if args.baseline else ("main:app", str(API_DIR), "/api/v1/router")
         url = f"http://127.0.0.1:{PORT}{path}"
-        server = start_server(target, cwd, env_extra)
+        server = start_server(target, cwd, env_extra, args.workers)
         try:
             if not wait_ready(url):
                 sys.exit("server did not become ready (is the model in api/modules/intent_router/models/ ?)")
@@ -214,7 +239,10 @@ def main():
             else:
                 for c in args.levels:
                     asyncio.run(run_level_http(url, c, 300, pool))                    # warm-up, not reported
-                    results.append(asyncio.run(run_level_http(url, c, args.requests, pool)))
+                    if args.seconds:
+                        results.append(asyncio.run(run_timed_http(url, c, args.seconds, pool)))
+                    else:
+                        results.append(asyncio.run(run_level_http(url, c, args.requests, pool)))
             sampler.stop = True
             peak_mb = sampler.peak / 1e6
         finally:
@@ -234,13 +262,15 @@ def main():
         body += (f"| {lead} | {fmt(r['client'], 'p50')} | {fmt(r['client'], 'p90')} | {fmt(r['client'], 'p95')} | "
                  f"{fmt(r['client'], 'p99')} | {fmt(r['server'], 'p50')} | {fmt(r['server'], 'p95')} | {bad} |\n")
     settings = ", ".join(f"{k}={v}" for k, v in env_extra.items()) or "defaults"
+    if args.workers > 1:
+        settings += f", workers={args.workers}"
     md = (f"# Load test results ({name}{', open-loop' if open_loop else ''})\n\nHardware: `{json.dumps(hardware())}`\n\n"
-          f"settings: {settings} | " + (f"{args.duration} s per rate | " if open_loop else f"{args.requests} requests per level | ")
+          f"settings: {settings} | " + (f"{args.duration} s per rate | " if open_loop else (f"{args.seconds} s per level | " if args.seconds else f"{args.requests} requests per level | "))
           + "~5% of requests are 10,000-character payloads | all times in ms\n\n" + hdr + body)
     if peak_mb is not None:
         md += f"\nServer peak RSS (process tree): {peak_mb:.0f} MB\n"
     tags = "".join("_" + k.replace("INTENT_ROUTER_", "").lower() + v for k, v in env_extra.items())
-    suffix = ("" if name == "http" else f"_{name}") + ("_openloop" if open_loop else "") + tags
+    suffix = ("" if name == "http" else f"_{name}") + ("_openloop" if open_loop else "") + (f"_workers{args.workers}" if args.workers > 1 else "") + tags
     (REPORTS / f"load_test_results{suffix}.md").write_text(md, encoding="utf-8")
     (REPORTS / f"load_test_results{suffix}.json").write_text(
         json.dumps({"mode": name, "settings": env_extra, "hardware": hardware(), "server_peak_rss_mb": peak_mb, "levels": results}, indent=2),

@@ -1,0 +1,39 @@
+{
+  "mode": "http",
+  "settings": {},
+  "hardware": {
+    "python": "3.12.10",
+    "os": "Windows-11-10.0.26300-SP0",
+    "cpu": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+    "logical_cpus": 12,
+    "ram_gb": 16.8,
+    "onnxruntime": "1.31.1"
+  },
+  "server_peak_rss_mb": 611.913728,
+  "levels": [
+    {
+      "concurrency": 50,
+      "requests": 38937,
+      "status_codes": {
+        "200": 38937
+      },
+      "throughput_rps": 648.3943897668855,
+      "client": {
+        "n": 38937,
+        "p50": 71.9773001037538,
+        "p90": 110.56970001664013,
+        "p95": 127.60316000785677,
+        "p99": 169.9073000019416,
+        "max": 818.0631999857724
+      },
+      "server": {
+        "n": 38937,
+        "p50": 12.948,
+        "p90": 42.0794,
+        "p95": 59.424799999999976,
+        "p99": 98.02931999999998,
+        "max": 436.182
+      }
+    }
+  ]
+}

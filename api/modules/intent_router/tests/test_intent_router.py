@@ -18,7 +18,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from main import app
-from modules.intent_router.router import service
+from modules.intent_router.router import metrics, service
 from modules.intent_router.service import ModelNotReady, SemanticRouter
 
 URL = "/api/v1/router"
@@ -237,7 +237,8 @@ def test_ensure_loaded_does_not_retry_after_a_failed_load(tmp_path, monkeypatch)
     assert router.is_ready is False
 
 
-@pytest.mark.parametrize("flags", [{"INTENT_ROUTER_MAX_CONCURRENCY": "2"}, {"INTENT_ROUTER_SPIN": "0"}])
+@pytest.mark.parametrize("flags", [{"INTENT_ROUTER_MAX_CONCURRENCY": "2"}, {"INTENT_ROUTER_SPIN": "0"},
+                                   {"INTENT_ROUTER_MODEL_FILE": "model.onnx"}])
 def test_performance_flags_do_not_change_decisions(ready_client, monkeypatch, flags):
     for key, value in flags.items():
         monkeypatch.setenv(key, value)
@@ -268,3 +269,53 @@ def test_fallback_threshold_boundary(ready_client, monkeypatch, top, expect_fall
     result = service.route_query("x")
     assert result["fallback_triggered"] is expect_fallback
     assert result["intent_category"] == ("search" if expect_fallback else "finance")
+
+
+# ---- metrics endpoint (Prometheus text format)
+def metric_value(text, line_start):
+    line = next(l for l in text.splitlines() if l.startswith(line_start))
+    return float(line.rsplit(" ", 1)[1])
+
+
+def test_metrics_count_routed_fallback_and_bad_requests(ready_client, monkeypatch):
+    def snapshot():
+        text = ready_client.get("/api/v1/router/metrics").text
+        return {name: metric_value(text, f'cortex_intent_router_requests_total{{outcome="{name}"}}')
+                for name in ("routed", "fallback", "bad_request")}
+
+    before = snapshot()
+    monkeypatch.setattr(service, "_logits", lambda q: np.array([5.0, 0.0, 0.0, 0.0]))   # confident -> routed
+    post(ready_client, FINANCE_Q)
+    monkeypatch.setattr(service, "_logits", lambda q: np.zeros(4))                        # flat -> fallback
+    post(ready_client, FINANCE_Q)
+    post(ready_client, "   ")                                                            # blank -> 400
+    after = snapshot()
+    assert after["routed"] == before["routed"] + 1
+    assert after["fallback"] == before["fallback"] + 1
+    assert after["bad_request"] == before["bad_request"] + 1
+
+
+def test_metrics_output_is_valid_prometheus_text(ready_client):
+    post(ready_client, FINANCE_Q)
+    res = ready_client.get("/api/v1/router/metrics")
+    assert res.status_code == 200
+    assert res.headers["content-type"].startswith("text/plain")
+    text = res.text
+    assert "cortex_intent_router_model_ready 1" in text
+    # histogram: cumulative buckets never decrease and +Inf equals _count
+    bucket_values = [float(l.rsplit(" ", 1)[1]) for l in text.splitlines()
+                     if l.startswith("cortex_intent_router_latency_ms_bucket")]
+    assert bucket_values == sorted(bucket_values)
+    assert bucket_values[-1] == metric_value(text, "cortex_intent_router_latency_ms_count")
+
+
+def test_metrics_count_not_ready_requests(client, monkeypatch):
+    def not_ready_total():
+        return metric_value(client.get("/api/v1/router/metrics").text, 'cortex_intent_router_requests_total{outcome="not_ready"}')
+
+    before = not_ready_total()
+    monkeypatch.setattr(service, "is_ready", False)
+    assert post(client, FINANCE_Q).status_code == 503
+    monkeypatch.setattr(service, "is_ready", True)
+    assert not_ready_total() == before + 1
+    metrics.render(True)                                  # rendering twice must not change anything

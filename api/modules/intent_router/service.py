@@ -108,7 +108,7 @@ class SemanticRouter:
         max_conc = int(os.getenv("INTENT_ROUTER_MAX_CONCURRENCY", "0"))   # 0 = unlimited (default)
         self._gate = threading.BoundedSemaphore(max_conc) if max_conc > 0 else None
         session = ort.InferenceSession(
-            str(d / "model.onnx"), sess_options=opts, providers=["CPUExecutionProvider"]
+            str(d / os.getenv("INTENT_ROUTER_MODEL_FILE", "model.onnx")), sess_options=opts, providers=["CPUExecutionProvider"]
         )
         if {i.name for i in session.get_inputs()} != {"input_ids", "attention_mask"}:
             raise ValueError("unexpected ONNX inputs; re-export the model")
