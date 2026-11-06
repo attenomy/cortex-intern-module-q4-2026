@@ -30,6 +30,8 @@ import argparse
 import asyncio
 import json
 import os
+import re
+import socket
 import subprocess
 import sys
 import threading
@@ -55,9 +57,33 @@ def start_server(app_target, cwd, env_extra, workers=1):
     return subprocess.Popen(cmd, cwd=cwd, env=env)
 
 
-def wait_ready(url, timeout=120):
+def port_in_use(port):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.settimeout(1)
+        return sock.connect_ex(("127.0.0.1", port)) == 0
+
+
+def kill_tree(proc):
+    """Kill the server AND all its children. On Windows, terminate() on the parent leaves uvicorn worker
+    processes running, and they keep the port occupied for the next run."""
+    try:
+        parent = psutil.Process(proc.pid)
+        victims = parent.children(recursive=True) + [parent]
+    except psutil.Error:
+        return
+    for p in victims:
+        try:
+            p.kill()
+        except psutil.Error:
+            pass
+    psutil.wait_procs(victims, timeout=15)
+
+
+def wait_ready(url, server, timeout=120):
     t0 = time.time()
     while time.time() - t0 < timeout:
+        if server.poll() is not None:                 # the new server exited (e.g. port already in use)
+            return False
         try:
             if httpx.post(url, json={"query": "warm up"}, timeout=5).status_code == 200:
                 return True
@@ -86,7 +112,10 @@ class RssSampler(threading.Thread):
 
     def run(self):
         while not self.stop:
-            self.peak = max(self.peak, tree_rss(self.proc))
+            try:
+                self.peak = max(self.peak, tree_rss(self.proc))
+            except psutil.Error:
+                return
             time.sleep(0.2)
 
 
@@ -225,9 +254,13 @@ def main():
     else:
         target, cwd, path = ("baseline_app:app", HERE, "/echo") if args.baseline else ("main:app", str(API_DIR), "/api/v1/router")
         url = f"http://127.0.0.1:{PORT}{path}"
+        if port_in_use(PORT):
+            sys.exit(f"Port {PORT} is already in use, probably by a server left over from an earlier run. Results would come "
+                     f"from that old server, not this one. Stop it first:\n"
+                     f"  Get-NetTCPConnection -LocalPort {PORT} | ForEach-Object {{ Stop-Process -Id $_.OwningProcess -Force }}")
         server = start_server(target, cwd, env_extra, args.workers)
         try:
-            if not wait_ready(url):
+            if not wait_ready(url, server):
                 sys.exit("server did not become ready (is the model in api/modules/intent_router/models/ ?)")
             sampler = RssSampler(server.pid)
             sampler.start()
@@ -246,8 +279,7 @@ def main():
             sampler.stop = True
             peak_mb = sampler.peak / 1e6
         finally:
-            server.terminate()
-            server.wait(timeout=20)
+            kill_tree(server)
 
     if open_loop:
         hdr = ("| target req/s | achieved req/s | peak in flight | client p50 | p90 | p95 | p99 | server p50 | p95 | non-200 |\n"
@@ -269,7 +301,8 @@ def main():
           + "~5% of requests are 10,000-character payloads | all times in ms\n\n" + hdr + body)
     if peak_mb is not None:
         md += f"\nServer peak RSS (process tree): {peak_mb:.0f} MB\n"
-    tags = "".join("_" + k.replace("INTENT_ROUTER_", "").lower() + v for k, v in env_extra.items())
+    tags = "".join("_" + k.replace("INTENT_ROUTER_", "").lower() + re.sub(r"[^A-Za-z0-9]+", "", os.path.splitext(v)[0])
+                   for k, v in env_extra.items())
     suffix = ("" if name == "http" else f"_{name}") + ("_openloop" if open_loop else "") + (f"_workers{args.workers}" if args.workers > 1 else "") + tags
     (REPORTS / f"load_test_results{suffix}.md").write_text(md, encoding="utf-8")
     (REPORTS / f"load_test_results{suffix}.json").write_text(
