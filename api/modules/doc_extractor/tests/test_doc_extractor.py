@@ -2,11 +2,10 @@ import base64
 import io
 from unittest.mock import patch
 
-from PIL import Image
 from fastapi.testclient import TestClient
-
 from main import app
 from modules.doc_extractor.router import service
+from PIL import Image
 
 client = TestClient(app)
 
@@ -88,4 +87,4 @@ def test_extract_invalid_base64():
 
     response = client.post("/api/v1/extract", json=payload)
 
-    assert response.status_code == 422    
+    assert response.status_code == 422

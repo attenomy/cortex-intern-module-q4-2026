@@ -1,9 +1,9 @@
 import os
-from typing import Protocol, Any
+from typing import Any, Protocol
 
 import pytesseract
-from pytesseract import Output
 from PIL import Image
+from pytesseract import Output
 
 
 class OCRProvider(Protocol):

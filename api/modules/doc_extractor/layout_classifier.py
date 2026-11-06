@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 from torchvision import models
 
-
 DOCUMENT_CLASSES = [
     "invoice",
     "receipt",

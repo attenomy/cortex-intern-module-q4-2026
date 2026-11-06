@@ -1,9 +1,7 @@
 from pathlib import Path
 
 import torch
-
 from modules.doc_extractor.layout_classifier import build_classifier
-
 
 MODEL_PATH = Path(__file__).parent / "models" / "document_classifier.pth"
 

@@ -1,6 +1,5 @@
 import pytest
 import torch
-
 from modules.doc_extractor.layout_classifier import build_classifier
 from modules.doc_extractor.model_loader import load_document_model
 

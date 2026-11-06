@@ -4,12 +4,12 @@ from typing import Any
 import pytesseract
 from fastapi import HTTPException
 
-from .image_utils import decode_document_image
 from .entity_extractor import (
     extract_invoice_entities,
     extract_invoice_entities_with_confidence,
 )
 from .entity_validator import validate_invoice_entities
+from .image_utils import decode_document_image
 from .ocr import OCRProvider, TesseractOCR
 
 
@@ -38,7 +38,6 @@ class DocumentExtractor:
                 ocr_data = self.ocr.extract_text_with_confidence(image)
 
                 extracted_text = ocr_data.get("text", "")
-                ocr_words = ocr_data.get("words", [])
 
             else:
                 extracted_text = raw_content.strip()
@@ -48,7 +47,6 @@ class DocumentExtractor:
                     "words": [],
                 }
 
-                ocr_words = []
 
             # Step 2: Extract entities
             if doc_type == "invoice":
@@ -65,10 +63,7 @@ class DocumentExtractor:
                     entities = extract_invoice_entities(extracted_text)
 
                     # Plain text has no OCR confidence scores.
-                    entity_confidence = {
-                        field: None
-                        for field in entities
-                    }
+                    entity_confidence = dict.fromkeys(entities)
 
                 # Step 3: Validate extracted entities
                 (

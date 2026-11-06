@@ -1,5 +1,4 @@
 import torch
-
 from modules.doc_extractor.layout_classifier import (
     DOCUMENT_CLASSES,
     build_classifier,

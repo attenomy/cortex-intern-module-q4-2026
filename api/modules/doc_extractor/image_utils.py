@@ -2,9 +2,8 @@ import base64
 import binascii
 import io
 
-from PIL import Image, UnidentifiedImageError
 from fastapi import HTTPException
-
+from PIL import Image, UnidentifiedImageError
 
 SUPPORTED_FORMATS = {"JPEG", "PNG", "WEBP"}
 

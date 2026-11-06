@@ -1,9 +1,8 @@
 from unittest.mock import patch
 
+from modules.doc_extractor.ocr import TesseractOCR
 from PIL import Image
 from pytesseract import Output
-
-from modules.doc_extractor.ocr import TesseractOCR
 
 
 def test_tesseract_ocr_extracts_text():

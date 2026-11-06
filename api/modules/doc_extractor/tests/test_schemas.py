@@ -1,11 +1,10 @@
 import pytest
-from pydantic import ValidationError
-
 from modules.doc_extractor.schemas import (
     BoundingBox,
     LayoutRegion,
     RegionType,
 )
+from pydantic import ValidationError
 
 
 def test_valid_bounding_box():
