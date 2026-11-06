@@ -27,3 +27,12 @@ Thumbs.db
 *.swp
 *.swo
 
+
+# Hugging Face cache
+.hf_cache/
+**/.hf_cache/
+
+# Generated document datasets
+**/data/raw/
+**/data/processed/
+**/dataset_manifest.backup.json

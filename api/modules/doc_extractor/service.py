@@ -3,6 +3,7 @@ from typing import Any
 
 import pytesseract
 from fastapi import HTTPException
+from torchvision import transforms
 
 from .entity_extractor import (
     extract_invoice_entities,
@@ -10,6 +11,7 @@ from .entity_extractor import (
 )
 from .entity_validator import validate_invoice_entities
 from .image_utils import decode_document_image
+from .layout_classifier import predict_document
 from .ocr import OCRProvider, TesseractOCR
 
 
@@ -19,6 +21,10 @@ class DocumentExtractor:
     def __init__(self, ocr_provider: OCRProvider | None = None):
         self.ocr = ocr_provider or TesseractOCR()
         self.is_ready = True
+        self.classifier = None
+
+    def set_classifier(self, model):
+        self.classifier = model
 
     def extract_document(
         self,
@@ -34,6 +40,20 @@ class DocumentExtractor:
             # Step 1: Extract document text
             if is_image:
                 image = decode_document_image(raw_content)
+
+                if self.classifier is not None:
+                    preprocess = transforms.Compose([
+                        transforms.Resize((224, 224)),
+                        transforms.ToTensor(),
+                        transforms.Normalize(
+                            mean=[0.485, 0.456, 0.406],
+                            std=[0.229, 0.224, 0.225],
+                        ),
+                    ])
+                    prediction = predict_document(
+                        self.classifier, preprocess(image.convert('RGB')).unsqueeze(0)
+                    )
+                    doc_type = prediction['document_type']
 
                 ocr_data = self.ocr.extract_text_with_confidence(image)
 
