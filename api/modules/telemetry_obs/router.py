@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from fastapi.responses import PlainTextResponse
+
 from .schemas import HealthResponse
 from .service import TelemetryService
 

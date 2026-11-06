@@ -1,12 +1,13 @@
 import time
-from typing import Dict, Any
+from typing import Any
+
 
 class TelemetryService:
     """Telemetry, Prometheus metrics and drift monitoring service."""
     def __init__(self):
         self.start_time = time.time()
 
-    def get_health(self, is_model_ready: bool = True) -> Dict[str, Any]:
+    def get_health(self, is_model_ready: bool = True) -> dict[str, Any]:
         return {
             "status": "healthy",
             "service": "attenomy-cortex-engine",

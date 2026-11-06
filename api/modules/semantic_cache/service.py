@@ -6,9 +6,9 @@ import secrets
 import threading
 import time
 import uuid
-
+from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Any, Dict, Optional, Iterator
+from typing import Any
 
 import numpy as np
 import redis
@@ -17,7 +17,7 @@ import redis
 class SemanticCacheService:
     """Redis-backed semantic cache with distributed query locking."""
 
-    def __init__(self, redis_url: Optional[str] = None):
+    def __init__(self, redis_url: str | None = None):
         self.redis_url = redis_url or os.getenv(
             "REDIS_URL",
             "redis://localhost:6379/0"
@@ -106,10 +106,10 @@ class SemanticCacheService:
     def acquire_query_lock(
         self,
         query: str,
-        ttl_seconds: Optional[int] = None,
-        wait_timeout_seconds: Optional[float] = None,
-        poll_interval_seconds: Optional[float] = None
-    ) -> Optional[str]:
+        ttl_seconds: int | None = None,
+        wait_timeout_seconds: float | None = None,
+        poll_interval_seconds: float | None = None
+    ) -> str | None:
         """
         Acquire a distributed Redis lock for a normalized query.
 
@@ -233,9 +233,9 @@ class SemanticCacheService:
     def query_lock(
         self,
         query: str,
-        ttl_seconds: Optional[int] = None,
-        wait_timeout_seconds: Optional[float] = None,
-        poll_interval_seconds: Optional[float] = None
+        ttl_seconds: int | None = None,
+        wait_timeout_seconds: float | None = None,
+        poll_interval_seconds: float | None = None
     ) -> Iterator[bool]:
         """
         Context manager for distributed query coordination.
@@ -318,6 +318,15 @@ class SemanticCacheService:
 
         return vector
 
+    def warm_up(self) -> None:
+        """
+        Load the embedding model and execute a sample inference.
+        Does not create or modify Redis cache entries.
+        """
+        self._embed(
+            "Attenomy Cortex semantic cache startup warm-up"
+        )
+
     # --------------------------------------------------
     # EMPTY RESULT
     # --------------------------------------------------
@@ -327,8 +336,8 @@ class SemanticCacheService:
         latency_ms: float,
         embedding_latency_ms: float = 0.0,
         redis_latency_ms: float = 0.0,
-        timings: Optional[Dict[str, float]] = None
-    ) -> Dict[str, Any]:
+        timings: dict[str, float] | None = None
+    ) -> dict[str, Any]:
 
         result = {
             "hit": False,
@@ -353,7 +362,7 @@ class SemanticCacheService:
         self,
         query: str,
         threshold: float = 0.95
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
 
         started = time.perf_counter()
 
@@ -510,7 +519,8 @@ class SemanticCacheService:
 
             for entry_id, metadata_json in zip(
                 entry_ids,
-                metadata_jsons
+                metadata_jsons,
+                strict=True,
             ):
 
                 try:
@@ -688,8 +698,8 @@ class SemanticCacheService:
     def store(
         self,
         query: str,
-        payload: Dict[str, Any],
-        ttl_seconds: Optional[int] = None
+        payload: dict[str, Any],
+        ttl_seconds: int | None = None
     ) -> None:
 
         query = query.strip()
@@ -789,7 +799,7 @@ class SemanticCacheService:
     # CACHE STATISTICS
     # --------------------------------------------------
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
 
         try:
             total_entries = sum(

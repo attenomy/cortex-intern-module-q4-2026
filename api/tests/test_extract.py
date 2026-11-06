@@ -1,4 +1,3 @@
-import pytest
 
 def test_extract_valid_invoice_payload(client):
     payload = {

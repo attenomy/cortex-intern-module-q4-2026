@@ -5,7 +5,6 @@ from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 import pytest
-
 from modules.semantic_cache.service import SemanticCacheService
 
 

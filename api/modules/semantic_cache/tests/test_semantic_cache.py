@@ -1,10 +1,7 @@
 
-import pytest
 from fastapi.testclient import TestClient
-
 from main import app
 from modules.semantic_cache.router import service
-
 
 client = TestClient(app)
 

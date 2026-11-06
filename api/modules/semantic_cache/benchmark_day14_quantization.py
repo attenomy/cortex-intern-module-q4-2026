@@ -3,9 +3,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
-
 from modules.semantic_cache.service import SemanticCacheService
-
 
 service = SemanticCacheService()
 model = service._get_model()

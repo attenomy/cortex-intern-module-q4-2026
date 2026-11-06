@@ -5,9 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import torch
-
 from modules.semantic_cache.service import SemanticCacheService
-
 
 BATCH_SIZES = [1, 4, 8, 16, 32]
 QUERY_COUNT = 96
@@ -53,7 +51,7 @@ results = {
 for batch_size in BATCH_SIZES:
     durations = []
 
-    for trial in range(TRIALS):
+    for _trial in range(TRIALS):
         started = time.perf_counter()
 
         vectors = model.encode(

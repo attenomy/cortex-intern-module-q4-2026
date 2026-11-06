@@ -1,4 +1,3 @@
-import pytest
 
 def test_router_finance_intent(client):
     payload = {

@@ -1,9 +1,13 @@
-import time
-import uuid
 import hashlib
 import re
-from typing import Dict, Any, List, Tuple
-from .schemas import DocumentIngestRequest, DocumentIngestResponse, DocumentChunk, IngestionSourceType
+import time
+import uuid
+
+from .schemas import (
+    DocumentChunk,
+    DocumentIngestRequest,
+    DocumentIngestResponse,
+)
 
 PROMPT_INJECTION_PATTERNS = [
     re.compile(r"ignore\s+(all\s+)?previous\s+instructions", re.IGNORECASE),
@@ -19,7 +23,7 @@ class AsyncDocumentIngestionService:
     def __init__(self):
         self.is_healthy = True
 
-    def sanitize_payload(self, text: str) -> Tuple[str, List[str]]:
+    def sanitize_payload(self, text: str) -> tuple[str, list[str]]:
         sanitization_flags = []
         cleaned_text = text
 
@@ -33,8 +37,8 @@ class AsyncDocumentIngestionService:
 
         return cleaned_text, sanitization_flags
 
-    def chunk_text(self, text: str, chunk_size: int, chunk_overlap: int) -> List[DocumentChunk]:
-        chunks: List[DocumentChunk] = []
+    def chunk_text(self, text: str, chunk_size: int, chunk_overlap: int) -> list[DocumentChunk]:
+        chunks: list[DocumentChunk] = []
         step = chunk_size - chunk_overlap
         if step <= 0:
             step = chunk_size

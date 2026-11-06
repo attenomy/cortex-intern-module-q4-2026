@@ -1,5 +1,7 @@
+from typing import Any
+
 from pydantic import BaseModel, Field
-from typing import Dict, Any
+
 
 class DocumentExtractionRequest(BaseModel):
     document_id: str = Field(..., description="Unique document identifier")
@@ -8,7 +10,7 @@ class DocumentExtractionRequest(BaseModel):
 
 class ExtractionResponse(BaseModel):
     document_id: str
-    extracted_fields: Dict[str, Any]
+    extracted_fields: dict[str, Any]
     schema_valid: bool
     latency_ms: float
 

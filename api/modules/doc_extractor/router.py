@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+
 from .schemas import DocumentExtractionRequest, ExtractionResponse
 from .service import DocumentExtractor
 

@@ -1,6 +1,6 @@
-import time
 import random
-from typing import Dict, Any
+import time
+from typing import Any
 
 INTENT_MAPPINGS = {
     "finance": ("invoice_extraction_pipeline", ["invoice", "total", "billing", "payment", "vat", "receipt"]),
@@ -14,14 +14,14 @@ class SemanticRouter:
     def __init__(self):
         self.is_ready = True
 
-    def route_query(self, query: str, client_tier: str = "Enterprise") -> Dict[str, Any]:
+    def route_query(self, query: str, client_tier: str = "Enterprise") -> dict[str, Any]:
         t0 = time.perf_counter()
         query_lower = query.lower()
 
         matched_intent = "search"
         highest_score = 0.50
 
-        for intent, (pipeline, keywords) in INTENT_MAPPINGS.items():
+        for intent, (_pipeline, keywords) in INTENT_MAPPINGS.items():
             matches = sum(1 for kw in keywords if kw in query_lower)
             if matches > 0:
                 score = min(0.98, 0.65 + matches * 0.12)

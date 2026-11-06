@@ -1,7 +1,7 @@
 
-from typing import Any, Dict, Optional
+from typing import Any
 
-from pydantic import BaseModel, Field, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class CacheLookupRequest(BaseModel):
@@ -15,12 +15,12 @@ class CacheStoreRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     query: str = Field(...)
-    payload: Dict[str, Any]
-    ttl_seconds: Optional[int] = Field(default=None, gt=0)
+    payload: dict[str, Any]
+    ttl_seconds: int | None = Field(default=None, gt=0)
 
     @field_validator("payload")
     @classmethod
-    def validate_payload(cls, value: Dict[str, Any]) -> Dict[str, Any]:
+    def validate_payload(cls, value: dict[str, Any]) -> dict[str, Any]:
         if not value:
             raise ValueError("Payload cannot be empty")
         return value
@@ -28,13 +28,13 @@ class CacheStoreRequest(BaseModel):
 
 class CacheLookupResponse(BaseModel):
     hit: bool
-    matched_query: Optional[str] = None
+    matched_query: str | None = None
     similarity_score: float
-    cached_payload: Optional[Dict[str, Any]] = None
+    cached_payload: dict[str, Any] | None = None
     latency_ms: float
     embedding_latency_ms: float = 0.0
     redis_latency_ms: float = 0.0
-    timings: Optional[Dict[str, float]] = None
+    timings: dict[str, float] | None = None
 
 
 class CacheStoreResponse(BaseModel):

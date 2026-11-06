@@ -3,15 +3,12 @@ import statistics
 import threading
 import time
 import uuid
-
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
 import torch
-
 from modules.semantic_cache.service import SemanticCacheService
-
 
 RUN_ID = uuid.uuid4().hex
 PREFIX = f"bench:ctx003:semantic:{RUN_ID}:"
@@ -109,7 +106,7 @@ try:
         per_worker = 20
         barrier = threading.Barrier(workers)
 
-        def worker(worker_id):
+        def worker(worker_id, barrier=barrier, per_worker=per_worker):
             samples = []
 
             barrier.wait()

@@ -1,5 +1,7 @@
+from typing import Any
+
 from pydantic import BaseModel, Field
-from typing import List, Dict, Optional, Any
+
 
 class QueryRoutingRequest(BaseModel):
     query: str = Field(..., description="User search query or agent input prompt")
@@ -20,7 +22,7 @@ class DocumentExtractionRequest(BaseModel):
 
 class ExtractionResponse(BaseModel):
     document_id: str
-    extracted_fields: Dict[str, Any]
+    extracted_fields: dict[str, Any]
     schema_valid: bool
     latency_ms: float
 

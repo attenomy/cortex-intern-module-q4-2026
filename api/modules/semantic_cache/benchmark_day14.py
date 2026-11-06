@@ -7,13 +7,11 @@ import threading
 import time
 import tracemalloc
 import uuid
-
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
 from modules.semantic_cache.service import SemanticCacheService
-
 
 RUN_ID = uuid.uuid4().hex
 PREFIX = f"bench:ctx003:{RUN_ID}:"
@@ -147,7 +145,7 @@ try:
         per_worker = 100
         barrier = threading.Barrier(workers)
 
-        def worker():
+        def worker(barrier=barrier, per_worker=per_worker):
             barrier.wait()
             return [exact_request() for _ in range(per_worker)]
 

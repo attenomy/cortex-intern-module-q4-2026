@@ -3,12 +3,11 @@ from fastapi import APIRouter, HTTPException
 from .schemas import (
     CacheLookupRequest,
     CacheLookupResponse,
+    CacheStatsResponse,
     CacheStoreRequest,
     CacheStoreResponse,
-    CacheStatsResponse,
 )
 from .service import SemanticCacheService
-
 
 router = APIRouter(
     prefix="/cache",
