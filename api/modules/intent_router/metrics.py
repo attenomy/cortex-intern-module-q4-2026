@@ -49,7 +49,7 @@ class RouterMetrics:
         out += ["# HELP cortex_intent_router_latency_ms Router execution time in milliseconds (latency_ms field)",
                 "# TYPE cortex_intent_router_latency_ms histogram"]
         running = 0
-        for upper, n in zip(LATENCY_BUCKETS_MS, buckets):
+        for upper, n in zip(LATENCY_BUCKETS_MS, buckets, strict=False):
             running += n
             out.append(f'cortex_intent_router_latency_ms_bucket{{le="{upper}"}} {running}')
         out += [f'cortex_intent_router_latency_ms_bucket{{le="+Inf"}} {count}',
