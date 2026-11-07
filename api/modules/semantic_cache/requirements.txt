@@ -1,0 +1,2 @@
+redis>=5.0,<7
+sentence-transformers>=3.0,<7
