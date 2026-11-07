@@ -1,0 +1,114 @@
+{
+  "dataset_provenance": "Synthetic - generated locally; original public dataset sources unverified",
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.1026,
+      "train_accuracy": 0.9816,
+      "train_macro_f1": 0.9816,
+      "val_loss": 1.1981,
+      "val_accuracy": 0.75,
+      "val_macro_f1": 0.6667,
+      "lr": 9.045084971874738e-05
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.0,
+      "train_accuracy": 1.0,
+      "train_macro_f1": 1.0,
+      "val_loss": 1.1344,
+      "val_accuracy": 0.75,
+      "val_macro_f1": 0.6667,
+      "lr": 6.545084971874737e-05
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.0,
+      "train_accuracy": 1.0,
+      "train_macro_f1": 1.0,
+      "val_loss": 1.1658,
+      "val_accuracy": 0.75,
+      "val_macro_f1": 0.6667,
+      "lr": 3.454915028125263e-05
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.0,
+      "train_accuracy": 1.0,
+      "train_macro_f1": 1.0,
+      "val_loss": 1.148,
+      "val_accuracy": 0.75,
+      "val_macro_f1": 0.6667,
+      "lr": 9.549150281252631e-06
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.0,
+      "train_accuracy": 1.0,
+      "train_macro_f1": 1.0,
+      "val_loss": 0.9574,
+      "val_accuracy": 0.75,
+      "val_macro_f1": 0.6667,
+      "lr": 0.0
+    }
+  ],
+  "best_val_macro_f1": 0.6667,
+  "test_metrics": {
+    "accuracy": 0.75,
+    "macro_f1": 0.6667,
+    "macro_precision": 0.625,
+    "macro_recall": 0.75,
+    "confusion_matrix": [
+      [
+        54,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        54,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        54,
+        0
+      ],
+      [
+        0,
+        54,
+        0,
+        0
+      ]
+    ],
+    "per_class": {
+      "invoice": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 54
+      },
+      "receipt": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6667,
+        "support": 54
+      },
+      "contract": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 54
+      },
+      "purchase_order": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 54
+      }
+    }
+  }
+}

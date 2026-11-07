@@ -1,26 +1,49 @@
-import os
+﻿import os
 import sys
+from contextlib import asynccontextmanager
 
+import torch
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# Ensure API directory is accessible in sys.path
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
-
-from modules.doc_extractor.router import router as doc_extractor_router
+from modules.doc_extractor.model_loader import load_document_model
+from modules.doc_extractor.router import (
+    router as doc_extractor_router,
+)
+from modules.doc_extractor.router import (
+    service as doc_extractor_service,
+)
 from modules.doc_ingestion.router import router as doc_ingestion_router
 from modules.intent_router.router import router as intent_router
 from modules.semantic_cache.router import router as semantic_cache_router
 from modules.telemetry_obs.router import router as telemetry_router
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    model = load_document_model()
+    try:
+        model.eval()
+        with torch.inference_mode():
+            model(torch.zeros(1, 3, 224, 224))
+    except Exception as exc:
+        raise RuntimeError(
+            f"Document classifier warm-up failed: {exc}"
+        ) from exc
+    doc_extractor_service.set_classifier(model)
+    app.state.document_classifier = model
+    yield
+    doc_extractor_service.set_classifier(None)
+    app.state.document_classifier = None
 app = FastAPI(
     title="Attenomy Cortex Engine API",
     description="Enterprise Autonomous Multi-Agent Orchestration & Cognitive Knowledge Retrieval Engine",
-    version="1.0.0"
+    version="1.0.0",
+    lifespan=lifespan,
 )
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -28,14 +51,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Mount Modular Routers
 app.include_router(intent_router, prefix="/api/v1")
 app.include_router(doc_extractor_router, prefix="/api/v1")
 app.include_router(semantic_cache_router, prefix="/api/v1")
 app.include_router(doc_ingestion_router, prefix="/api/v1")
 app.include_router(telemetry_router)
-
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
