@@ -45,3 +45,19 @@ def test_adapt_sroie_empty_entity_lists():
 def test_adapt_sroie_rejects_invalid_record():
     with pytest.raises(TypeError):
         adapt_sroie_entities("invalid")
+
+@pytest.mark.parametrize(
+    "amount",
+    ["", "NaN", "Infinity", "-Infinity"]
+)
+def test_adapt_sroie_rejects_non_finite_or_empty_amount(amount):
+    result = adapt_sroie_entities({
+        "entities": {"total": [amount]}
+    })
+
+    assert result["net_amount"] is None
+
+
+def test_adapt_sroie_rejects_non_dictionary_entities():
+    with pytest.raises(ValueError):
+        adapt_sroie_entities({"entities": "invalid"})

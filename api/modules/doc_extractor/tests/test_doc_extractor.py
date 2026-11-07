@@ -2,6 +2,7 @@ import base64
 import io
 from unittest.mock import patch
 
+import pytesseract
 from fastapi.testclient import TestClient
 from main import app
 from modules.doc_extractor.router import service
@@ -201,3 +202,36 @@ def test_plain_text_extraction_has_no_classifier_metadata():
     assert fields["predicted_doc_type"] is None
     assert fields["classification_confidence"] is None
     assert fields["validation_warnings"] == []
+
+def test_ocr_unavailable_returns_503():
+    payload = {
+        "document_id": "ocr_error_001",
+        "document_type": "invoice",
+        "image_base64": create_test_image_base64()
+    }
+
+    with patch.object(
+        service.ocr,
+        "extract_text_with_confidence",
+        side_effect=pytesseract.TesseractNotFoundError()
+    ):
+        response = client.post("/api/v1/extract", json=payload)
+
+    assert response.status_code == 503
+
+
+def test_ocr_processing_failure_returns_500():
+    payload = {
+        "document_id": "ocr_error_002",
+        "document_type": "invoice",
+        "image_base64": create_test_image_base64()
+    }
+
+    with patch.object(
+        service.ocr,
+        "extract_text_with_confidence",
+        side_effect=pytesseract.TesseractError(1, "OCR failed")
+    ):
+        response = client.post("/api/v1/extract", json=payload)
+
+    assert response.status_code == 500
