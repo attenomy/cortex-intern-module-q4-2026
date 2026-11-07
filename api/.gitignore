@@ -6,3 +6,6 @@ data/sroie/processed/
 
 # Unverified model weights
 modules/doc_extractor/models/*.pth
+
+# Generated local SROIE evaluation data
+modules/doc_extractor/data/real_sroie/

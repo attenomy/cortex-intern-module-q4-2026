@@ -2,8 +2,7 @@ CTX-002: Cognitive Document Entity Extractor & Layout Classifier
 Module: api/modules/doc_extractor/
 API endpoint: POST /api/v1/extract
 Branch: feature/CTX-002-doc-extractor
-Status: Specification updated with mentor-confirmed decisions;
-implementation pending.
+Status: Core implementation and test evidence prepared; acceptance validation remains incomplete.
 1. Problem Statement
 The current document extraction module in api/modules/doc_extractor/
 returns a mocked JSON response instead of performing actual document

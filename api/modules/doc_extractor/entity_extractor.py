@@ -18,7 +18,7 @@ def extract_invoice_entities(ocr_text: str) -> dict[str, Any]:
 
     # Extract invoice number
     invoice_match = re.search(
-        r"(?:invoice\s*(?:no|number|#)\s*[:.]?\s*)"
+        r"(?:inv(?:oice)?\s*(?:no\.?|number|#)\s*[:.]?\s*)"
         r"([A-Z0-9][A-Z0-9/-]*)",
         text,
         re.IGNORECASE,
@@ -72,20 +72,24 @@ def extract_invoice_entities(ocr_text: str) -> dict[str, Any]:
         text,
         re.IGNORECASE,
     )
-
     if vendor_match:
         vendor_name = vendor_match.group(1).strip()
-
-    elif lines:
-        first_line = lines[0]
-
-        if not re.search(
-            r"invoice|receipt|purchase order|tax invoice",
-            first_line,
+    else:
+        heading_match = re.search(
+            r"^([A-Z][A-Z0-9&.,' -]+?)\s+(?:COMMERCIAL\s+)?INVOICE\b",
+            text,
             re.IGNORECASE,
-        ):
-            vendor_name = first_line
-
+        )
+        if heading_match:
+            vendor_name = heading_match.group(1).strip()
+        elif lines:
+            first_line = lines[0]
+            if not re.search(
+                r"invoice|receipt|purchase order|tax invoice",
+                first_line,
+                re.IGNORECASE,
+            ):
+                vendor_name = first_line
     return {
         "vendor_name": vendor_name,
         "invoice_number": invoice_number,

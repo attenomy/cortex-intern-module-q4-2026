@@ -13,6 +13,7 @@ from .entity_validator import validate_invoice_entities
 from .image_utils import decode_document_image
 from .layout_classifier import predict_document
 from .ocr import OCRProvider, TesseractOCR
+from .region_detector import detect_layout_regions
 
 
 class DocumentExtractor:
@@ -35,6 +36,10 @@ class DocumentExtractor:
     ) -> dict[str, Any]:
 
         start_time = time.perf_counter()
+        requested_doc_type = doc_type
+        predicted_doc_type = None
+        classification_confidence = None
+        validation_warnings = []
 
         try:
             # Step 1: Extract document text
@@ -51,13 +56,27 @@ class DocumentExtractor:
                         ),
                     ])
                     prediction = predict_document(
-                        self.classifier, preprocess(image.convert('RGB')).unsqueeze(0)
+                        self.classifier,
+                        preprocess(image.convert("RGB")).unsqueeze(0),
                     )
-                    doc_type = prediction['document_type']
+                    predicted_doc_type = prediction["document_type"]
+                    classification_confidence = prediction["confidence"]
+                    if predicted_doc_type != requested_doc_type:
+                        validation_warnings.append(
+                            f"Requested document type '{requested_doc_type}' "
+                            f"does not match classifier prediction "
+                            f"'{predicted_doc_type}'"
+                        )
+                    doc_type = predicted_doc_type
 
                 ocr_data = self.ocr.extract_text_with_confidence(image)
 
                 extracted_text = ocr_data.get("text", "")
+                detected_regions = detect_layout_regions(
+                    ocr_data.get("words", []),
+                    image.width,
+                    image.height,
+                )
 
             else:
                 extracted_text = raw_content.strip()
@@ -66,6 +85,7 @@ class DocumentExtractor:
                     "text": extracted_text,
                     "words": [],
                 }
+                detected_regions = []
 
 
             # Step 2: Extract entities
@@ -126,10 +146,18 @@ class DocumentExtractor:
             "document_id": doc_id,
             "extracted_fields": {
                 "doc_type": doc_type,
+                "requested_doc_type": requested_doc_type,
+                "predicted_doc_type": predicted_doc_type,
+                "classification_confidence": classification_confidence,
+                "validation_warnings": validation_warnings,
                 "ocr_text": extracted_text,
                 "extracted_entities": entities,
                 "entity_confidence": entity_confidence,
                 "validation_errors": validation_errors,
+                "detected_regions": [
+                    region.model_dump()
+                    for region in detected_regions
+                ],
             },
             "schema_valid": schema_valid,
             "latency_ms": elapsed_ms,

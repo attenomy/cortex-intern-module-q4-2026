@@ -247,7 +247,7 @@ def train_model(
         # Checkpoint best model based on validation macro F1
         if val_metrics["macro_f1"] > best_val_f1:
             best_val_f1 = val_metrics["macro_f1"]
-            best_weights = model.state_dict().copy()
+            best_weights = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
 
     # Load best weights for final evaluation
     if best_weights:

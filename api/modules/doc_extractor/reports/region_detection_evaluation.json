@@ -1,0 +1,2974 @@
+{
+  "dataset": "SROIE",
+  "split": "test",
+  "total_documents": 337,
+  "processed": 337,
+  "errors": 0,
+  "region_detection_counts": {
+    "header": 148,
+    "line_item_table": 148,
+    "totals_block": 314
+  },
+  "detection_rate": {
+    "header": 43.92,
+    "line_item_table": 43.92,
+    "totals_block": 93.18
+  },
+  "latency_ms": {
+    "median": 747.37,
+    "p95": 3568.62,
+    "mean": 1124.81
+  },
+  "errors_detail": [],
+  "document_results": [
+    {
+      "document_id": "X00016469670",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 96,
+      "latency_ms": 576.04
+    },
+    {
+      "document_id": "X00016469671",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 91,
+      "latency_ms": 424.19
+    },
+    {
+      "document_id": "X51005200931",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 151,
+      "latency_ms": 658.7
+    },
+    {
+      "document_id": "X51005230605",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 91,
+      "latency_ms": 599.96
+    },
+    {
+      "document_id": "X51005230616",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 132,
+      "latency_ms": 753.29
+    },
+    {
+      "document_id": "X51005230621",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 112,
+      "latency_ms": 749.39
+    },
+    {
+      "document_id": "X51005230648",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 85,
+      "latency_ms": 540.89
+    },
+    {
+      "document_id": "X51005230657",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 120,
+      "latency_ms": 606.46
+    },
+    {
+      "document_id": "X51005230659",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 80,
+      "latency_ms": 582.0
+    },
+    {
+      "document_id": "X51005268275",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 212,
+      "latency_ms": 1290.24
+    },
+    {
+      "document_id": "X51005268408",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 90,
+      "latency_ms": 875.32
+    },
+    {
+      "document_id": "X51005288570",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 68,
+      "latency_ms": 446.44
+    },
+    {
+      "document_id": "X51005337867",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 127,
+      "latency_ms": 707.39
+    },
+    {
+      "document_id": "X51005337877",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 108,
+      "latency_ms": 545.04
+    },
+    {
+      "document_id": "X51005361906",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 138,
+      "latency_ms": 859.04
+    },
+    {
+      "document_id": "X51005361908",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 87,
+      "latency_ms": 908.36
+    },
+    {
+      "document_id": "X51005361912",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 125,
+      "latency_ms": 899.52
+    },
+    {
+      "document_id": "X51005361923",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 83,
+      "latency_ms": 1283.29
+    },
+    {
+      "document_id": "X51005365187",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 170,
+      "latency_ms": 929.27
+    },
+    {
+      "document_id": "X51005433518",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 89,
+      "latency_ms": 446.75
+    },
+    {
+      "document_id": "X51005433543",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 91,
+      "latency_ms": 434.06
+    },
+    {
+      "document_id": "X51005433548",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 87,
+      "latency_ms": 465.82
+    },
+    {
+      "document_id": "X51005433556",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 112,
+      "latency_ms": 535.87
+    },
+    {
+      "document_id": "X51005442322",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 159,
+      "latency_ms": 673.82
+    },
+    {
+      "document_id": "X51005442334",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 91,
+      "latency_ms": 485.08
+    },
+    {
+      "document_id": "X51005442343",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 93,
+      "latency_ms": 504.77
+    },
+    {
+      "document_id": "X51005442366",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 71,
+      "latency_ms": 433.47
+    },
+    {
+      "document_id": "X51005442375",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 88,
+      "latency_ms": 454.88
+    },
+    {
+      "document_id": "X51005442382",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 83,
+      "latency_ms": 420.7
+    },
+    {
+      "document_id": "X51005442388",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 57,
+      "latency_ms": 380.55
+    },
+    {
+      "document_id": "X51005444040",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 111,
+      "latency_ms": 712.21
+    },
+    {
+      "document_id": "X51005444041",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 142,
+      "latency_ms": 837.37
+    },
+    {
+      "document_id": "X51005444044",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 65,
+      "latency_ms": 411.38
+    },
+    {
+      "document_id": "X51005444046",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 132,
+      "latency_ms": 730.86
+    },
+    {
+      "document_id": "X51005447841",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 119,
+      "latency_ms": 844.56
+    },
+    {
+      "document_id": "X51005447842",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 93,
+      "latency_ms": 689.09
+    },
+    {
+      "document_id": "X51005447844",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 139,
+      "latency_ms": 755.86
+    },
+    {
+      "document_id": "X51005447851",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 92,
+      "latency_ms": 693.52
+    },
+    {
+      "document_id": "X51005447859",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 93,
+      "latency_ms": 663.42
+    },
+    {
+      "document_id": "X51005568855",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 230,
+      "latency_ms": 1424.68
+    },
+    {
+      "document_id": "X51005568866",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 183,
+      "latency_ms": 1115.74
+    },
+    {
+      "document_id": "X51005568885",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 83,
+      "latency_ms": 599.82
+    },
+    {
+      "document_id": "X51005568887",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 96,
+      "latency_ms": 675.89
+    },
+    {
+      "document_id": "X51005568889",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 111,
+      "latency_ms": 728.36
+    },
+    {
+      "document_id": "X51005568890",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 111,
+      "latency_ms": 786.21
+    },
+    {
+      "document_id": "X51005568892",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 89,
+      "latency_ms": 618.58
+    },
+    {
+      "document_id": "X51005568894",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 179,
+      "latency_ms": 956.59
+    },
+    {
+      "document_id": "X51005568895",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 158,
+      "latency_ms": 940.0
+    },
+    {
+      "document_id": "X51005577191",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 30,
+      "latency_ms": 455.28
+    },
+    {
+      "document_id": "X51005582745",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 115,
+      "latency_ms": 862.34
+    },
+    {
+      "document_id": "X51005587261",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 124,
+      "latency_ms": 824.05
+    },
+    {
+      "document_id": "X51005605287",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 93,
+      "latency_ms": 563.27
+    },
+    {
+      "document_id": "X51005605295",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 107,
+      "latency_ms": 553.22
+    },
+    {
+      "document_id": "X51005605332",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 105,
+      "latency_ms": 710.83
+    },
+    {
+      "document_id": "X51005621482",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 179,
+      "latency_ms": 679.42
+    },
+    {
+      "document_id": "X51005663274",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 104,
+      "latency_ms": 667.7
+    },
+    {
+      "document_id": "X51005663300",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 106,
+      "latency_ms": 640.02
+    },
+    {
+      "document_id": "X51005663307",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 154,
+      "latency_ms": 899.06
+    },
+    {
+      "document_id": "X51005663309",
+      "regions": [],
+      "word_count": 2,
+      "latency_ms": 560.13
+    },
+    {
+      "document_id": "X51005663310",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 111,
+      "latency_ms": 662.76
+    },
+    {
+      "document_id": "X51005663323",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 76,
+      "latency_ms": 701.16
+    },
+    {
+      "document_id": "X51005675099",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 112,
+      "latency_ms": 701.7
+    },
+    {
+      "document_id": "X51005675103",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 129,
+      "latency_ms": 801.59
+    },
+    {
+      "document_id": "X51005675104",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 122,
+      "latency_ms": 749.67
+    },
+    {
+      "document_id": "X51005675914",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 150,
+      "latency_ms": 1000.72
+    },
+    {
+      "document_id": "X51005676534",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 136,
+      "latency_ms": 802.4
+    },
+    {
+      "document_id": "X51005676535",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 123,
+      "latency_ms": 754.68
+    },
+    {
+      "document_id": "X51005676537",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 121,
+      "latency_ms": 761.97
+    },
+    {
+      "document_id": "X51005676542",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 112,
+      "latency_ms": 790.57
+    },
+    {
+      "document_id": "X51005676548",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 124,
+      "latency_ms": 765.32
+    },
+    {
+      "document_id": "X51005677327",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 115,
+      "latency_ms": 724.42
+    },
+    {
+      "document_id": "X51005677333",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 135,
+      "latency_ms": 884.98
+    },
+    {
+      "document_id": "X51005677336",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 111,
+      "latency_ms": 732.78
+    },
+    {
+      "document_id": "X51005677337",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 120,
+      "latency_ms": 1082.54
+    },
+    {
+      "document_id": "X510056849111",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 70,
+      "latency_ms": 443.88
+    },
+    {
+      "document_id": "X51005705727",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 123,
+      "latency_ms": 975.69
+    },
+    {
+      "document_id": "X51005705729",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 133,
+      "latency_ms": 1014.34
+    },
+    {
+      "document_id": "X51005705784",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 161,
+      "latency_ms": 1045.07
+    },
+    {
+      "document_id": "X51005710963",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 90,
+      "latency_ms": 681.96
+    },
+    {
+      "document_id": "X51005711402",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 95,
+      "latency_ms": 658.88
+    },
+    {
+      "document_id": "X51005711443",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 86,
+      "latency_ms": 587.95
+    },
+    {
+      "document_id": "X51005711444",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 71,
+      "latency_ms": 534.06
+    },
+    {
+      "document_id": "X51005711446",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 80,
+      "latency_ms": 573.31
+    },
+    {
+      "document_id": "X51005711449",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 89,
+      "latency_ms": 581.19
+    },
+    {
+      "document_id": "X51005715007",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 117,
+      "latency_ms": 543.95
+    },
+    {
+      "document_id": "X51005715455",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 83,
+      "latency_ms": 445.72
+    },
+    {
+      "document_id": "X51005719823",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 109,
+      "latency_ms": 808.88
+    },
+    {
+      "document_id": "X51005719855",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 100,
+      "latency_ms": 692.52
+    },
+    {
+      "document_id": "X51005719857",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 93,
+      "latency_ms": 722.96
+    },
+    {
+      "document_id": "X51005719863",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 374.36
+    },
+    {
+      "document_id": "X51005719888",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 97,
+      "latency_ms": 630.35
+    },
+    {
+      "document_id": "X51005719889",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 114,
+      "latency_ms": 819.8
+    },
+    {
+      "document_id": "X51005719895",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 159,
+      "latency_ms": 923.77
+    },
+    {
+      "document_id": "X51005719898",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 108,
+      "latency_ms": 744.74
+    },
+    {
+      "document_id": "X51005719903",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 86,
+      "latency_ms": 635.32
+    },
+    {
+      "document_id": "X51005719905",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 120,
+      "latency_ms": 754.45
+    },
+    {
+      "document_id": "X51005724552",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 128,
+      "latency_ms": 788.32
+    },
+    {
+      "document_id": "X51005724611",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 118,
+      "latency_ms": 738.05
+    },
+    {
+      "document_id": "X51005724622",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 141,
+      "latency_ms": 897.73
+    },
+    {
+      "document_id": "X51005724623",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 145,
+      "latency_ms": 884.86
+    },
+    {
+      "document_id": "X51005724624",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 142,
+      "latency_ms": 910.95
+    },
+    {
+      "document_id": "X51005724625",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 142,
+      "latency_ms": 921.94
+    },
+    {
+      "document_id": "X51005724626",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 153,
+      "latency_ms": 887.19
+    },
+    {
+      "document_id": "X51005724628",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 132,
+      "latency_ms": 861.7
+    },
+    {
+      "document_id": "X51005741929",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 116,
+      "latency_ms": 628.65
+    },
+    {
+      "document_id": "X51005742110",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 71,
+      "latency_ms": 499.49
+    },
+    {
+      "document_id": "X51005745213",
+      "regions": [],
+      "word_count": 33,
+      "latency_ms": 412.34
+    },
+    {
+      "document_id": "X51005745244",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 93,
+      "latency_ms": 596.98
+    },
+    {
+      "document_id": "X51005745298",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 99,
+      "latency_ms": 594.65
+    },
+    {
+      "document_id": "X51005746203",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 206,
+      "latency_ms": 949.71
+    },
+    {
+      "document_id": "X51005746204",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 104,
+      "latency_ms": 573.12
+    },
+    {
+      "document_id": "X51005746206",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 110,
+      "latency_ms": 628.34
+    },
+    {
+      "document_id": "X51005746207",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 170,
+      "latency_ms": 806.52
+    },
+    {
+      "document_id": "X51005746210",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 204,
+      "latency_ms": 853.55
+    },
+    {
+      "document_id": "X51005749904",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 325.39
+    },
+    {
+      "document_id": "X51005757233",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 107,
+      "latency_ms": 728.76
+    },
+    {
+      "document_id": "X51005757282",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 114,
+      "latency_ms": 775.52
+    },
+    {
+      "document_id": "X51005757292",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 90,
+      "latency_ms": 660.3
+    },
+    {
+      "document_id": "X51005757308",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 143,
+      "latency_ms": 938.85
+    },
+    {
+      "document_id": "X51005757342",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 106,
+      "latency_ms": 714.75
+    },
+    {
+      "document_id": "X51005763958",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 123,
+      "latency_ms": 641.64
+    },
+    {
+      "document_id": "X51005763964",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 71,
+      "latency_ms": 483.07
+    },
+    {
+      "document_id": "X51005763999",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 180,
+      "latency_ms": 815.26
+    },
+    {
+      "document_id": "X51005764031",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 152,
+      "latency_ms": 747.37
+    },
+    {
+      "document_id": "X51005764154",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 128,
+      "latency_ms": 667.97
+    },
+    {
+      "document_id": "X51005764161",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 87,
+      "latency_ms": 506.23
+    },
+    {
+      "document_id": "X51005806692",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 179,
+      "latency_ms": 1164.8
+    },
+    {
+      "document_id": "X51005806695",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 123,
+      "latency_ms": 743.86
+    },
+    {
+      "document_id": "X51005806696",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 80,
+      "latency_ms": 571.55
+    },
+    {
+      "document_id": "X51005806718",
+      "regions": [
+        "header",
+        "line_item_table"
+      ],
+      "word_count": 110,
+      "latency_ms": 780.74
+    },
+    {
+      "document_id": "X51005806719",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 127,
+      "latency_ms": 927.93
+    },
+    {
+      "document_id": "X51005806720",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 119,
+      "latency_ms": 829.61
+    },
+    {
+      "document_id": "X51006008081",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 121,
+      "latency_ms": 754.04
+    },
+    {
+      "document_id": "X51006008082",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 173,
+      "latency_ms": 1022.17
+    },
+    {
+      "document_id": "X51006008083",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 134,
+      "latency_ms": 835.04
+    },
+    {
+      "document_id": "X51006008090",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 137,
+      "latency_ms": 992.95
+    },
+    {
+      "document_id": "X51006008092",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 150,
+      "latency_ms": 948.39
+    },
+    {
+      "document_id": "X51006008093",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 113,
+      "latency_ms": 912.94
+    },
+    {
+      "document_id": "X51006008105",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 115,
+      "latency_ms": 777.71
+    },
+    {
+      "document_id": "X51006008166",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 89,
+      "latency_ms": 705.29
+    },
+    {
+      "document_id": "X51006008206",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 78,
+      "latency_ms": 574.68
+    },
+    {
+      "document_id": "X51006248253",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 87,
+      "latency_ms": 679.04
+    },
+    {
+      "document_id": "X51006311714",
+      "regions": [],
+      "word_count": 58,
+      "latency_ms": 629.69
+    },
+    {
+      "document_id": "X51006327953",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 98,
+      "latency_ms": 494.31
+    },
+    {
+      "document_id": "X51006327960",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 86,
+      "latency_ms": 523.02
+    },
+    {
+      "document_id": "X51006328345",
+      "regions": [],
+      "word_count": 75,
+      "latency_ms": 492.07
+    },
+    {
+      "document_id": "X51006329183",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 155,
+      "latency_ms": 843.2
+    },
+    {
+      "document_id": "X51006332641",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 54,
+      "latency_ms": 432.84
+    },
+    {
+      "document_id": "X51006334139",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 86,
+      "latency_ms": 527.48
+    },
+    {
+      "document_id": "X51006334742",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 103,
+      "latency_ms": 569.66
+    },
+    {
+      "document_id": "X51006334766",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 122,
+      "latency_ms": 592.95
+    },
+    {
+      "document_id": "X51006334770",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 126,
+      "latency_ms": 658.52
+    },
+    {
+      "document_id": "X51006334819",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 83,
+      "latency_ms": 502.03
+    },
+    {
+      "document_id": "X51006334927",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 79,
+      "latency_ms": 483.8
+    },
+    {
+      "document_id": "X51006335818",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 138,
+      "latency_ms": 690.45
+    },
+    {
+      "document_id": "X51006349081",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 115,
+      "latency_ms": 615.49
+    },
+    {
+      "document_id": "X51006349083",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 112,
+      "latency_ms": 673.48
+    },
+    {
+      "document_id": "X51006349085",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 114,
+      "latency_ms": 667.16
+    },
+    {
+      "document_id": "X51006350737",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 114,
+      "latency_ms": 653.98
+    },
+    {
+      "document_id": "X51006387660",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 73,
+      "latency_ms": 509.87
+    },
+    {
+      "document_id": "X51006387737",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 84,
+      "latency_ms": 537.55
+    },
+    {
+      "document_id": "X51006387931",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 70,
+      "latency_ms": 477.81
+    },
+    {
+      "document_id": "X51006387950",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 71,
+      "latency_ms": 453.41
+    },
+    {
+      "document_id": "X51006387973",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 158,
+      "latency_ms": 962.29
+    },
+    {
+      "document_id": "X51006388068",
+      "regions": [],
+      "word_count": 4,
+      "latency_ms": 434.66
+    },
+    {
+      "document_id": "X51006388081",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 367.54
+    },
+    {
+      "document_id": "X51006388089",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 41,
+      "latency_ms": 468.6
+    },
+    {
+      "document_id": "X51006389894",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 78,
+      "latency_ms": 637.63
+    },
+    {
+      "document_id": "X51006389898",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 101,
+      "latency_ms": 599.09
+    },
+    {
+      "document_id": "X51006392167",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 114,
+      "latency_ms": 643.82
+    },
+    {
+      "document_id": "X51006401845",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 47,
+      "latency_ms": 450.06
+    },
+    {
+      "document_id": "X51006401977",
+      "regions": [],
+      "word_count": 57,
+      "latency_ms": 509.56
+    },
+    {
+      "document_id": "X51006414425",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 102,
+      "latency_ms": 2584.12
+    },
+    {
+      "document_id": "X51006414427",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 94,
+      "latency_ms": 2405.41
+    },
+    {
+      "document_id": "X51006414433",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 98,
+      "latency_ms": 2381.96
+    },
+    {
+      "document_id": "X51006414512",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 134,
+      "latency_ms": 2727.73
+    },
+    {
+      "document_id": "X51006414532",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 159,
+      "latency_ms": 3257.61
+    },
+    {
+      "document_id": "X51006414593",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 104,
+      "latency_ms": 2565.95
+    },
+    {
+      "document_id": "X51006414600",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 153,
+      "latency_ms": 3209.86
+    },
+    {
+      "document_id": "X51006414702",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 171,
+      "latency_ms": 3063.63
+    },
+    {
+      "document_id": "X51006414708",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 128,
+      "latency_ms": 2897.05
+    },
+    {
+      "document_id": "X51006414715",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 101,
+      "latency_ms": 2638.22
+    },
+    {
+      "document_id": "X51006414717",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 185,
+      "latency_ms": 3240.57
+    },
+    {
+      "document_id": "X51006414728",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 97,
+      "latency_ms": 2894.45
+    },
+    {
+      "document_id": "X51006438346",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 97,
+      "latency_ms": 692.86
+    },
+    {
+      "document_id": "X51006466070",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 78,
+      "latency_ms": 465.8
+    },
+    {
+      "document_id": "X51006502534",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 96,
+      "latency_ms": 536.85
+    },
+    {
+      "document_id": "X51006502540",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 105,
+      "latency_ms": 551.72
+    },
+    {
+      "document_id": "X51006554841",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 93,
+      "latency_ms": 539.15
+    },
+    {
+      "document_id": "X51006555819",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 146,
+      "latency_ms": 718.92
+    },
+    {
+      "document_id": "X51006555833",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 156,
+      "latency_ms": 810.05
+    },
+    {
+      "document_id": "X51006555835",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 158,
+      "latency_ms": 783.36
+    },
+    {
+      "document_id": "X51006556610",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 136,
+      "latency_ms": 644.39
+    },
+    {
+      "document_id": "X51006556648",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 182,
+      "latency_ms": 888.83
+    },
+    {
+      "document_id": "X51006556654",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 178,
+      "latency_ms": 864.44
+    },
+    {
+      "document_id": "X51006556657",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 164,
+      "latency_ms": 789.73
+    },
+    {
+      "document_id": "X51006556658",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 171,
+      "latency_ms": 812.37
+    },
+    {
+      "document_id": "X51006556723",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 137,
+      "latency_ms": 716.58
+    },
+    {
+      "document_id": "X51006556728",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 173,
+      "latency_ms": 872.16
+    },
+    {
+      "document_id": "X51006556734",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 170,
+      "latency_ms": 831.97
+    },
+    {
+      "document_id": "X51006556740",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 179,
+      "latency_ms": 836.95
+    },
+    {
+      "document_id": "X51006556806",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 162,
+      "latency_ms": 865.06
+    },
+    {
+      "document_id": "X51006556808",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 157,
+      "latency_ms": 731.28
+    },
+    {
+      "document_id": "X51006556809",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 144,
+      "latency_ms": 721.93
+    },
+    {
+      "document_id": "X51006556810",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 158,
+      "latency_ms": 718.63
+    },
+    {
+      "document_id": "X51006556812",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 164,
+      "latency_ms": 745.6
+    },
+    {
+      "document_id": "X51006556821",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 176,
+      "latency_ms": 800.02
+    },
+    {
+      "document_id": "X51006556826",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 170,
+      "latency_ms": 812.34
+    },
+    {
+      "document_id": "X51006556827",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 173,
+      "latency_ms": 892.96
+    },
+    {
+      "document_id": "X51006556829",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 173,
+      "latency_ms": 847.93
+    },
+    {
+      "document_id": "X51006556851",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 178,
+      "latency_ms": 847.37
+    },
+    {
+      "document_id": "X51006556865",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 122,
+      "latency_ms": 685.2
+    },
+    {
+      "document_id": "X51006557115",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 178,
+      "latency_ms": 816.66
+    },
+    {
+      "document_id": "X51006557169",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 170,
+      "latency_ms": 862.8
+    },
+    {
+      "document_id": "X51006557173",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 177,
+      "latency_ms": 947.18
+    },
+    {
+      "document_id": "X51006557187",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 180,
+      "latency_ms": 803.96
+    },
+    {
+      "document_id": "X51006557194",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 178,
+      "latency_ms": 837.8
+    },
+    {
+      "document_id": "X51006557196",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 171,
+      "latency_ms": 817.49
+    },
+    {
+      "document_id": "X51006557208",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 140,
+      "latency_ms": 738.45
+    },
+    {
+      "document_id": "X51006557209",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 142,
+      "latency_ms": 674.17
+    },
+    {
+      "document_id": "X51006557507",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 168,
+      "latency_ms": 774.13
+    },
+    {
+      "document_id": "X51006619328",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 301.74
+    },
+    {
+      "document_id": "X51006619338",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 73,
+      "latency_ms": 572.19
+    },
+    {
+      "document_id": "X51006619346",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 333.0
+    },
+    {
+      "document_id": "X51006619503",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 101,
+      "latency_ms": 598.65
+    },
+    {
+      "document_id": "X51006619506",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 267.11
+    },
+    {
+      "document_id": "X51006619507",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 89,
+      "latency_ms": 643.77
+    },
+    {
+      "document_id": "X51006619509",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 63,
+      "latency_ms": 546.84
+    },
+    {
+      "document_id": "X51006619564",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 335.11
+    },
+    {
+      "document_id": "X51006619567",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 85,
+      "latency_ms": 591.1
+    },
+    {
+      "document_id": "X51006619569",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 95,
+      "latency_ms": 724.89
+    },
+    {
+      "document_id": "X51006619570",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 117,
+      "latency_ms": 796.37
+    },
+    {
+      "document_id": "X51006619700",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 287.63
+    },
+    {
+      "document_id": "X51006619703",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 279.49
+    },
+    {
+      "document_id": "X51006619704",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 330.26
+    },
+    {
+      "document_id": "X51006619757",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 129,
+      "latency_ms": 792.04
+    },
+    {
+      "document_id": "X51006619760",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 95,
+      "latency_ms": 616.51
+    },
+    {
+      "document_id": "X51006619764",
+      "regions": [],
+      "word_count": 15,
+      "latency_ms": 568.54
+    },
+    {
+      "document_id": "X51006619766",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 175,
+      "latency_ms": 1036.08
+    },
+    {
+      "document_id": "X51006619779",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 63,
+      "latency_ms": 482.49
+    },
+    {
+      "document_id": "X51006619784",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 258.8
+    },
+    {
+      "document_id": "X51006619790",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 120,
+      "latency_ms": 808.09
+    },
+    {
+      "document_id": "X51006619842",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 280.71
+    },
+    {
+      "document_id": "X51006619863",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 86,
+      "latency_ms": 608.03
+    },
+    {
+      "document_id": "X51006619869",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 105,
+      "latency_ms": 790.82
+    },
+    {
+      "document_id": "X51006620175",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 111,
+      "latency_ms": 827.79
+    },
+    {
+      "document_id": "X51006620182",
+      "regions": [],
+      "word_count": 0,
+      "latency_ms": 420.11
+    },
+    {
+      "document_id": "X51006620192",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 122,
+      "latency_ms": 973.62
+    },
+    {
+      "document_id": "X51006620437",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 65,
+      "latency_ms": 549.11
+    },
+    {
+      "document_id": "X51006647933",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 84,
+      "latency_ms": 390.18
+    },
+    {
+      "document_id": "X51006647984",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 142,
+      "latency_ms": 677.53
+    },
+    {
+      "document_id": "X51006733495",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 67,
+      "latency_ms": 530.75
+    },
+    {
+      "document_id": "X51006828199",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 111,
+      "latency_ms": 700.1
+    },
+    {
+      "document_id": "X51006828200",
+      "regions": [
+        "header",
+        "line_item_table"
+      ],
+      "word_count": 80,
+      "latency_ms": 544.26
+    },
+    {
+      "document_id": "X51006828201",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 123,
+      "latency_ms": 802.77
+    },
+    {
+      "document_id": "X51006856982",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 155,
+      "latency_ms": 844.55
+    },
+    {
+      "document_id": "X51006857126",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 94,
+      "latency_ms": 627.88
+    },
+    {
+      "document_id": "X51006857132",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 112,
+      "latency_ms": 735.7
+    },
+    {
+      "document_id": "X51006857137",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 63,
+      "latency_ms": 447.05
+    },
+    {
+      "document_id": "X51006857540",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 157,
+      "latency_ms": 998.56
+    },
+    {
+      "document_id": "X51006912959",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 111,
+      "latency_ms": 2664.53
+    },
+    {
+      "document_id": "X51006912976",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 207,
+      "latency_ms": 3254.51
+    },
+    {
+      "document_id": "X51006912998",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 142,
+      "latency_ms": 2564.0
+    },
+    {
+      "document_id": "X51006913018",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 225,
+      "latency_ms": 3568.62
+    },
+    {
+      "document_id": "X51006913032",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 118,
+      "latency_ms": 2530.18
+    },
+    {
+      "document_id": "X51006913060",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 94,
+      "latency_ms": 2414.14
+    },
+    {
+      "document_id": "X51006913061",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 92,
+      "latency_ms": 2419.36
+    },
+    {
+      "document_id": "X51007103597",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 87,
+      "latency_ms": 548.2
+    },
+    {
+      "document_id": "X51007103610",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 92,
+      "latency_ms": 597.4
+    },
+    {
+      "document_id": "X51007103649",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 99,
+      "latency_ms": 648.42
+    },
+    {
+      "document_id": "X51007103668",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 110,
+      "latency_ms": 644.82
+    },
+    {
+      "document_id": "X51007103687",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 88,
+      "latency_ms": 589.18
+    },
+    {
+      "document_id": "X51007225406",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 96,
+      "latency_ms": 513.89
+    },
+    {
+      "document_id": "X51007231274",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 95,
+      "latency_ms": 2443.41
+    },
+    {
+      "document_id": "X51007231275",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 84,
+      "latency_ms": 2372.53
+    },
+    {
+      "document_id": "X51007231276",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 92,
+      "latency_ms": 2364.3
+    },
+    {
+      "document_id": "X51007231331",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 119,
+      "latency_ms": 2663.67
+    },
+    {
+      "document_id": "X51007231341",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 97,
+      "latency_ms": 2788.28
+    },
+    {
+      "document_id": "X51007231343",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 86,
+      "latency_ms": 2366.67
+    },
+    {
+      "document_id": "X51007231346",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 112,
+      "latency_ms": 2602.95
+    },
+    {
+      "document_id": "X51007231364",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 81,
+      "latency_ms": 4222.47
+    },
+    {
+      "document_id": "X51007231372",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 258,
+      "latency_ms": 4510.71
+    },
+    {
+      "document_id": "X51007339105",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 133,
+      "latency_ms": 1230.16
+    },
+    {
+      "document_id": "X51007339109",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 115,
+      "latency_ms": 997.44
+    },
+    {
+      "document_id": "X51007339116",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 125,
+      "latency_ms": 1260.96
+    },
+    {
+      "document_id": "X51007339119",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 118,
+      "latency_ms": 985.14
+    },
+    {
+      "document_id": "X51007339121",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 117,
+      "latency_ms": 1142.82
+    },
+    {
+      "document_id": "X51007339122",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 123,
+      "latency_ms": 1130.58
+    },
+    {
+      "document_id": "X51007339125",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 91,
+      "latency_ms": 917.42
+    },
+    {
+      "document_id": "X51007339127",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 107,
+      "latency_ms": 960.87
+    },
+    {
+      "document_id": "X51007339134",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 98,
+      "latency_ms": 1044.41
+    },
+    {
+      "document_id": "X51007339159",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 131,
+      "latency_ms": 1005.93
+    },
+    {
+      "document_id": "X51007339160",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 138,
+      "latency_ms": 1044.22
+    },
+    {
+      "document_id": "X51007339161",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 137,
+      "latency_ms": 1113.04
+    },
+    {
+      "document_id": "X51007339163",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 137,
+      "latency_ms": 1235.68
+    },
+    {
+      "document_id": "X51007339638",
+      "regions": [],
+      "word_count": 52,
+      "latency_ms": 855.66
+    },
+    {
+      "document_id": "X51007391390",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 76,
+      "latency_ms": 761.8
+    },
+    {
+      "document_id": "X51007433809",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 100,
+      "latency_ms": 1690.01
+    },
+    {
+      "document_id": "X51007579714",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 165,
+      "latency_ms": 967.7
+    },
+    {
+      "document_id": "X51007579719",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 116,
+      "latency_ms": 769.05
+    },
+    {
+      "document_id": "X51007579725",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 75,
+      "latency_ms": 645.44
+    },
+    {
+      "document_id": "X51007846266",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 92,
+      "latency_ms": 3617.17
+    },
+    {
+      "document_id": "X51007846268",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 107,
+      "latency_ms": 3664.45
+    },
+    {
+      "document_id": "X51007846282",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 263,
+      "latency_ms": 4310.51
+    },
+    {
+      "document_id": "X51007846283",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 270,
+      "latency_ms": 5115.44
+    },
+    {
+      "document_id": "X51007846288",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 92,
+      "latency_ms": 3517.73
+    },
+    {
+      "document_id": "X51007846289",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 253,
+      "latency_ms": 4564.34
+    },
+    {
+      "document_id": "X51007846290",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 92,
+      "latency_ms": 4130.21
+    },
+    {
+      "document_id": "X51007846303",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 85,
+      "latency_ms": 4126.89
+    },
+    {
+      "document_id": "X51007846304",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 103,
+      "latency_ms": 3681.65
+    },
+    {
+      "document_id": "X51007846310",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 228,
+      "latency_ms": 4985.98
+    },
+    {
+      "document_id": "X51007846321",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 115,
+      "latency_ms": 11052.23
+    },
+    {
+      "document_id": "X51007846355",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 130,
+      "latency_ms": 4110.4
+    },
+    {
+      "document_id": "X51007846358",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 211,
+      "latency_ms": 3872.23
+    },
+    {
+      "document_id": "X51007846360",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 278,
+      "latency_ms": 4062.03
+    },
+    {
+      "document_id": "X51007846361",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 121,
+      "latency_ms": 3991.62
+    },
+    {
+      "document_id": "X51007846371",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 104,
+      "latency_ms": 3246.12
+    },
+    {
+      "document_id": "X51007846372",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 98,
+      "latency_ms": 3106.95
+    },
+    {
+      "document_id": "X51007846379",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 230,
+      "latency_ms": 3942.56
+    },
+    {
+      "document_id": "X51007846387",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 127,
+      "latency_ms": 3512.18
+    },
+    {
+      "document_id": "X51007846392",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 95,
+      "latency_ms": 2780.72
+    },
+    {
+      "document_id": "X51007846396",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 124,
+      "latency_ms": 2659.7
+    },
+    {
+      "document_id": "X51007846397",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 95,
+      "latency_ms": 2654.96
+    },
+    {
+      "document_id": "X51007846400",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 108,
+      "latency_ms": 3023.49
+    },
+    {
+      "document_id": "X51007846403",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 102,
+      "latency_ms": 2742.75
+    },
+    {
+      "document_id": "X51008030561",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 106,
+      "latency_ms": 732.61
+    },
+    {
+      "document_id": "X51008030563",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 91,
+      "latency_ms": 636.37
+    },
+    {
+      "document_id": "X51008042779",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 97,
+      "latency_ms": 626.04
+    },
+    {
+      "document_id": "X51008042780",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 101,
+      "latency_ms": 644.53
+    },
+    {
+      "document_id": "X51008042781",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 87,
+      "latency_ms": 584.27
+    },
+    {
+      "document_id": "X51008042786",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 91,
+      "latency_ms": 608.29
+    },
+    {
+      "document_id": "X51008042787",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 202,
+      "latency_ms": 1151.7
+    },
+    {
+      "document_id": "X51008099047",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 90,
+      "latency_ms": 633.28
+    },
+    {
+      "document_id": "X51008099086",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 98,
+      "latency_ms": 778.8
+    },
+    {
+      "document_id": "X51008099088",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 76,
+      "latency_ms": 628.27
+    },
+    {
+      "document_id": "X51008099090",
+      "regions": [
+        "header",
+        "line_item_table",
+        "totals_block"
+      ],
+      "word_count": 85,
+      "latency_ms": 680.02
+    },
+    {
+      "document_id": "X51008099100",
+      "regions": [
+        "totals_block"
+      ],
+      "word_count": 117,
+      "latency_ms": 806.11
+    }
+  ],
+  "evaluation_note": "Heuristic candidate detection only. SROIE provides word-level annotations, not major-region ground truth. IoU accuracy is not claimed or calculated."
+}

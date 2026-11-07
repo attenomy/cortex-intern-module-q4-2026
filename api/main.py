@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import torch
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
@@ -24,6 +25,14 @@ from modules.telemetry_obs.router import router as telemetry_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     model = load_document_model()
+    try:
+        model.eval()
+        with torch.inference_mode():
+            model(torch.zeros(1, 3, 224, 224))
+    except Exception as exc:
+        raise RuntimeError(
+            f"Document classifier warm-up failed: {exc}"
+        ) from exc
     doc_extractor_service.set_classifier(model)
     app.state.document_classifier = model
     yield

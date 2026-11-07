@@ -1,4 +1,5 @@
 {
+  "dataset_provenance": "Synthetic - generated locally; original public dataset sources unverified",
   "history": [
     {
       "epoch": 1,
@@ -77,23 +78,23 @@
         0
       ],
       [
-        54,
         0,
+        54,
         0,
         0
       ]
     ],
     "per_class": {
       "invoice": {
-        "precision": 0.5,
-        "recall": 1.0,
-        "f1": 0.6667,
-        "support": 54
-      },
-      "receipt": {
         "precision": 1.0,
         "recall": 1.0,
         "f1": 1.0,
+        "support": 54
+      },
+      "receipt": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6667,
         "support": 54
       },
       "contract": {
