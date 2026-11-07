@@ -1,7 +1,9 @@
-﻿from modules.doc_extractor.region_detector import detect_layout_regions
+﻿import pytest
 from modules.doc_extractor.iou_evaluator import calculate_iou, evaluate_regions
+from modules.doc_extractor.region_detector import detect_layout_regions
 from modules.doc_extractor.schemas import BoundingBox, LayoutRegion, RegionType
-import pytest
+
+
 def test_iou_partial_overlap():
     a = BoundingBox(x_min=0, y_min=0, x_max=100, y_max=100)
     b = BoundingBox(x_min=50, y_min=50, x_max=150, y_max=150)
@@ -33,7 +35,10 @@ def test_invalid_image_dimensions():
 def test_empty_words():
     assert detect_layout_regions([], 100, 100) == []
 from unittest.mock import patch
+
 from modules.doc_extractor.service import DocumentExtractor
+
+
 def test_image_extraction_returns_detected_regions():
     fake_words = [
         {"text": "ABC STORE", "confidence": 0.95,

@@ -3,9 +3,11 @@ import sys
 import time
 from collections import Counter
 from pathlib import Path
+
 import torch
 from PIL import Image
 from torchvision import transforms
+
 API_ROOT = Path.cwd()
 MODULE_ROOT = API_ROOT / "modules" / "doc_extractor"
 sys.path.insert(0, str(API_ROOT))
@@ -14,6 +16,7 @@ from modules.doc_extractor.layout_classifier import (
     build_classifier,
     predict_document,
 )
+
 MANIFEST = MODULE_ROOT / "data" / "real_sroie" / "manifest.jsonl"
 MODEL_PATH = MODULE_ROOT / "models" / "document_classifier.pth"
 REPORT_PATH = MODULE_ROOT / "reports" / "sroie_real_test_evaluation.md"

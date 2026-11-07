@@ -1,11 +1,13 @@
 ﻿import json
-import time
 import statistics
-from pathlib import Path
+import time
 from collections import Counter
-from PIL import Image
+from pathlib import Path
+
 from modules.doc_extractor.ocr import TesseractOCR
 from modules.doc_extractor.region_detector import detect_layout_regions
+from PIL import Image
+
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "data" / "real_sroie" / "manifest.jsonl"
 REPORT_DIR = ROOT / "reports"

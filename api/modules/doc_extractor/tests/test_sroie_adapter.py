@@ -1,5 +1,7 @@
 ﻿import pytest
 from modules.doc_extractor.sroie_adapter import adapt_sroie_entities
+
+
 def test_adapt_sroie_complete_record():
     record = {
         "document_id": "SROIE-001",

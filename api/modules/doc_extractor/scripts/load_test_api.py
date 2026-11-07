@@ -3,7 +3,9 @@ import json
 import math
 import time
 from pathlib import Path
+
 import httpx
+
 URL = "http://127.0.0.1:8000/api/v1/extract"
 CONCURRENCY = 20
 TOTAL_REQUESTS = 100

@@ -1,11 +1,12 @@
-﻿from collections import defaultdict
 import re
 from typing import Any
+
 from modules.doc_extractor.schemas import (
     BoundingBox,
     LayoutRegion,
     RegionType,
 )
+
 TABLE_ANCHORS = {
     "QTY", "QUANTITY", "PRICE", "AMOUNT", "AMT",
     "DESC", "DESCRIPTION", "ITEM", "CODE",
@@ -100,7 +101,7 @@ def detect_layout_regions(
     table_top = None
     # Combine anchors from nearby OCR lines instead of requiring
     # multiple exact anchors on one line.
-    for index, line in enumerate(lines):
+    for index, _line in enumerate(lines):
         nearby_lines = lines[max(0, index - 1): index + 2]
         tokens = {
             normalize_text(w["text"])
@@ -222,3 +223,4 @@ def detect_layout_regions(
                 )
             )
     return regions
+

@@ -1,5 +1,7 @@
 ﻿from decimal import Decimal, InvalidOperation
 from typing import Any
+
+
 def _parse_amount(value: Any) -> float | None:
     if value is None:
         return None

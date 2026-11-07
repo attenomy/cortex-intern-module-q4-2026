@@ -1,5 +1,4 @@
-﻿from modules.doc_extractor.schemas import BoundingBox
-def calculate_iou(box_a, box_b):
+﻿def calculate_iou(box_a, box_b):
     def get(box, key):
         return box[key] if isinstance(box, dict) else getattr(box, key)
     ax1, ay1 = get(box_a, "x_min"), get(box_a, "y_min")

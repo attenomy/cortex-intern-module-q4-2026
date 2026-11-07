@@ -1,8 +1,9 @@
-﻿import json
-import hashlib
+﻿import hashlib
+import json
 import shutil
-from pathlib import Path
 from collections import Counter
+from pathlib import Path
+
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT.parent.parent / "data" / "sroie" / "processed"
 OUTPUT = ROOT / "data" / "real_sroie"

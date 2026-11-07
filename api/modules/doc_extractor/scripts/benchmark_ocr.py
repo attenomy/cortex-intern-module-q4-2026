@@ -1,12 +1,14 @@
-﻿import json
+import cProfile
+import json
 import statistics
 import time
-import cProfile
 import tracemalloc
 from pathlib import Path
-from PIL import Image, ImageFilter, ImageOps
+
 import pytesseract
+from PIL import Image, ImageFilter, ImageOps
 from pytesseract import Output
+
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "data" / "real_sroie" / "manifest.jsonl"
 REPORT = ROOT / "reports"
@@ -86,7 +88,7 @@ for resolution in (512, 1024):
                 timings.append((time.perf_counter() - start) * 1000)
                 accepted = 0
                 raw = 0
-                for word, confidence in zip(data["text"], data["conf"]):
+                for word, confidence in zip(data["text"], data["conf"], strict=False):
                     if not word.strip():
                         continue
                     try:
@@ -155,3 +157,4 @@ profiler.dump_stats(str(REPORT / "ocr_profile.prof"))
 print(f"\nBenchmark complete: {len(results)} experiments")
 print("Images:", len(images))
 print("Reports:", REPORT)
+

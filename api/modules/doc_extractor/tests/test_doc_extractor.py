@@ -89,6 +89,8 @@ def test_extract_invalid_base64():
 
     assert response.status_code == 422
 from modules.doc_extractor.service import DocumentExtractor
+
+
 def test_service_extracts_valid_plain_text_invoice():
     extractor = DocumentExtractor()
     result = extractor.extract_document(
