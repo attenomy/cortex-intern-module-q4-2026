@@ -1,7 +1,6 @@
 import time
 
 import numpy as np
-
 from modules.doc_extractor.service import DocumentExtractor
 
 extractor = DocumentExtractor()
