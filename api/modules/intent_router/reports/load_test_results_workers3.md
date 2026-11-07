@@ -6,6 +6,6 @@ settings: defaults, workers=3 | 60 s per level | ~5% of requests are 10,000-char
 
 | concurrency | req/s | client p50 | p90 | p95 | p99 | server p50 | p95 | non-200 |
 |---|---|---|---|---|---|---|---|---|
-| 50 | 648 | 72.0 | 110.6 | 127.6 | 169.9 | 12.9 | 59.4 | 0 |
+| 50 | 502 | 57.4 | 224.5 | 361.3 | 604.0 | 14.8 | 191.1 | 0 |
 
-Server peak RSS (process tree): 612 MB
+Server peak RSS (process tree): 656 MB

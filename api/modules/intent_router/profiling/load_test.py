@@ -44,14 +44,14 @@ import psutil
 
 from common import API_DIR, REPORTS, hardware, percentiles, query_pool
 
-PORT = 8765
+DEFAULT_PORT = 8765
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
-def start_server(app_target, cwd, env_extra, workers=1):
+def start_server(app_target, cwd, env_extra, workers=1, port=DEFAULT_PORT):
     env = dict(os.environ)
     env.update(env_extra)
-    cmd = [sys.executable, "-m", "uvicorn", app_target, "--host", "127.0.0.1", "--port", str(PORT), "--log-level", "warning"]
+    cmd = [sys.executable, "-m", "uvicorn", app_target, "--host", "127.0.0.1", "--port", str(port), "--log-level", "warning"]
     if workers > 1:
         cmd += ["--workers", str(workers)]          # each worker process loads its own copy of the model
     return subprocess.Popen(cmd, cwd=cwd, env=env)
@@ -228,6 +228,7 @@ def main():
     ap.add_argument("--rates", type=int, nargs="+", default=None, help="open-loop test at these req/s (HTTP modes)")
     ap.add_argument("--duration", type=int, default=10, help="seconds per rate for --rates")
     ap.add_argument("--seconds", type=int, default=None, help="closed loop: run each concurrency level for this many seconds")
+    ap.add_argument("--port", type=int, default=DEFAULT_PORT, help="port for the test server (use another one if the default is stuck)")
     ap.add_argument("--workers", type=int, default=1, help="uvicorn worker processes (each loads the model)")
     mode = ap.add_mutually_exclusive_group()
     mode.add_argument("--baseline", action="store_true", help="web stack without the model")
@@ -253,12 +254,11 @@ def main():
             results.append(run_level_inprocess(router, c, args.requests, pool))
     else:
         target, cwd, path = ("baseline_app:app", HERE, "/echo") if args.baseline else ("main:app", str(API_DIR), "/api/v1/router")
-        url = f"http://127.0.0.1:{PORT}{path}"
-        if port_in_use(PORT):
-            sys.exit(f"Port {PORT} is already in use, probably by a server left over from an earlier run. Results would come "
-                     f"from that old server, not this one. Stop it first:\n"
-                     f"  Get-NetTCPConnection -LocalPort {PORT} | ForEach-Object {{ Stop-Process -Id $_.OwningProcess -Force }}")
-        server = start_server(target, cwd, env_extra, args.workers)
+        url = f"http://127.0.0.1:{args.port}{path}"
+        if port_in_use(args.port):
+            sys.exit(f"Port {args.port} is already in use, probably by a server left over from an earlier run. Results would come "
+                     f"from that old server, not this one. Either stop it, or run again with another port, e.g. --port {args.port + 1}")
+        server = start_server(target, cwd, env_extra, args.workers, args.port)
         try:
             if not wait_ready(url, server):
                 sys.exit("server did not become ready (is the model in api/modules/intent_router/models/ ?)")

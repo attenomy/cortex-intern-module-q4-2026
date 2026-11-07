@@ -6,6 +6,6 @@ settings: defaults | 60 s per level | ~5% of requests are 10,000-character paylo
 
 | concurrency | req/s | client p50 | p90 | p95 | p99 | server p50 | p95 | non-200 |
 |---|---|---|---|---|---|---|---|---|
-| 50 | 449 | 98.8 | 112.6 | 121.2 | 489.6 | 8.6 | 21.8 | 0 |
+| 50 | 527 | 94.0 | 105.1 | 109.1 | 119.7 | 8.1 | 17.9 | 0 |
 
 Server peak RSS (process tree): 217 MB
