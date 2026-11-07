@@ -1,0 +1,1000 @@
+{
+  "summary": {
+    "temperature": 2.0,
+    "n_clean": 30,
+    "n_ambiguous": 10,
+    "minilm_clean": {
+      "argmax": {
+        "accuracy": 0.8666666666666667,
+        "correct": 26,
+        "n": 30,
+        "wilson95": [
+          0.7031831605558306,
+          0.9469043057578189
+        ],
+        "macro_f1": 0.8618357487922705
+      },
+      "end_to_end": {
+        "accuracy": 0.8666666666666667,
+        "correct": 26,
+        "n": 30,
+        "wilson95": [
+          0.7031831605558306,
+          0.9469043057578189
+        ],
+        "macro_f1": 0.8398809523809524
+      },
+      "fallback_rate": 0.2,
+      "mean_confidence": 0.7972766666666667
+    },
+    "tfidf_baseline_clean": {
+      "argmax_accuracy": 0.8,
+      "end_to_end_accuracy": 0.4666666666666667,
+      "macro_f1": 0.40616246498599434,
+      "fallback_rate": 0.7
+    },
+    "ambiguous": {
+      "fallback_rate": 0.1,
+      "mean_confidence": 0.88317,
+      "end_to_end_accuracy_vs_main_intent": 0.8
+    },
+    "confusion_matrix": {
+      "labels": [
+        "finance",
+        "support",
+        "search",
+        "orchestration"
+      ],
+      "rows_true_cols_pred": [
+        [
+          10,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          4,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          9,
+          0
+        ],
+        [
+          0,
+          1,
+          1,
+          3
+        ]
+      ]
+    }
+  },
+  "clean": [
+    {
+      "id": "fin-02-1",
+      "text": "Generate a billing report for last quarter",
+      "true": "finance",
+      "argmax": "finance",
+      "final": "finance",
+      "fallback": false,
+      "confidence": 0.9518,
+      "top_k": [
+        [
+          "finance",
+          0.9518
+        ],
+        [
+          "orchestration",
+          0.0222
+        ],
+        [
+          "support",
+          0.0134
+        ]
+      ]
+    },
+    {
+      "id": "fin-02-2",
+      "text": "Show me the monthly billing summary for October",
+      "true": "finance",
+      "argmax": "finance",
+      "final": "finance",
+      "fallback": false,
+      "confidence": 0.9572,
+      "top_k": [
+        [
+          "finance",
+          0.9572
+        ],
+        [
+          "search",
+          0.0271
+        ],
+        [
+          "support",
+          0.0093
+        ]
+      ]
+    },
+    {
+      "id": "fin-02-3",
+      "text": "I need a breakdown of charges by customer",
+      "true": "finance",
+      "argmax": "finance",
+      "final": "finance",
+      "fallback": false,
+      "confidence": 0.9478,
+      "top_k": [
+        [
+          "finance",
+          0.9478
+        ],
+        [
+          "search",
+          0.0321
+        ],
+        [
+          "support",
+          0.014
+        ]
+      ]
+    },
+    {
+      "id": "fin-02-4",
+      "text": "Create a revenue report for the third quarter",
+      "true": "finance",
+      "argmax": "finance",
+      "final": "finance",
+      "fallback": false,
+      "confidence": 0.9243,
+      "top_k": [
+        [
+          "finance",
+          0.9243
+        ],
+        [
+          "orchestration",
+          0.044
+        ],
+        [
+          "search",
+          0.0165
+        ]
+      ]
+    },
+    {
+      "id": "fin-02-5",
+      "text": "Give me an itemized statement for account 4471",
+      "true": "finance",
+      "argmax": "finance",
+      "final": "finance",
+      "fallback": false,
+      "confidence": 0.9501,
+      "top_k": [
+        [
+          "finance",
+          0.9501
+        ],
+        [
+          "search",
+          0.0268
+        ],
+        [
+          "orchestration",
+          0.0118
+        ]
+      ]
+    },
+    {
+      "id": "fin-11-1",
+      "text": "What are the payment terms in this vendor contract?",
+      "true": "finance",
+      "argmax": "finance",
+      "final": "finance",
+      "fallback": false,
+      "confidence": 0.668,
+      "top_k": [
+        [
+          "finance",
+          0.668
+        ],
+        [
+          "search",
+          0.2989
+        ],
+        [
+          "support",
+          0.0201
+        ]
+      ]
+    },
+    {
+      "id": "fin-11-2",
+      "text": "Extract the penalty clause amounts from the agreement",
+      "true": "finance",
+      "argmax": "finance",
+      "final": "finance",
+      "fallback": false,
+      "confidence": 0.8961,
+      "top_k": [
+        [
+          "finance",
+          0.8961
+        ],
+        [
+          "orchestration",
+          0.0598
+        ],
+        [
+          "support",
+          0.0283
+        ]
+      ]
+    },
+    {
+      "id": "fin-11-3",
+      "text": "Find the net 30 terms in this supplier document",
+      "true": "finance",
+      "argmax": "finance",
+      "final": "finance",
+      "fallback": false,
+      "confidence": 0.7394,
+      "top_k": [
+        [
+          "finance",
+          0.7394
+        ],
+        [
+          "search",
+          0.2283
+        ],
+        [
+          "support",
+          0.0182
+        ]
+      ]
+    },
+    {
+      "id": "fin-11-4",
+      "text": "How much is the late fee on this invoice?",
+      "true": "finance",
+      "argmax": "finance",
+      "final": "finance",
+      "fallback": false,
+      "confidence": 0.9594,
+      "top_k": [
+        [
+          "finance",
+          0.9594
+        ],
+        [
+          "search",
+          0.0191
+        ],
+        [
+          "support",
+          0.0151
+        ]
+      ]
+    },
+    {
+      "id": "fin-11-5",
+      "text": "Read the total contract value from the document",
+      "true": "finance",
+      "argmax": "finance",
+      "final": "finance",
+      "fallback": false,
+      "confidence": 0.9229,
+      "top_k": [
+        [
+          "finance",
+          0.9229
+        ],
+        [
+          "orchestration",
+          0.0467
+        ],
+        [
+          "search",
+          0.0152
+        ]
+      ]
+    },
+    {
+      "id": "sup-01-1",
+      "text": "The app crashes every time I open settings",
+      "true": "support",
+      "argmax": "support",
+      "final": "support",
+      "fallback": false,
+      "confidence": 0.9663,
+      "top_k": [
+        [
+          "support",
+          0.9663
+        ],
+        [
+          "search",
+          0.0141
+        ],
+        [
+          "finance",
+          0.0118
+        ]
+      ]
+    },
+    {
+      "id": "sup-01-2",
+      "text": "Mobile app freezes on the checkout screen",
+      "true": "support",
+      "argmax": "support",
+      "final": "support",
+      "fallback": false,
+      "confidence": 0.9599,
+      "top_k": [
+        [
+          "support",
+          0.9599
+        ],
+        [
+          "finance",
+          0.0191
+        ],
+        [
+          "search",
+          0.0128
+        ]
+      ]
+    },
+    {
+      "id": "sup-01-3",
+      "text": "Fix the crash bug in the login module",
+      "true": "support",
+      "argmax": "support",
+      "final": "support",
+      "fallback": false,
+      "confidence": 0.9658,
+      "top_k": [
+        [
+          "support",
+          0.9658
+        ],
+        [
+          "search",
+          0.0138
+        ],
+        [
+          "finance",
+          0.0114
+        ]
+      ]
+    },
+    {
+      "id": "sup-01-4",
+      "text": "The dashboard keeps closing unexpectedly",
+      "true": "support",
+      "argmax": "support",
+      "final": "support",
+      "fallback": false,
+      "confidence": 0.9667,
+      "top_k": [
+        [
+          "support",
+          0.9667
+        ],
+        [
+          "search",
+          0.0127
+        ],
+        [
+          "finance",
+          0.0117
+        ]
+      ]
+    },
+    {
+      "id": "sup-01-5",
+      "text": "La aplicaci\u00f3n se cierra sola al abrir",
+      "true": "support",
+      "argmax": "finance",
+      "final": "search",
+      "fallback": true,
+      "confidence": 0.4508,
+      "top_k": [
+        [
+          "finance",
+          0.4508
+        ],
+        [
+          "orchestration",
+          0.2926
+        ],
+        [
+          "search",
+          0.2156
+        ]
+      ]
+    },
+    {
+      "id": "sea-05-1",
+      "text": "What is the difference between SLA and SLO?",
+      "true": "search",
+      "argmax": "search",
+      "final": "search",
+      "fallback": false,
+      "confidence": 0.823,
+      "top_k": [
+        [
+          "search",
+          0.823
+        ],
+        [
+          "orchestration",
+          0.0779
+        ],
+        [
+          "finance",
+          0.0502
+        ]
+      ]
+    },
+    {
+      "id": "sea-05-2",
+      "text": "Define churn rate as used in our reports",
+      "true": "search",
+      "argmax": "finance",
+      "final": "finance",
+      "fallback": false,
+      "confidence": 0.8007,
+      "top_k": [
+        [
+          "finance",
+          0.8007
+        ],
+        [
+          "search",
+          0.1088
+        ],
+        [
+          "orchestration",
+          0.0575
+        ]
+      ]
+    },
+    {
+      "id": "sea-05-3",
+      "text": "What does the term ARR mean?",
+      "true": "search",
+      "argmax": "search",
+      "final": "search",
+      "fallback": false,
+      "confidence": 0.69,
+      "top_k": [
+        [
+          "search",
+          0.69
+        ],
+        [
+          "finance",
+          0.1421
+        ],
+        [
+          "orchestration",
+          0.1155
+        ]
+      ]
+    },
+    {
+      "id": "sea-05-4",
+      "text": "Explain what a vector database is",
+      "true": "search",
+      "argmax": "search",
+      "final": "search",
+      "fallback": false,
+      "confidence": 0.9345,
+      "top_k": [
+        [
+          "search",
+          0.9345
+        ],
+        [
+          "orchestration",
+          0.0278
+        ],
+        [
+          "support",
+          0.0201
+        ]
+      ]
+    },
+    {
+      "id": "sea-05-5",
+      "text": "Meaning of RAG in simple words",
+      "true": "search",
+      "argmax": "search",
+      "final": "search",
+      "fallback": true,
+      "confidence": 0.5014,
+      "top_k": [
+        [
+          "search",
+          0.5014
+        ],
+        [
+          "finance",
+          0.2211
+        ],
+        [
+          "orchestration",
+          0.1902
+        ]
+      ]
+    },
+    {
+      "id": "sea-10-1",
+      "text": "What is the capital of France?",
+      "true": "search",
+      "argmax": "finance",
+      "final": "search",
+      "fallback": true,
+      "confidence": 0.4521,
+      "top_k": [
+        [
+          "finance",
+          0.4521
+        ],
+        [
+          "search",
+          0.3513
+        ],
+        [
+          "support",
+          0.1156
+        ]
+      ]
+    },
+    {
+      "id": "sea-10-2",
+      "text": "Explain how transformers work in machine learning",
+      "true": "search",
+      "argmax": "search",
+      "final": "search",
+      "fallback": false,
+      "confidence": 0.8669,
+      "top_k": [
+        [
+          "search",
+          0.8669
+        ],
+        [
+          "orchestration",
+          0.095
+        ],
+        [
+          "support",
+          0.0205
+        ]
+      ]
+    },
+    {
+      "id": "sea-10-3",
+      "text": "What is the time complexity of quicksort?",
+      "true": "search",
+      "argmax": "search",
+      "final": "search",
+      "fallback": true,
+      "confidence": 0.3177,
+      "top_k": [
+        [
+          "search",
+          0.3177
+        ],
+        [
+          "finance",
+          0.3074
+        ],
+        [
+          "orchestration",
+          0.2717
+        ]
+      ]
+    },
+    {
+      "id": "sea-10-4",
+      "text": "Tell me about the history of the internet",
+      "true": "search",
+      "argmax": "search",
+      "final": "search",
+      "fallback": false,
+      "confidence": 0.9454,
+      "top_k": [
+        [
+          "search",
+          0.9454
+        ],
+        [
+          "finance",
+          0.021
+        ],
+        [
+          "support",
+          0.0189
+        ]
+      ]
+    },
+    {
+      "id": "sea-10-5",
+      "text": "How tall is Mount Everest?",
+      "true": "search",
+      "argmax": "search",
+      "final": "search",
+      "fallback": true,
+      "confidence": 0.53,
+      "top_k": [
+        [
+          "search",
+          0.53
+        ],
+        [
+          "finance",
+          0.234
+        ],
+        [
+          "support",
+          0.1425
+        ]
+      ]
+    },
+    {
+      "id": "orc-07-1",
+      "text": "If the invoice is over 10k, send it to a manager for approval",
+      "true": "orchestration",
+      "argmax": "orchestration",
+      "final": "search",
+      "fallback": true,
+      "confidence": 0.5313,
+      "top_k": [
+        [
+          "orchestration",
+          0.5313
+        ],
+        [
+          "finance",
+          0.4147
+        ],
+        [
+          "support",
+          0.0316
+        ]
+      ]
+    },
+    {
+      "id": "orc-07-2",
+      "text": "When a ticket is marked urgent, notify the on-call engineer",
+      "true": "orchestration",
+      "argmax": "orchestration",
+      "final": "orchestration",
+      "fallback": false,
+      "confidence": 0.6266,
+      "top_k": [
+        [
+          "orchestration",
+          0.6266
+        ],
+        [
+          "support",
+          0.2951
+        ],
+        [
+          "finance",
+          0.054
+        ]
+      ]
+    },
+    {
+      "id": "orc-07-3",
+      "text": "Run step two only if step one succeeds",
+      "true": "orchestration",
+      "argmax": "orchestration",
+      "final": "orchestration",
+      "fallback": false,
+      "confidence": 0.9282,
+      "top_k": [
+        [
+          "orchestration",
+          0.9282
+        ],
+        [
+          "support",
+          0.0399
+        ],
+        [
+          "finance",
+          0.0197
+        ]
+      ]
+    },
+    {
+      "id": "orc-07-4",
+      "text": "Branch the workflow based on document type",
+      "true": "orchestration",
+      "argmax": "orchestration",
+      "final": "orchestration",
+      "fallback": false,
+      "confidence": 0.9536,
+      "top_k": [
+        [
+          "orchestration",
+          0.9536
+        ],
+        [
+          "search",
+          0.0227
+        ],
+        [
+          "support",
+          0.0124
+        ]
+      ]
+    },
+    {
+      "id": "orc-07-5",
+      "text": "Retry the failed task three times, then alert me",
+      "true": "orchestration",
+      "argmax": "support",
+      "final": "support",
+      "fallback": false,
+      "confidence": 0.7904,
+      "top_k": [
+        [
+          "support",
+          0.7904
+        ],
+        [
+          "orchestration",
+          0.1795
+        ],
+        [
+          "finance",
+          0.0186
+        ]
+      ]
+    }
+  ],
+  "ambiguous": [
+    {
+      "id": "sup-14-1",
+      "text": "The invoice page crashes when I open it",
+      "true": "support",
+      "argmax": "support",
+      "final": "support",
+      "fallback": false,
+      "confidence": 0.8409,
+      "top_k": [
+        [
+          "support",
+          0.8409
+        ],
+        [
+          "finance",
+          0.1282
+        ],
+        [
+          "orchestration",
+          0.0168
+        ]
+      ]
+    },
+    {
+      "id": "sup-14-2",
+      "text": "I need help, the search bar stopped working",
+      "true": "support",
+      "argmax": "support",
+      "final": "support",
+      "fallback": false,
+      "confidence": 0.9596,
+      "top_k": [
+        [
+          "support",
+          0.9596
+        ],
+        [
+          "search",
+          0.0185
+        ],
+        [
+          "finance",
+          0.0137
+        ]
+      ]
+    },
+    {
+      "id": "sup-14-3",
+      "text": "Billing portal shows an error on login",
+      "true": "support",
+      "argmax": "support",
+      "final": "support",
+      "fallback": false,
+      "confidence": 0.927,
+      "top_k": [
+        [
+          "support",
+          0.927
+        ],
+        [
+          "finance",
+          0.0466
+        ],
+        [
+          "search",
+          0.0172
+        ]
+      ]
+    },
+    {
+      "id": "sup-14-4",
+      "text": "Workflow fails with a timeout, please check the logs",
+      "true": "support",
+      "argmax": "support",
+      "final": "support",
+      "fallback": false,
+      "confidence": 0.9577,
+      "top_k": [
+        [
+          "support",
+          0.9577
+        ],
+        [
+          "orchestration",
+          0.0207
+        ],
+        [
+          "finance",
+          0.0122
+        ]
+      ]
+    },
+    {
+      "id": "sup-14-5",
+      "text": "Fix the crash and then let me know",
+      "true": "support",
+      "argmax": "support",
+      "final": "support",
+      "fallback": false,
+      "confidence": 0.954,
+      "top_k": [
+        [
+          "support",
+          0.954
+        ],
+        [
+          "orchestration",
+          0.0195
+        ],
+        [
+          "search",
+          0.0137
+        ]
+      ]
+    },
+    {
+      "id": "orc-14-1",
+      "text": "Search the policy docs and then run the approval workflow",
+      "true": "orchestration",
+      "argmax": "orchestration",
+      "final": "orchestration",
+      "fallback": false,
+      "confidence": 0.8942,
+      "top_k": [
+        [
+          "orchestration",
+          0.8942
+        ],
+        [
+          "support",
+          0.0604
+        ],
+        [
+          "search",
+          0.0384
+        ]
+      ]
+    },
+    {
+      "id": "orc-14-2",
+      "text": "Check the invoice and trigger the payment flow",
+      "true": "orchestration",
+      "argmax": "finance",
+      "final": "search",
+      "fallback": true,
+      "confidence": 0.5173,
+      "top_k": [
+        [
+          "finance",
+          0.5173
+        ],
+        [
+          "orchestration",
+          0.4449
+        ],
+        [
+          "support",
+          0.0229
+        ]
+      ]
+    },
+    {
+      "id": "orc-14-3",
+      "text": "Investigate the error and restart the pipeline",
+      "true": "orchestration",
+      "argmax": "support",
+      "final": "support",
+      "fallback": false,
+      "confidence": 0.9477,
+      "top_k": [
+        [
+          "support",
+          0.9477
+        ],
+        [
+          "orchestration",
+          0.0305
+        ],
+        [
+          "search",
+          0.0123
+        ]
+      ]
+    },
+    {
+      "id": "orc-14-4",
+      "text": "Look up the vendor, then start the onboarding workflow",
+      "true": "orchestration",
+      "argmax": "orchestration",
+      "final": "orchestration",
+      "fallback": false,
+      "confidence": 0.8866,
+      "top_k": [
+        [
+          "orchestration",
+          0.8866
+        ],
+        [
+          "search",
+          0.0625
+        ],
+        [
+          "support",
+          0.0425
+        ]
+      ]
+    },
+    {
+      "id": "orc-14-5",
+      "text": "Find the latest report and email it to the team automatically",
+      "true": "orchestration",
+      "argmax": "orchestration",
+      "final": "orchestration",
+      "fallback": false,
+      "confidence": 0.9467,
+      "top_k": [
+        [
+          "orchestration",
+          0.9467
+        ],
+        [
+          "support",
+          0.0276
+        ],
+        [
+          "finance",
+          0.0141
+        ]
+      ]
+    }
+  ]
+}

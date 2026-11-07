@@ -1,0 +1,38 @@
+{
+  "rows": [
+    {
+      "block": 1,
+      "requests": 1000,
+      "python_kb": 20.734375,
+      "rss_mb": 189.915136
+    },
+    {
+      "block": 2,
+      "requests": 2000,
+      "python_kb": 28.9755859375,
+      "rss_mb": 189.927424
+    },
+    {
+      "block": 3,
+      "requests": 3000,
+      "python_kb": 35.9560546875,
+      "rss_mb": 190.099456
+    },
+    {
+      "block": 4,
+      "requests": 4000,
+      "python_kb": 40.6923828125,
+      "rss_mb": 190.128128
+    },
+    {
+      "block": 5,
+      "requests": 5000,
+      "python_kb": 56.814453125,
+      "rss_mb": 190.193664
+    }
+  ],
+  "python_growth_kb": 36.080078125,
+  "rss_growth_mb": 0.27852800000002276,
+  "verdict": "PASS",
+  "rss_after_load_mb": 186.597376
+}
