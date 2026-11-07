@@ -93,7 +93,7 @@ md_path = report_dir / "day14_quantization_results.md"
 
 json_path.write_text(json.dumps(results, indent=2))
 
-md = f"""# CTX-003 Day 14 — Quantization Experiment
+md = f"""# CTX-003 Day 14 - Quantization Experiment
 
 - Device: {results['device']}
 - Representation: {results['quantization']}

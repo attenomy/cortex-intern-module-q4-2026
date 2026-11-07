@@ -1,4 +1,4 @@
-# CTX-003 Day 14 — Batch Size Tuning
+# CTX-003 Day 14 - Batch Size Tuning
 
 - Device: cpu
 - PyTorch intra-op threads: 6

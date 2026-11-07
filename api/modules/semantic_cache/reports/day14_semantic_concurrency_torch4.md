@@ -1,4 +1,4 @@
-# CTX-003 Day 14 — CPU Semantic Concurrency
+# CTX-003 Day 14 - CPU Semantic Concurrency
 
 - Run ID: `a9897c4efb764aa58bb9e66f758e54d3`
 - Timestamp UTC: `2026-11-05T02:22:49.642606+00:00`

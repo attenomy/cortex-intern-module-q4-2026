@@ -1,4 +1,4 @@
-# CTX-003 Day 14 — Performance and Tuning Experiments
+# CTX-003 Day 14 - Performance and Tuning Experiments
 
 - Run ID: `1c2b72f1e5764ffda92c1de09920da7f`
 - UTC timestamp: `2026-11-05T01:34:25.345415+00:00`
@@ -30,10 +30,10 @@ Semantic baseline similarity: `0.785749`
 
 Target: median <25 ms and p95 <50 ms.
 
-- 1 workers: median `0.42 ms`, p95 `0.713 ms` — PASS
-- 4 workers: median `1.12 ms`, p95 `1.985 ms` — PASS
-- 8 workers: median `2.216 ms`, p95 `4.458 ms` — PASS
-- 16 workers: median `4.382 ms`, p95 `9.329 ms` — PASS
+- 1 workers: median `0.42 ms`, p95 `0.713 ms` - PASS
+- 4 workers: median `1.12 ms`, p95 `1.985 ms` - PASS
+- 8 workers: median `2.216 ms`, p95 `4.458 ms` - PASS
+- 16 workers: median `4.382 ms`, p95 `9.329 ms` - PASS
 
 ## 4. cProfile
 
@@ -42,7 +42,7 @@ Target: median <25 ms and p95 <50 ms.
 - P95: 0.633 ms
 - Detailed profile: `../reports/day14_cprofile.txt`
 
-## 5. tracemalloc — 5,000 requests
+## 5. tracemalloc - 5,000 requests
 
 - Before: 0 bytes
 - After GC: 58 bytes

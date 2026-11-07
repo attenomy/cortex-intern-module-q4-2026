@@ -1,4 +1,4 @@
-# CTX-003 — Diagnostic Error Analysis
+# CTX-003 - Diagnostic Error Analysis
 
 ## 1. Executive Summary
 
@@ -124,7 +124,7 @@ Do not change the production Redis index without a separately validated migratio
 
 | Workload | Result |
 |---|---|
-| Exact-query path, 1–16 workers | PASS |
+| Exact-query path, 1-16 workers | PASS |
 | Semantic lookup, 1 worker | PASS |
 | Semantic lookup, 4 workers | FAIL |
 | Semantic lookup, 8 workers | FAIL |

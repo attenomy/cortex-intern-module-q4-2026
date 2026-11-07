@@ -1,13 +1,13 @@
 # FEATURE SPECIFICATION
 ## CTX-003: Redis Semantic Vector Caching & Query Deduplication Engine
 
-**Project:** Attenomy Cortex  
-**Engineer:** Yakshith Anandapu (@YAKSHITH684)  
-**Ticket:** CTX-003  
-**Module:** `api/modules/semantic_cache/`  
-**Branch:** `feature/CTX-003-semantic-cache`  
-**Target Branch:** `staging`  
-**Status:** Proposed – Pending Review
+**Project:** Attenomy Cortex
+**Engineer:** Yakshith Anandapu (@YAKSHITH684)
+**Ticket:** CTX-003
+**Module:** `api/modules/semantic_cache/`
+**Branch:** `feature/CTX-003-semantic-cache-clean`
+**Target Branch:** `staging`
+**Status:** Implemented - Awaiting Lead / CPO Review
 
 ---
 
@@ -17,16 +17,17 @@ Develop a Redis-backed semantic caching system that identifies identical and sem
 
 The system must provide efficient vector similarity search, reliable cache retrieval, duplicate request handling, and graceful recovery when Redis is unavailable.
 
-## 2. Existing Architecture
+## 2. Implemented Architecture
 
 The current module contains:
 
-- `router.py` – FastAPI endpoints for cache lookup and statistics.
-- `schemas.py` – Pydantic request and response models.
-- `service.py` – Existing local dictionary-based cache implementation.
-- `tests/test_semantic_cache.py` – Initial API tests.
+- `router.py` - FastAPI endpoints for cache storage, lookup and statistics, including lifecycle management.
+- `schemas.py` - Pydantic request and response validation models.
+- `service.py` - Redis-backed exact and semantic cache implementation using Sentence Transformer embeddings.
+- `tests/` - Semantic cache service and API tests covering validation, Redis failures, expiry, locking and concurrency.
+- `reports/` - Benchmark results and performance analysis.
 
-The existing service supports exact normalized-query matching but does not yet implement Redis connectivity or semantic vector search.
+The implementation includes normalized exact-query lookup, Redis vector similarity search, TTL handling, lock helper utilities, fail-open behavior and performance instrumentation.
 
 ## 3. Proposed System Architecture
 
@@ -143,7 +144,7 @@ Requirements:
 - Support invalidation of stale or corrupted entries.
 - Avoid permanent accumulation of unused cache records.
 
-The default TTL must be finalized during implementation review.
+The implementation currently uses a default TTL of 3600 seconds. Confirm the production TTL during rollout review.
 
 ## 8. Concurrency and Thread Safety
 
@@ -207,7 +208,7 @@ The following failure conditions must be covered.
 
 ## 11. Testing Strategy
 
-The implementation must contain at least 12–15 unit and integration tests.
+The implementation must contain at least 12-15 unit and integration tests.
 
 Testing categories:
 
@@ -292,15 +293,15 @@ Additional reporting files will be created as required during implementation.
 - Duplicate requests are handled safely.
 - TTL and invalidation work correctly.
 - Redis failures do not interrupt live inference.
-- Thread-safe concurrent operations are supported.
-- At least 12–15 tests pass.
+- Concurrent lock acquisition and lock-helper behavior are covered by tests; lock helpers are not integrated into the primary lookup/store flow.
+- At least 12-15 tests pass.
 - More than 60% of tests cover negative and boundary conditions.
 - Performance targets are measured and documented.
 - Operational documentation and evidence-driven PR are prepared.
 
 ## 16. Review Questions / Decisions Requiring Confirmation
 
-Before implementation, confirm:
+Before production rollout, confirm:
 
 1. Which embedding model and vector dimensions should be used?
 2. Is Redis Stack available in the development and evaluation environments?
@@ -311,7 +312,7 @@ Before implementation, confirm:
 
 ---
 
-**Prepared by:** Yakshith Anandapu  
-**Ticket:** CTX-003  
-**Review status:** Awaiting Lead / CPO approval  
-**Implementation status:** Not started – specification-first phase.
+**Prepared by:** Yakshith Anandapu
+**Ticket:** CTX-003
+**Review status:** Awaiting Lead / CPO approval
+**Implementation status:** Implemented; performance limitations documented; formal review pending.

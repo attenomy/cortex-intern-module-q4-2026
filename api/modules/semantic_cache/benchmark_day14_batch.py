@@ -94,7 +94,7 @@ md_path = REPORTS / "day14_batch_size_results.md"
 json_path.write_text(json.dumps(results, indent=2))
 
 lines = [
-    "# CTX-003 Day 14 — Batch Size Tuning",
+    "# CTX-003 Day 14 - Batch Size Tuning",
     "",
     f"- Device: {results['device']}",
     f"- PyTorch intra-op threads: {results['torch_intra_op_threads']}",

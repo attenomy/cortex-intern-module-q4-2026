@@ -1,4 +1,4 @@
-# CTX-003 Day 14 — Quantization Experiment
+# CTX-003 Day 14 - Quantization Experiment
 
 - Device: cpu
 - Representation: symmetric int8 simulation

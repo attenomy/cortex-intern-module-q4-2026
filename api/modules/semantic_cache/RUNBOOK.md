@@ -1,8 +1,8 @@
-# Attenomy Cortex — Semantic Cache Runbook
+# Attenomy Cortex - Semantic Cache Runbook
 
 **Module:** `api/modules/semantic_cache/`
-**Ticket:** CTX-003 — Redis Semantic Vector Caching
-**Branch:** `feature/CTX-003-semantic-cache`
+**Ticket:** CTX-003 - Redis Semantic Vector Caching
+**Branch:** `feature/CTX-003-semantic-cache-clean`
 
 ## 1. Overview
 
@@ -15,16 +15,17 @@ Features:
 - Cache statistics.
 - Fail-open lookup behavior.
 - Distributed locking.
+- Startup model warm-up and Redis client cleanup.
 
 Exact-query and semantic lookup have different latency characteristics. Exact-query benchmark results must not be presented as semantic lookup results.
 
 ## 2. Prerequisites
 
 - Ubuntu WSL.
-- Python 3.12.
+- Python 3.14.4 (tested environment).
 - Virtual environment: `api/.venv-wsl/`.
 - Redis 8 with vector-set command support.
-- Dependencies from `api/requirements.txt`.
+- Module dependencies from `api/modules/semantic_cache/requirements.txt`.
 
 Docker is not required for this local workflow.
 
@@ -49,7 +50,7 @@ The default Redis URL is `redis://localhost:6379/0`.
 | `SEMANTIC_CACHE_LOCK_WAIT_SECONDS` | `2` | Lock wait duration |
 | `SEMANTIC_CACHE_LOCK_POLL_SECONDS` | `0.05` | Lock polling interval |
 
-The Sentence Transformer model may need to download on first use.
+The Sentence Transformer model may need to download on first use. Startup warm-up attempts to load the model before requests are served.
 
 ## 5. Start the FastAPI application
 
@@ -77,7 +78,7 @@ Blank queries are rejected with HTTP 400. Store failures may return HTTP 400 or 
 - Confirm the FastAPI application starts without import or connection errors.
 - Use `/docs` to exercise the store, lookup and stats endpoints.
 - Check the `redis_connected` field in the stats response.
-- Review `reports/` for benchmark JSON, Markdown and profiling evidence.
+- Review `api/modules/semantic_cache/reports/` for benchmark JSON, Markdown and profiling evidence.
 
 ## 8. Performance findings and limitations
 

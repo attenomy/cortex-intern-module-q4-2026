@@ -165,7 +165,7 @@ try:
 
     report_path = REPORTS / "day14_semantic_concurrency.md"
     lines = [
-        "# CTX-003 Day 14 — CPU Semantic Concurrency",
+        "# CTX-003 Day 14 - CPU Semantic Concurrency",
         "",
         f"- Run ID: `{RUN_ID}`",
         f"- Timestamp UTC: `{results['timestamp_utc']}`",
@@ -191,7 +191,7 @@ try:
         "",
         "## Profiling",
         "",
-        "Concurrent latency was measured using the async worker harness.",
+        "Concurrent latency was measured using a thread-based worker harness.",
         "Sequential cProfile results are available in day14_cprofile.txt from the original benchmark.",
         "",
         "## Limitations",

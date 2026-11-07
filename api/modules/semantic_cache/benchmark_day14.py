@@ -228,7 +228,7 @@ try:
     report_path = REPORTS / "tuning_experiments.md"
 
     lines = [
-        "# CTX-003 Day 14 — Performance and Tuning Experiments",
+        "# CTX-003 Day 14 - Performance and Tuning Experiments",
         "",
         f"- Run ID: `{RUN_ID}`",
         f"- UTC timestamp: `{results['timestamp_utc']}`",
@@ -276,7 +276,7 @@ try:
         passed = data["median_ms"] < 25 and data["p95_ms"] < 50
         lines.append(
             f"- {workers} workers: median `{data['median_ms']} ms`, "
-            f"p95 `{data['p95_ms']} ms` — "
+            f"p95 `{data['p95_ms']} ms` - "
             f"{'PASS' if passed else 'FAIL'}"
         )
 
@@ -289,7 +289,7 @@ try:
         f"- P95: {results['profiling']['p95_ms']} ms",
         f"- Detailed profile: `{profile_path}`",
         "",
-        "## 5. tracemalloc — 5,000 requests",
+        "## 5. tracemalloc - 5,000 requests",
         "",
         f"- Before: {results['memory']['before_current_bytes']} bytes",
         f"- After GC: {results['memory']['after_current_bytes']} bytes",

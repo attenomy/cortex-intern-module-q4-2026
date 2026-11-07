@@ -1,3 +1,7 @@
+import asyncio
+import logging
+from contextlib import asynccontextmanager
+
 from fastapi import APIRouter, HTTPException
 
 from .schemas import (
@@ -9,12 +13,44 @@ from .schemas import (
 )
 from .service import SemanticCacheService
 
-router = APIRouter(
-    prefix="/cache",
-    tags=["Semantic Caching"]
-)
+logger = logging.getLogger(__name__)
 
 service = SemanticCacheService()
+
+
+@asynccontextmanager
+async def semantic_cache_lifespan(app):
+    """
+    Preload the embedding model at startup and close Redis
+    connections during application shutdown.
+    """
+    try:
+        await asyncio.to_thread(service.warm_up)
+        logger.info(
+            "Semantic cache embedding model warmed up successfully."
+        )
+    except Exception:
+        logger.exception(
+            "Semantic cache warm-up failed. Lazy loading remains available."
+        )
+
+    try:
+        yield
+    finally:
+        try:
+            await asyncio.to_thread(service.redis_client.close)
+            logger.info("Semantic cache Redis client closed.")
+        except Exception:
+            logger.exception(
+                "Failed to close semantic cache Redis client."
+            )
+
+
+router = APIRouter(
+    prefix="/cache",
+    tags=["Semantic Caching"],
+    lifespan=semantic_cache_lifespan,
+)
 
 
 @router.post("/lookup", response_model=CacheLookupResponse)
@@ -58,6 +94,7 @@ def store_cache_endpoint(req: CacheStoreRequest):
         )
 
     except Exception:
+        logger.exception("Semantic cache store operation failed.")
         raise HTTPException(
             status_code=503,
             detail="Unable to store data in Redis semantic cache"
