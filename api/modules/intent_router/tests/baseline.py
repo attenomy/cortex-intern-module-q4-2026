@@ -11,7 +11,8 @@ from sklearn.pipeline import make_pipeline
 SEED = 42
 THRESHOLD = 0.60
 path = sys.argv[1] if len(sys.argv) > 1 else "data/intent_dataset.json"
-samples = json.load(open(path, encoding="utf-8"))["samples"]
+with open(path, encoding="utf-8") as f:
+    samples = json.load(f)["samples"]
 
 
 def split(name, ambiguous=None):

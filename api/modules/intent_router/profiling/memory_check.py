@@ -15,7 +15,6 @@ import json
 import tracemalloc
 
 import psutil
-
 from common import REPORTS, hardware, query_pool
 from modules.intent_router.service import SemanticRouter
 

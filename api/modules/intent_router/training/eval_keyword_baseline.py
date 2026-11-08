@@ -36,12 +36,13 @@ samples = json.loads(DATASET.read_text(encoding="utf-8"))["samples"]
 for name, ambiguous in (("clean", False), ("ambiguous", True)):
     rows = [s for s in samples if s["split"] == "test" and s["ambiguous"] == ambiguous]
     preds = [old_router(s["text"]) for s in rows]
-    ok = sum(p == s["label"] for p, s in zip(preds, rows))
+    ok = sum(p == s["label"] for p, s in zip(preds, rows, strict=False))
     print(f"original keyword router, {name} test queries: {ok}/{len(rows)} = {ok / len(rows):.3f}")
     if not ambiguous:
         per = collections.defaultdict(lambda: [0, 0])
-        for p, s in zip(preds, rows):
+        for p, s in zip(preds, rows, strict=False):
             per[s["label"]][1] += 1
             per[s["label"]][0] += p == s["label"]
         print("  correct per class:", {k: f"{v[0]}/{v[1]}" for k, v in per.items()})
         print("  predicted distribution:", dict(collections.Counter(preds)))
+

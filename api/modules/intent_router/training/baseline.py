@@ -1,4 +1,4 @@
-"""TF-IDF + Logistic Regression baseline for CTX-001. Never touches the test split."""
+﻿"""TF-IDF + Logistic Regression baseline for CTX-001. Never touches the test split."""
 import json
 import sys
 
@@ -11,7 +11,8 @@ from sklearn.pipeline import make_pipeline
 SEED = 42
 THRESHOLD = 0.60
 path = sys.argv[1] if len(sys.argv) > 1 else "data/intent_dataset.json"
-samples = json.load(open(path, encoding="utf-8"))["samples"]
+with open(path, encoding="utf-8") as f:
+    samples = json.load(f)["samples"]
 
 
 def split(name, ambiguous=None):
@@ -33,8 +34,8 @@ classes = list(model.classes_)
 search_idx = classes.index("search")
 
 
-def decide(X):
-    proba = model.predict_proba(X)
+def decide(x):
+    proba = model.predict_proba(x)
     pred = proba.argmax(1)
     fallback = proba.max(1) < THRESHOLD
     final = np.where(fallback, search_idx, pred)

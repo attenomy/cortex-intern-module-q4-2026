@@ -6,7 +6,7 @@ from fastapi.responses import PlainTextResponse
 
 from .metrics import RouterMetrics
 from .schemas import QueryRoutingRequest, RoutingDecision
-from .service import ModelNotReady, SemanticRouter
+from .service import ModelNotReadyError, SemanticRouter
 
 logger = logging.getLogger(__name__)
 service = SemanticRouter()
@@ -35,7 +35,7 @@ def route_query_endpoint(req: QueryRoutingRequest):
     service.ensure_loaded()   # no-op once the lifespan has loaded the model
     try:
         result = service.route_query(req.query, req.client_tier, req.max_routing_candidates)
-    except ModelNotReady:
+    except ModelNotReadyError:
         metrics.record("not_ready")
         raise HTTPException(status_code=503, detail="Intent router model is not ready")
     except Exception:

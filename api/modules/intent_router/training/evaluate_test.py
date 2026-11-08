@@ -1,4 +1,4 @@
-"""Day 15: final evaluation on the TEST split (CTX-001).
+﻿"""Day 15: final evaluation on the TEST split (CTX-001).
 
 Use this ONCE, after model, temperature and every setting are frozen. Never change anything because of
 what it prints (that would turn the test split into a tuning set). Run it with --final to confirm.
@@ -49,18 +49,18 @@ def main():
     if not args.final:
         sys.exit("This evaluates the TEST split. Run it once, after everything is frozen: add --final")
 
+    from modules.intent_router.service import SemanticRouter
     from sklearn.feature_extraction.text import TfidfVectorizer
     from sklearn.linear_model import LogisticRegression
     from sklearn.metrics import classification_report, confusion_matrix, f1_score
     from sklearn.pipeline import make_pipeline
-    from modules.intent_router.service import SemanticRouter
 
     doc = json.loads((MODULE_DIR / "data" / "intent_dataset.json").read_text(encoding="utf-8"))
     labels = doc["meta"]["labels"]
-    S = doc["samples"]
-    train = [s for s in S if s["split"] == "train"]
-    clean = [s for s in S if s["split"] == "test" and not s["ambiguous"]]
-    amb = [s for s in S if s["split"] == "test" and s["ambiguous"]]
+    all_samples = doc["samples"]
+    train = [s for s in all_samples if s["split"] == "train"]
+    clean = [s for s in all_samples if s["split"] == "test" and not s["ambiguous"]]
+    amb = [s for s in all_samples if s["split"] == "test" and s["ambiguous"]]
 
     router = SemanticRouter()
     router.load()
@@ -79,7 +79,7 @@ def main():
     def metrics(res, key):
         y = [r["true"] for r in res]
         p = [r[key] for r in res]
-        k = sum(a == b for a, b in zip(y, p))
+        k = sum(a == b for a, b in zip(y, p, strict=False))
         return {"accuracy": k / len(res), "correct": k, "n": len(res),
                 "wilson95": wilson(k, len(res)), "macro_f1": f1_score(y, p, labels=labels, average="macro", zero_division=0)}
 
@@ -96,7 +96,7 @@ def main():
     cls = list(base.classes_)
     b_arg = [cls[i] for i in proba.argmax(1)]
     b_fin = ["search" if proba[i].max() < THRESHOLD else b_arg[i] for i in range(len(clean))]
-    kb_arg, kb_fin = sum(a == b for a, b in zip(y_true, b_arg)), sum(a == b for a, b in zip(y_true, b_fin))
+    kb_arg, kb_fin = sum(a == b for a, b in zip(y_true, b_arg, strict=False)), sum(a == b for a, b in zip(y_true, b_fin, strict=False))
     base_res = {"argmax_accuracy": kb_arg / len(clean), "end_to_end_accuracy": kb_fin / len(clean),
                 "macro_f1": f1_score(y_true, b_fin, labels=labels, average="macro", zero_division=0),
                 "fallback_rate": float(np.mean(proba.max(1) < THRESHOLD))}
@@ -130,7 +130,7 @@ def main():
              f"{base_res['macro_f1']:.3f} | {base_res['fallback_rate']:.2f} |\n",
              "\nPer-class (MiniLM, end to end):\n\n```\n" + report_txt + "```\n",
              "Confusion matrix (rows = true, columns = routed; the `search` column includes fallbacks):\n\n```\n"
-             + "            " + " ".join(f"{l[:6]:>7}" for l in labels) + "\n"
+             + "            " + " ".join(f"{lbl[:6]:>7}" for lbl in labels) + "\n"
              + "\n".join(f"{labels[i]:<12}" + " ".join(f"{v:>7}" for v in row) for i, row in enumerate(cm.tolist())) + "\n```\n",
              f"\n## Errors on clean test queries ({len(errors)})\n"]
     lines += [f"- `{r['text']}`: true **{r['true']}**, routed **{r['final']}** (fallback: {r['fallback']}), "
@@ -149,7 +149,7 @@ def main():
         from sklearn.metrics import ConfusionMatrixDisplay
         fig, ax = plt.subplots(figsize=(5.5, 5))
         ConfusionMatrixDisplay(cm, display_labels=labels).plot(ax=ax, xticks_rotation=30, colorbar=False)
-        ax.set_title("Test split, clean queries (n=%d)" % len(res_clean))
+        ax.set_title(f"Test split, clean queries (n={len(res_clean)})")
         fig.tight_layout()
         fig.savefig(FIGURES / "confusion_matrix.png", dpi=150)
     except ImportError:

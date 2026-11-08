@@ -16,10 +16,9 @@ from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 import pytest
 from fastapi.testclient import TestClient
-
 from main import app
 from modules.intent_router.router import metrics, service
-from modules.intent_router.service import ModelNotReady, SemanticRouter
+from modules.intent_router.service import ModelNotReadyError, SemanticRouter
 
 URL = "/api/v1/router"
 FINANCE_Q = "Find invoice total for Q3 AWS"
@@ -202,7 +201,7 @@ def test_endpoint_returns_503_when_model_not_ready(client, monkeypatch):
 
 
 def test_route_query_before_load_raises():
-    with pytest.raises(ModelNotReady):
+    with pytest.raises(ModelNotReadyError):
         SemanticRouter(model_dir="does-not-exist").route_query("x")
 
 
@@ -273,7 +272,7 @@ def test_fallback_threshold_boundary(ready_client, monkeypatch, top, expect_fall
 
 # ---- metrics endpoint (Prometheus text format)
 def metric_value(text, line_start):
-    line = next(l for l in text.splitlines() if l.startswith(line_start))
+    line = next(ln for ln in text.splitlines() if ln.startswith(line_start))
     return float(line.rsplit(" ", 1)[1])
 
 
@@ -303,8 +302,8 @@ def test_metrics_output_is_valid_prometheus_text(ready_client):
     text = res.text
     assert "cortex_intent_router_model_ready 1" in text
     # histogram: cumulative buckets never decrease and +Inf equals _count
-    bucket_values = [float(l.rsplit(" ", 1)[1]) for l in text.splitlines()
-                     if l.startswith("cortex_intent_router_latency_ms_bucket")]
+    bucket_values = [float(line.rsplit(" ", 1)[1]) for line in text.splitlines()
+                     if line.startswith("cortex_intent_router_latency_ms_bucket")]
     assert bucket_values == sorted(bucket_values)
     assert bucket_values[-1] == metric_value(text, "cortex_intent_router_latency_ms_count")
 

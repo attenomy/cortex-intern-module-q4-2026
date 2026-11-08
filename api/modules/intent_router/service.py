@@ -33,7 +33,7 @@ DEFAULT_MODEL_DIR = Path(__file__).resolve().parent / "models"
 WARMUP_QUERIES = ("warm up query", "extract the invoice total", "my login is broken")
 
 
-class ModelNotReady(RuntimeError):
+class ModelNotReadyError(RuntimeError):
     """route_query() was called before load() finished (or load() failed)."""
 
 
@@ -138,7 +138,7 @@ class SemanticRouter:
 
     def route_query(self, query: str, client_tier: str = "Enterprise", max_candidates: int = 3) -> dict[str, Any]:
         if not self.is_ready:
-            raise ModelNotReady("intent router model is not loaded")
+            raise ModelNotReadyError("intent router model is not loaded")
         t0 = time.perf_counter()
 
         logits = self._logits(query)

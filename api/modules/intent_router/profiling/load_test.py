@@ -41,7 +41,6 @@ from concurrent.futures import ThreadPoolExecutor
 import aiohttp
 import httpx
 import psutil
-
 from common import API_DIR, REPORTS, hardware, percentiles, query_pool
 
 DEFAULT_PORT = 8765

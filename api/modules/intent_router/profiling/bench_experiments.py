@@ -15,10 +15,10 @@ import time
 
 import numpy as np
 import onnxruntime as ort
-from tokenizers import Tokenizer
 
 from common import MODEL_DIR, REPORTS, hardware, load_samples, long_payload, percentiles
 from modules.intent_router.service import softmax
+from tokenizers import Tokenizer
 
 FP32 = MODEL_DIR / "model.onnx"
 INT8 = MODEL_DIR / "model.int8.onnx"
@@ -91,7 +91,7 @@ def main():
     args = ap.parse_args()
 
     cal = json.loads((MODEL_DIR / "calibration.json").read_text())
-    T = float(cal["temperature"])
+    temperature = float(cal["temperature"])
     labels_json = json.loads((MODEL_DIR / "labels.json").read_text())
     labels = [labels_json[str(i)] for i in range(len(labels_json))]
     clean = load_samples("validation", ambiguous=False)
@@ -106,7 +106,7 @@ def main():
             print(f"{exp_id}: skipped (no INT8 model)")
             continue
         sess, tk = make_session(path, threads), make_tokenizer(max_len)
-        infer = make_infer(sess, tk, T)
+        infer = make_infer(sess, tk, temperature)
         n = args.iters if batch == 1 else max(50, args.iters // 3)
         typ, wst = time_calls(infer, typical, batch, n), time_calls(infer, worst, batch, n)
         # accuracy: one query at a time, same decision rule as the service
@@ -134,11 +134,11 @@ def main():
         f"{r['typical_p50']:.2f} / {r['typical_p95']:.2f} | {r['worst_p50']:.2f} / {r['worst_p95']:.2f} | "
         f"{r['items_per_s']:.0f} | {r['size_mb']:.0f} | {r['clean_acc']:.3f} | {r['fallback_rate']:.2f} |\n"
         for r in rows)
-    md = (f"# Benchmark results\n\nHardware: `{json.dumps(hardware())}`\n\nTemperature T = {T}. "
+    md = (f"# Benchmark results\n\nHardware: `{json.dumps(hardware())}`\n\nTemperature T = {temperature}. "
           f"'typical' = dataset queries, 'worst-case' = one 10,000-character payload. Batch rows report latency per CALL.\n\n"
           + hdr + body)
     (REPORTS / "bench_results.md").write_text(md, encoding="utf-8")
-    (REPORTS / "bench_results.json").write_text(json.dumps({"hardware": hardware(), "T": T, "runs": rows}, indent=2), encoding="utf-8")
+    (REPORTS / "bench_results.json").write_text(json.dumps({"hardware": hardware(), "T": temperature, "runs": rows}, indent=2), encoding="utf-8")
     print("\n" + hdr + body)
 
 
