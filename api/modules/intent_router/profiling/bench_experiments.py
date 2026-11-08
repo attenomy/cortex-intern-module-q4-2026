@@ -1,4 +1,4 @@
-"""Day 14, part 1: tuning experiments (9 runs) for CTX-001.
+﻿"""Day 14, part 1: tuning experiments (9 runs) for CTX-001.
 
 Varies: intra-op threads, max sequence length, batch size, FP32 vs INT8 (dynamic quantization).
 Measures per run: latency on typical queries and on the worst case (a 10,000-character payload),
@@ -15,7 +15,6 @@ import time
 
 import numpy as np
 import onnxruntime as ort
-
 from common import MODEL_DIR, REPORTS, hardware, load_samples, long_payload, percentiles
 from modules.intent_router.service import softmax
 from tokenizers import Tokenizer

@@ -1,4 +1,4 @@
-"""TF-IDF + Logistic Regression baseline for CTX-001. Never touches the test split."""
+﻿"""TF-IDF + Logistic Regression baseline for CTX-001. Never touches the test split."""
 import json
 import sys
 
@@ -34,8 +34,8 @@ classes = list(model.classes_)
 search_idx = classes.index("search")
 
 
-def decide(X):
-    proba = model.predict_proba(X)
+def decide(x):
+    proba = model.predict_proba(x)
     pred = proba.argmax(1)
     fallback = proba.max(1) < THRESHOLD
     final = np.where(fallback, search_idx, pred)
