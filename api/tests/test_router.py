@@ -1,4 +1,15 @@
+﻿import pytest
+from pathlib import Path
 
+# Skip all model-dependent tests when ONNX model files are absent (e.g. in CI)
+MODEL_FILE = Path(__file__).resolve().parents[1] / "modules" / "intent_router" / "models" / "model.onnx"
+needs_model = pytest.mark.skipif(
+    not MODEL_FILE.exists(),
+    reason="model.onnx not present; skipping model-dependent tests",
+)
+
+
+@needs_model
 def test_router_finance_intent(client):
     payload = {
         "query": "Find invoice total for Q3 vendor AWS",
@@ -12,6 +23,7 @@ def test_router_finance_intent(client):
     assert data["confidence"] > 0.60
     assert data["latency_ms"] > 0.0
 
+@needs_model
 def test_router_support_intent(client):
     payload = {
         "query": "Encountered a critical bug and login broken error in dashboard",
@@ -23,6 +35,7 @@ def test_router_support_intent(client):
     assert data["intent_category"] == "support"
     assert data["target_pipeline"] == "agent_triage_pipeline"
 
+@needs_model
 def test_router_search_intent_fallback(client):
     payload = {
         "query": "How to find architectural system documentation",
@@ -58,4 +71,3 @@ def test_router_missing_payload_field_422(client):
     }
     response = client.post("/api/v1/router", json=payload)
     assert response.status_code == 422
-
