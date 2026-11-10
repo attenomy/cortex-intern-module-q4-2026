@@ -1,5 +1,6 @@
-﻿import pytest
-from pathlib import Path
+﻿from pathlib import Path
+
+import pytest
 
 # Skip all model-dependent tests when ONNX model files are absent (e.g. in CI)
 MODEL_FILE = Path(__file__).resolve().parents[1] / "modules" / "intent_router" / "models" / "model.onnx"
