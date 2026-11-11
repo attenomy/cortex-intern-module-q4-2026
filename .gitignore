@@ -27,3 +27,4 @@ Thumbs.db
 *.swp
 *.swo
 
+api/modules/intent_router/models/*.onnx
