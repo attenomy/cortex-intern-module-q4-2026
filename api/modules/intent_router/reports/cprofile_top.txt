@@ -1,0 +1,23 @@
+         94001 function calls in 5.999 seconds
+
+   Ordered by: cumulative time
+   List reduced from 32 to 15 due to restriction <15>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     2000    5.296    0.003    5.297    0.003 D:\intern_project\cortex-intern-module-q4-2026\.venv\Lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py:372(run)
+     2000    0.541    0.000    0.541    0.000 {method 'encode' of 'tokenizers.Tokenizer' objects}
+     2000    0.024    0.000    0.040    0.000 D:\intern_project\cortex-intern-module-q4-2026\api\modules\intent_router\service.py:40(softmax)
+     8000    0.026    0.000    0.026    0.000 {built-in method numpy.asarray}
+     2000    0.006    0.000    0.025    0.000 D:\intern_project\cortex-intern-module-q4-2026\.venv\Lib\site-packages\numpy\_core\fromnumeric.py:2586(all)
+     2000    0.011    0.000    0.019    0.000 D:\intern_project\cortex-intern-module-q4-2026\.venv\Lib\site-packages\numpy\_core\fromnumeric.py:86(_wrapreduction_any_all)
+     2000    0.003    0.000    0.018    0.000 D:\intern_project\cortex-intern-module-q4-2026\.venv\Lib\site-packages\numpy\_core\fromnumeric.py:1115(argsort)
+     6000    0.015    0.000    0.015    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+     8000    0.015    0.000    0.015    0.000 {built-in method builtins.round}
+     2000    0.003    0.000    0.014    0.000 D:\intern_project\cortex-intern-module-q4-2026\.venv\Lib\site-packages\numpy\_core\fromnumeric.py:48(_wrapfunc)
+     2000    0.012    0.000    0.012    0.000 D:\intern_project\cortex-intern-module-q4-2026\.venv\Lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py:360(_validate_graph_capture_run_api)
+     2000    0.010    0.000    0.010    0.000 {method 'argsort' of 'numpy.ndarray' objects}
+     2000    0.003    0.000    0.010    0.000 {method 'max' of 'numpy.ndarray' objects}
+     2000    0.008    0.000    0.008    0.000 D:\intern_project\cortex-intern-module-q4-2026\.venv\Lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py:344(_validate_input)
+     2000    0.002    0.000    0.007    0.000 D:\intern_project\cortex-intern-module-q4-2026\.venv\Lib\site-packages\numpy\_core\_methods.py:39(_amax)
+
+

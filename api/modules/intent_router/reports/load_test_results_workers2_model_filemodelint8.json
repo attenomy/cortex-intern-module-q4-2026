@@ -1,0 +1,41 @@
+{
+  "mode": "http",
+  "settings": {
+    "INTENT_ROUTER_MODEL_FILE": "model.int8.onnx"
+  },
+  "hardware": {
+    "python": "3.12.10",
+    "os": "Windows-11-10.0.26300-SP0",
+    "cpu": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+    "logical_cpus": 12,
+    "ram_gb": 16.8,
+    "onnxruntime": "1.31.1"
+  },
+  "server_peak_rss_mb": 315.379712,
+  "levels": [
+    {
+      "concurrency": 50,
+      "requests": 10559,
+      "status_codes": {
+        "200": 10559
+      },
+      "throughput_rps": 175.2146279215473,
+      "client": {
+        "n": 10559,
+        "p50": 288.6655000038445,
+        "p90": 398.1120000593366,
+        "p95": 458.78325996454805,
+        "p99": 553.4409339376725,
+        "max": 693.1321000447497
+      },
+      "server": {
+        "n": 10559,
+        "p50": 54.065,
+        "p90": 108.70300000000005,
+        "p95": 149.89800000000014,
+        "p99": 270.89444000000003,
+        "max": 364.212
+      }
+    }
+  ]
+}
