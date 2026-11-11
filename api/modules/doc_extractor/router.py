@@ -9,6 +9,16 @@ service = DocumentExtractor()
 @router.post("", response_model=ExtractionResponse)
 def extract_document_endpoint(req: DocumentExtractionRequest):
     if not req.document_id.strip():
-        raise HTTPException(status_code=400, detail="document_id cannot be empty")
-    return service.extract_document(req.document_id, req.document_type, req.raw_content)
+        raise HTTPException(
+            status_code=400,
+            detail="document_id cannot be empty"
+        )
 
+    content = req.image_base64 or req.raw_content
+
+    return service.extract_document(
+        req.document_id,
+        req.document_type.value,
+        content,
+        is_image=bool(req.image_base64)
+    )

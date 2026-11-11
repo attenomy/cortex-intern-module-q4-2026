@@ -5,3 +5,7 @@ numpy>=1.24.0
 onnxruntime>=1.17.0
 tokenizers>=0.15.0
 -r modules/semantic_cache/requirements.txt
+pycountry>=24.6.1
+torch>=2.0.0
+torchvision>=0.15.0
+pytesseract>=0.3.10

@@ -1,0 +1,26 @@
+{
+  "test_type": "Uvicorn HTTP load test",
+  "endpoint": "POST /api/v1/extract",
+  "total_requests": 100,
+  "concurrency": 20,
+  "warmup_requests": 5,
+  "successful_valid_responses": 100,
+  "failed_or_invalid_responses": 0,
+  "status_counts": {
+    "200": 100
+  },
+  "wall_time_seconds": 1.003,
+  "throughput_requests_per_second": 99.66,
+  "client_latency_ms": {
+    "median": 161.6,
+    "p95": 370.95,
+    "max": 848.82
+  },
+  "service_latency_ms": {
+    "median": 0.09,
+    "p95": 0.11,
+    "max": 0.15
+  },
+  "errors": [],
+  "limitations": "Local Uvicorn HTTP test; excludes external network conditions. "
+}
