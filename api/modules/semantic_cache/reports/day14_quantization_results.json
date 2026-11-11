@@ -1,0 +1,15 @@
+{
+  "timestamp_utc": "2026-11-05T04:04:08.635710+00:00",
+  "device": "cpu",
+  "dimensions": 384,
+  "vector_count": 8,
+  "quantization": "symmetric int8 simulation",
+  "scale": 0.0015330084133893251,
+  "float32_bytes": 12288,
+  "int8_bytes": 3072,
+  "storage_reduction_percent": 75.0,
+  "cosine_similarity_max_absolute_drift": 0.00146917,
+  "cosine_similarity_mean_absolute_drift": 0.00035327,
+  "cosine_similarity_p95_absolute_drift": 0.00114801,
+  "minimum_restored_vector_norm": 0.99949092
+}
