@@ -24,8 +24,9 @@
 
 ## 2. Infrastructure and Security Proof
 
-* **pip-audit history**: the first CI run (44747378034) failed with 59 findings: 17 in filelock 4.1.0 and 42 in Pillow 12.3.0. After the Python 3.11 change and the version constraints, the GitHub checks `Pytest and Security Scan (pull_request)` (successful in 1m) and `Ruff Lint (pull_request)` (successful in 7s) are green. Resolved package versions from the CI log: <FILL FROM ACTIONS LOG>.
-* **Known pip-audit limit**: torch and torchvision `+cpu` wheels cannot be audited by pip-audit because they are not on PyPI. This is documented in `docs/CI_RUNBOOK.md`.
+* **pip-audit history**: the first CI run (44747378034) failed with 59 findings: 17 in filelock 4.1.0 and 42 in Pillow 12.3.0. After the Python 3.11 change and the version constraints, the GitHub checks `Pytest and Security Scan (pull_request)` (successful in 1m) and `Ruff Lint (pull_request)` (successful in 7s) are green.
+* **Resolved versions from the CI log (Python 3.11.18)**: filelock 4.2.4, setuptools 84.2.1, torch 2.15.0+cpu, torchvision 0.29.2+cpu. Pillow version: not shown in the log excerpt. The pip-audit step reports "No known vulnerabilities found".
+* **Known pip-audit limit**: torch and torchvision `+cpu` wheels cannot be audited by pip-audit because they are not on PyPI. The CI log shows both skipped for this reason. This is documented in `docs/CI_RUNBOOK.md`.
 * **Local pip-audit (developer venv)**: 6 findings remain in `datasets 3.6.0` and `setuptools 78.1.0`. Neither is in the project requirements, and CI does a fresh install, so they do not appear in CI. filelock and Pillow are no longer reported locally.
 * **Non-root user, final image size, container CVE scan, healthcheck**: N/A for the Automated CI track. These belong to the Docker track (teammate).
 * **docker-build job (ticket Phase 4, "verify container build")**: deferred. It is not added because the Dockerfile is owned by a teammate and was not verified to build. Docker is not installed on my workstation, so the `python:3.11-slim` change in `api/Dockerfile` is unverified locally.
@@ -41,10 +42,10 @@ Command (local, Windows, Python 3.12.4, pytest 9.2.0, pytest-cov 7.1.0):
 .venv\Scripts\python.exe -m pytest --basetemp=.pytest-tmp-ctx004-r3 -o cache_dir=.pytest-cache-ctx004-r3 --cov=api/modules --cov-report=term-missing -rs
 ```
 
-* **Result**: 168 collected, **138 passed, 30 skipped, 0 failed** in 106.54s.
-* **Skips**: all 30 are intent router tests. The files `model.onnx`, `tokenizer.json`, `labels.json` and `calibration.json` are not committed to git. No test is skipped because of a missing system package or Redis. These 30 tests are also skipped in CI.
+* **Local result**: 168 collected, **138 passed, 30 skipped, 0 failed** in 106.54s.
+* **CI result** (Ubuntu, Python 3.11.18, `pytest --cov=api/modules --cov-report=term-missing -rs`): 168 collected, **138 passed, 30 skipped, 0 failed** in 9.06s.
+* **Skips**: all 30 are intent router tests. The files `model.onnx`, `tokenizer.json`, `labels.json` and `calibration.json` are not committed to git. No test is skipped because of a missing system package or Redis. The same 30 tests are skipped in CI.
 * **Full raw output** (test names, coverage, skip reasons): [CTX-004-pytest.log](CTX-004-pytest.log).
-* **CI test count**: <FILL FROM ACTIONS LOG, "Run Pytest Test Suite" step>.
 * **Lint**: `ruff check api/` reports "All checks passed!".
 
 ---
@@ -52,7 +53,6 @@ Command (local, Windows, Python 3.12.4, pytest 9.2.0, pytest-cov 7.1.0):
 ## 4. Video Demo Walkthrough
 
 * **Video Link**: https://drive.google.com/file/d/1-CyErMA6hpNW4rhujLEKZWRQEA-j1xbU/view?usp=sharing
-* Confirm the link opens in a private window with "Anyone with the link" access: <CHECK BEFORE SUBMISSION>
 
 ---
 
