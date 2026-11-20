@@ -148,7 +148,7 @@ When `pip-audit` detects a CVE in an installed package:
 2. Check whether the package is a direct dependency in `api/requirements.txt` or a sub-module requirements file.
 3. **Primary Remediation (Upgrade)**:
    - If direct, update the version constraint in `api/requirements.txt` to or above the fix version.
-   - If transitive, upgrade it explicitly in `api/requirements.txt` or via a dedicated upgrade step in CI (similar to `pip install --upgrade fsspec`).
+   - If transitive, upgrade it explicitly in `api/requirements.txt` or via a dedicated upgrade step in CI (similar to `pip install --upgrade fsspec "filelock>=4.2.1"`).
 4. **Secondary Remediation (Documented Exception)**:
    - If an upstream fix is unavailable and the vulnerability is non-exploitable in Cortex runtime context, use `--ignore-vuln <VULN_ID>`.
    - Every `--ignore-vuln` flag must be accompanied by a documented exception comment in the workflow detailing the advisory ID, reason for exemption, date, and supervisor sign-off.
