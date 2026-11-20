@@ -2,6 +2,7 @@
 
 > Target branch: `staging`
 > Assigned component: Automated CI
+> Contributor: Abhinav Singh
 > Change: use Python 3.11 in CI and the Docker image, and install patched `filelock` and Pillow versions.
 
 ## 1. Scope and architectural decision
@@ -40,4 +41,4 @@ This run used Windows, Python 3.12.4, pytest 9.2.0, and pytest-cov 7.1.0. It ver
 
 ## 6. Preferred review slot
 
-Sunday, 22 November 2026, 4:00 PM IST.
+Sunday, 22 November 2026, 7:00 PM IST.
