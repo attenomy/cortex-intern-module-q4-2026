@@ -7,166 +7,161 @@
 
 ---
 
-## 1. Executive Summary & Purpose
+## 1. Executive Summary & Pipeline Objective
 
-The Attenomy Cortex CI pipeline provides continuous integration quality gates for every change targeting the `staging` branch. Its primary objectives are:
+The Attenomy Cortex continuous integration (CI) pipeline automates code quality, vulnerability scanning, and regression testing for every change targeting `staging` or `main`.
 
-- Prevent regression of low-latency query routing, cognitive document extraction, semantic caching, ingestion, and telemetry modules.
-- Enforce strict code formatting and linting standards via Ruff with zero warning tolerance.
-- Maintain comprehensive test coverage and publish verifiable coverage artifacts on every run.
-- Guard against known vulnerabilities in upstream dependencies via pip-audit with automated retry handling.
-- Protect staging stability with concurrency-managed, least-privilege automated runs.
+Its primary objectives are:
+- Enforce strict code formatting and linting standards via pinned Ruff 0.17.4.
+- Prevent regressions across query routing, cognitive document extraction, semantic caching, document ingestion, and telemetry modules.
+- Ensure dependency security by auditing installed packages against known CVEs using pip-audit 2.10.1.
+- Accelerate build turnaround via pip caching and lightweight CPU-only PyTorch wheels.
 
 ---
 
-## 2. Pipeline Architecture & Triggers
+## 2. Pipeline Triggers & Concurrency
 
 ### Triggers
-- **Pull Requests**: Any pull request targeting the `staging` branch.
-- **Pushes**: Any direct push to the `staging` branch (such as post-merge).
+The workflow executes on:
+- **Pushes** to `main` and `staging`.
+- **Pull Requests** targeting `main` and `staging`.
 
-### Least-Privilege Security Permissions
-The workflow declares minimal permissions at the root:
+```yaml
+on:
+  push:
+    branches: [ main, staging ]
+  pull_request:
+    branches: [ main, staging ]
+```
+
+### Security Permissions
+Least-privilege permissions are enforced at the top level:
 ```yaml
 permissions:
   contents: read
 ```
-This blocks unauthorized token write access to repo code, releases, packages, or issues.
+This blocks write access to repository contents, releases, packages, and issues.
 
-### Concurrency Control
+### Concurrency Group
 ```yaml
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: cortex-ci-${{ github.ref }}
   cancel-in-progress: true
 ```
-Pushing new commits to an open PR immediately cancels prior in-flight runs, saving runner capacity and preventing stale test reports.
+Subsequent pushes to an active pull request immediately cancel redundant in-flight builds.
 
-### Execution Isolation & Limits
+---
+
+## 3. Jobs and Execution Details
+
+The workflow is divided into two focused jobs:
+
+### Job 1: `lint` (Ruff Lint)
 - **Runner**: `ubuntu-latest`
-- **Timeout**: `timeout-minutes: 15` prevents hung jobs from consuming minutes.
-- **Service Containers**: `redis:7-alpine` is provisioned on port 6379 with automated healthchecks (`redis-cli ping`).
+- **Timeout**: 10 minutes
+- **Environment**: Python 3.10
+- **Tool**: Pinned `ruff==0.17.4`
+- **Command**: `ruff check api/`
+- **Objective**: Verifies compliance with import order, syntax, and coding standards defined in `pyproject.toml`.
+
+### Job 2: `test` (Pytest and Security Scan)
+- **Runner**: `ubuntu-latest`
+- **Timeout**: 30 minutes
+- **Environment**: Python 3.10 with pip caching keyed on:
+  - `api/requirements.txt`
+  - `api/modules/semantic_cache/requirements.txt`
+- **Step 1: Install Dependencies**:
+  - Upgrades `pip`, `setuptools`, and `wheel`.
+  - Installs lightweight CPU-only PyTorch and torchvision wheels via `--index-url https://download.pytorch.org/whl/cpu` to avoid downloading multi-gigabyte CUDA binaries.
+  - Installs dependencies from `api/requirements.txt`.
+  - Upgrades `fsspec` to resolve known transitive vulnerabilities.
+  - Installs `pytest`, `pytest-cov`, `httpx`, and pinned `pip-audit==2.10.1`.
+- **Step 2: Security Scan with pip-audit**:
+  - Scans all installed packages against the OSV and PyPI vulnerability databases.
+- **Step 3: Run Pytest Test Suite**:
+  - Executes `pytest --cov=api/modules --cov-report=term-missing -rs`.
 
 ---
 
-## 3. Pipeline Steps in Execution Order
+## 4. How to Run the Same Checks Locally
 
-1. **Checkout Code**: Uses `actions/checkout@v4` to pull repository history.
-2. **Set up Python 3.12**: Uses `actions/setup-python@v5` with pip caching enabled to accelerate repeat builds.
-3. **Install Dependencies**:
-   - Upgrades `pip` to latest.
-   - Installs runtime dependencies from `api/requirements.txt` (including explicit `redis>=5.0.0,<7.0.0` and sub-module dependencies).
-   - Installs testing, linting, and audit toolchains: `pytest`, `pytest-cov`, `httpx`, `ruff`, and pinned `pip-audit>=2.7`.
-4. **Lint Code with Ruff**:
-   - Executes `ruff check api/`.
-   - Enforces rules defined in `pyproject.toml` (E, F, W, I, N, UP, B, C4).
-5. **Run Pytest Test Suite with Coverage**:
-   - Sets `REDIS_URL: redis://localhost:6379/0`.
-   - Executes `pytest -v --cov=api --cov-report=term --cov-report=xml:coverage.xml --cov-report=html:coverage_html`.
-   - Produces machine-readable XML and interactive HTML coverage reports.
-6. **Upload Coverage Report Artifacts**:
-   - Uses `actions/upload-artifact@v4` with `if: always()` to preserve coverage artifacts even if assertions fail.
-   - Retains artifacts for 14 days.
-7. **Security Audit with pip-audit**:
-   - Scans all installed packages against the OSV advisory database.
-   - Uses a 3-attempt retry loop with 10-second exponential pause to absorb transient network glitches.
-   - Exits with a fatal non-zero code if any known unpatched CVE is identified.
+Always run and verify these checks on your machine before pushing commits:
 
----
-
-## 4. How to Read and Triage Failures
-
-When a CI run fails, GitHub Actions marks the job with a red cross. Click into the job details and inspect the failing step:
-
-### A. Linting Failure (`Lint Code with Ruff`)
-- **Symptom**: Step exits with code 1 and outputs file paths with rule codes (e.g. `I001`, `F401`).
-- **Diagnosis**: Imports are unsorted, unused variables exist, or syntax violates formatting guidelines.
-- **Remediation**: Run locally:
-  ```powershell
-  .venv\Scripts\python -m ruff check api/ --fix
-  ```
-  Review changes, commit, and push.
-
-### B. Unit or Integration Test Failure (`Run Pytest Test Suite with Coverage`)
-- **Symptom**: Pytest outputs `FAILURES` with stack traces and assertion differences.
-- **Diagnosis**: A code change broke contract expectations, schema validation, or error handling.
-- **Remediation**: Run the failing test file locally:
-  ```powershell
-  .venv\Scripts\python -m pytest api/modules/<module_name>/tests/<test_file>.py -v
-  ```
-  Fix the underlying logic or update mock data if contract specifications changed legitimately.
-
-### C. Dependency or Security Audit Failure (`Security Audit with pip-audit`)
-- **Symptom**: pip-audit reports known CVEs with package names and advisory IDs.
-- **Diagnosis**: A pinned dependency in `api/requirements.txt` has a disclosed vulnerability.
-- **Remediation**:
-  1. Inspect the advisory URL printed in the CI console.
-  2. Identify the patched version of the library.
-  3. Update `api/requirements.txt` to the patched version.
-  4. Verify locally that no dependency resolver conflicts arise.
-
-### D. Flaky Network or Transient Step Error
-- **Symptom**: Connection timeout during package installation or advisory lookup.
-- **Diagnosis**: Transient GitHub runner network disconnect or PyPI rate limiting.
-- **Remediation**: The pip-audit step retries up to 3 times automatically. If setup-python or pip install fails due to GitHub infrastructure outages, rerun the workflow.
-
----
-
-## 5. How to Rerun the Pipeline
-
-### Via GitHub Web UI
-1. Navigate to the **Actions** tab in the repository: `https://github.com/attenomy/cortex-intern-module-q4-2026/actions`.
-2. Select **Attenomy Cortex CI Pipeline** from the left sidebar.
-3. Click on the failing run.
-4. Click the **Re-run jobs** button in the upper right corner, then choose **Re-run all jobs** or **Re-run failed jobs**.
-
-### Via GitHub CLI (`gh`)
-```bash
-gh run list --workflow=cortex-ci.yml
-gh run rerun <run-id> --failed
-```
-
-### Local Reproduction Before Rerunning
-Always reproduce and verify locally before triggering CI runs:
 ```powershell
-# 1. Activate environment
+# 1. Activate your virtual environment
 .venv\Scripts\activate
 
-# 2. Check linting
+# 2. Run Ruff linting
 .venv\Scripts\python -m ruff check api/
 
-# 3. Run full test suite
-.venv\Scripts\python -m pytest -q
+# 3. Run the full test suite with module coverage and skip reporting
+.venv\Scripts\python -m pytest --cov=api/modules -q -rs
 
-# 4. Check requirements
-.venv\Scripts\python -m pip install -r api/requirements.txt
+# 4. Run pip-audit security scan
+.venv\Scripts\pip-audit.exe
 ```
 
 ---
 
-## 6. How to Add a New Check to the Pipeline
+## 5. How to Read and Triage a Red Run
 
-To add a new quality check (such as type checking with mypy, bandit security scanning, or docs validation):
+When a CI run fails, click the red cross on GitHub Actions and inspect the failing job:
 
-1. **Locate Workflow File**: Open `.github/workflows/cortex-ci.yml`.
-2. **Install Tooling**: If the tool requires a new package, add it to the `Install Dependencies` step.
-3. **Insert Job Step**: Add the new step in the appropriate logical order. For example:
-   ```yaml
-   - name: Run Static Security Analysis (Bandit)
-     run: |
-       bandit -r api/ -x api/tests,api/modules/*/tests
-   ```
-4. **Local Verification**: Execute the tool locally in `.venv` and verify it exits cleanly with code 0.
-5. **Document in Runbook**: Update Section 3 of this runbook to describe the purpose and remediation protocol for the new check.
+### A. Failure in `lint` (Ruff)
+- **Indicator**: Step `Lint Code with Ruff` exits with code 1, listing file names and error codes (e.g. `I001` unsorted imports, `F401` unused import).
+- **Remediation**: Run `.venv\Scripts\python -m ruff check api/ --fix` locally, review diffs, commit, and push.
+
+### B. Failure in `test` (pip-audit)
+- **Indicator**: Step `Security Scan with pip-audit` reports a table of package names, vulnerability IDs, and fix versions.
+- **Remediation**: See Section 7 on handling pip-audit findings below.
+
+### C. Failure in `test` (Pytest)
+- **Indicator**: Step `Run Pytest Test Suite` prints failing test names with assertion tracebacks.
+- **Remediation**: Run the specific test locally:
+  ```powershell
+  .venv\Scripts\python -m pytest api/modules/<module>/tests/<test_file>.py -v
+  ```
+  Investigate logic regressions, mock mismatches, or schema deviations.
 
 ---
 
-## 7. Standards & Compliance Checklist
+## 6. How to Refresh the Pip Cache
 
-- [x] Workflow triggers on `pull_request` targeting `staging` and `push` to `staging`.
-- [x] Least-privilege permissions (`contents: read`) enforced.
-- [x] Concurrency group enabled with `cancel-in-progress: true`.
-- [x] Python 3.12 with pip caching configured.
-- [x] Redis service container provisioned with healthcheck.
-- [x] Coverage reports generated in XML and HTML and archived as workflow artifacts.
-- [x] Pinned `pip-audit>=2.7` with automated retry loop.
-- [x] Zero em dashes and zero en dashes present across code, comments, and documentation.
+GitHub Actions caches pip downloads based on hash keys of:
+- `api/requirements.txt`
+- `api/modules/semantic_cache/requirements.txt`
+
+If a cached wheel is corrupted or dependencies drift without file modification:
+1. **Automated Refresh via File Update**: Adding or modifying a pin in `api/requirements.txt` changes the cache key, triggering a fresh download.
+2. **Manual Cache Deletion via GitHub UI**:
+   - Go to repository **Actions** -> **Caches** (in the left management sidebar).
+   - Locate the cache prefixed with `cortex-ci-` or `Linux-pip-`.
+   - Click the trash icon to delete the cache entry.
+   - The next workflow run will rebuild the pip cache from scratch.
+
+---
+
+## 7. How to Handle a pip-audit Finding
+
+When `pip-audit` detects a CVE in an installed package:
+1. Review the output table containing package name, current version, advisory ID, and fix version.
+2. Check whether the package is a direct dependency in `api/requirements.txt` or a sub-module requirements file.
+3. If direct, update the version constraint in `api/requirements.txt` to or above the fix version.
+4. If transitive, upgrade it explicitly in `api/requirements.txt` or via a dedicated upgrade step (similar to `pip install --upgrade fsspec`).
+5. Run `.venv\Scripts\pip-audit.exe` locally to confirm the advisory is cleared and zero conflicts exist.
+
+---
+
+## 8. Known Limitations & Edge Cases
+
+### CPU PyTorch Wheels and pip-audit
+- PyTorch and torchvision CPU wheels are fetched from `https://download.pytorch.org/whl/cpu` and bear local version suffixes such as `torch (2.15.0+cpu)` and `torchvision (0.29.2+cpu)`.
+- Because local build tags (`+cpu`) do not match standard PyPI release names, `pip-audit` skips them with:
+  `Dependency not found on PyPI and could not be audited: torch (2.15.0+cpu)`
+- This is normal and expected behavior for CPU wheels; pip-audit logs the skip in its summary table without failing the build.
+
+### Docker Build Job Status (Why Docker Job is Not Added Yet)
+- Ticket CTX-004 covers Docker hardening under a teammate's track.
+- `api/Dockerfile` currently has `COPY requirements.txt .` before copying `modules/`, causing `pip install -r requirements.txt` to fail during build because `-r modules/semantic_cache/requirements.txt` is not yet available in the build context.
+- Furthermore, the multi-stage non-root user `USER attenomy` (UID 10001) and healthchecks have not yet landed from the container track.
+- Therefore, the `docker-build` job must not be added to CI until the teammate container hardening PR is merged.
