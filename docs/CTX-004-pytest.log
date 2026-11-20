@@ -1,6 +1,6 @@
 ﻿============================= test session starts =============================
 platform win32 -- Python 3.12.4, pytest-9.2.0, pluggy-1.7.0 -- E:\Projects\cortex-intern-module-q4-2026\.venv\Scripts\python.exe
-cachedir: .pytest-cache-ctx004
+cachedir: .pytest-cache-ctx004-r3
 rootdir: E:\Projects\cortex-intern-module-q4-2026
 configfile: pytest.ini (WARNING: ignoring pytest config in pyproject.toml!)
 testpaths: api/tests, api/modules
@@ -257,4 +257,4 @@ SKIPPED [1] api\modules\intent_router\tests\test_intent_router.py:254: Model not
 SKIPPED [2] api\modules\intent_router\tests\test_intent_router.py:264: Model not loaded: put model.onnx, tokenizer.json, labels.json and calibration.json in api/modules/intent_router/models/
 SKIPPED [1] api\modules\intent_router\tests\test_intent_router.py:280: Model not loaded: put model.onnx, tokenizer.json, labels.json and calibration.json in api/modules/intent_router/models/
 SKIPPED [1] api\modules\intent_router\tests\test_intent_router.py:298: Model not loaded: put model.onnx, tokenizer.json, labels.json and calibration.json in api/modules/intent_router/models/
-================= 138 passed, 30 skipped in 106.98s (0:01:46) =================
+================= 138 passed, 30 skipped in 106.54s (0:01:46) =================

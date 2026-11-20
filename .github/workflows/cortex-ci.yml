@@ -23,10 +23,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.10
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Install Ruff
         run: python -m pip install ruff==0.17.4
@@ -43,10 +43,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.10
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
           cache: "pip"
           cache-dependency-path: |
             api/requirements.txt
@@ -58,7 +58,6 @@ jobs:
           pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
           pip install -r api/requirements.txt
           pip install --upgrade fsspec
-          pip install "filelock<=4.1.0"
           pip install pytest pytest-cov httpx pip-audit==2.10.1
 
       - name: Security Scan with pip-audit

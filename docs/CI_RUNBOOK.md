@@ -59,7 +59,7 @@ The workflow is divided into two focused jobs:
 ### Job 1: `lint` (Ruff Lint)
 - **Runner**: `ubuntu-latest`
 - **Timeout**: 10 minutes
-- **Environment**: Python 3.10
+- **Environment**: Python 3.11
 - **Tool**: Pinned `ruff==0.17.4`
 - **Command**: `ruff check api/`
 - **Objective**: Verifies compliance with import order, syntax, and coding standards defined in `pyproject.toml`.
@@ -67,7 +67,7 @@ The workflow is divided into two focused jobs:
 ### Job 2: `test` (Pytest and Security Scan)
 - **Runner**: `ubuntu-latest`
 - **Timeout**: 30 minutes
-- **Environment**: Python 3.10 with pip caching keyed on:
+- **Environment**: Python 3.11 with pip caching keyed on:
   - `api/requirements.txt`
   - `api/modules/semantic_cache/requirements.txt`
 - **Step 1: Install Dependencies**:
@@ -75,6 +75,7 @@ The workflow is divided into two focused jobs:
   - Installs lightweight CPU-only PyTorch and torchvision wheels via `--index-url https://download.pytorch.org/whl/cpu` to avoid downloading multi-gigabyte CUDA binaries.
   - Installs dependencies from `api/requirements.txt`.
   - Upgrades `fsspec` to resolve known transitive vulnerabilities.
+  - Uses the `filelock>=4.2.1` and `Pillow>=13.0.0` constraints in `api/requirements.txt` to select versions containing the fixes reported by pip-audit.
   - Installs `pytest`, `pytest-cov`, `httpx`, and pinned `pip-audit==2.10.1`.
 - **Step 2: Security Scan with pip-audit**:
   - Scans all installed packages against the OSV and PyPI vulnerability databases.
@@ -160,9 +161,9 @@ When `pip-audit` detects a CVE in an installed package:
 ## 8. Known Limitations & Edge Cases
 ### pip-audit Findings in CI Run 44747378034
 - The run flagged pillow 12.3.0 and filelock 4.1.0. Both are transitive dependencies (torchvision and pytesseract bring in pillow, torch brings in filelock).
-- The CI workflow constrains `filelock` to `<=4.1.0` for the Python 3.10 compatibility correction. The local full pytest suite passes with 138 passed and 30 model-dependent skips (Python 3.12.4); this does not verify the CI dependency install or pip-audit result. Confirm the Python 3.10 install and security scan in GitHub Actions.
-- The Docker image installs from requirements.txt and is not covered by this CI-only upgrade.
-- A local virtual environment can show datasets and an old setuptools in pip-audit. CI does a fresh install, so these do not appear there.
+- CI reported vulnerabilities in `filelock 4.1.0` and `pillow 12.3.0`. Their reported fixed releases require Python 3.11 or newer, so both CI and the Docker base image now use Python 3.11. `api/requirements.txt` constrains `filelock` to at least 4.2.1 and Pillow to at least 13.0.0; confirm the resolved versions and pip-audit result in GitHub Actions.
+- The same fixed version constraints are in `api/requirements.txt`, which the Docker image installs. The Docker image build has not been verified as part of this correction.
+- This local developer virtual environment reports additional `datasets` and `setuptools` findings. They are not declared by `api/requirements.txt`; the clean CI install should be checked independently.
 
 ### Intent Router Model Test Skips (30 Tests Skipped)
 - The test suite reports 138 passed and 30 skipped.
@@ -171,10 +172,10 @@ When `pip-audit` detects a CVE in an installed package:
 - Pytest decorators skip these tests when the model file is not present. This skip behavior is expected both locally and in CI.
 - No tests skip due to missing system packages (such as tesseract-ocr) or services (such as Redis).
 
-### Python Version Discrepancy (CI 3.10 vs Local 3.12)
-- CI jobs execute under Python 3.10 to align with the production container base image (`python:3.10-slim`).
+### Python Version Discrepancy (CI/Docker 3.11 vs Local 3.12)
+- CI jobs execute under Python 3.11 to align with the production container base image (`python:3.11-slim`).
 - Local developer environments may run Python 3.12 (e.g. Windows virtual environments).
-- Both versions are supported by `pyproject.toml` (`requires-python = ">=3.10"`). When debugging environment-specific dependency issues, verify packages against Python 3.10 constraints.
+- Python 3.11 is supported by `pyproject.toml` (`requires-python = ">=3.10"`). When debugging environment-specific dependency issues, verify packages against Python 3.11 constraints.
 
 ### CPU PyTorch Wheels and pip-audit
 - PyTorch and torchvision CPU wheels are fetched from `https://download.pytorch.org/whl/cpu` and bear local version suffixes such as `torch (2.15.0+cpu)` and `torchvision (0.29.2+cpu)`.
