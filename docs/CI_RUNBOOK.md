@@ -71,7 +71,7 @@ The workflow is divided into two focused jobs:
   - `api/requirements.txt`
   - `api/modules/semantic_cache/requirements.txt`
 - **Step 1: Install Dependencies**:
-  - Upgrades `pip`, `setuptools`, and `wheel`.
+  - Upgrades `pip` and `wheel`, and installs `setuptools>=84.1.0` to satisfy the pip-audit security fix floor.
   - Installs lightweight CPU-only PyTorch and torchvision wheels via `--index-url https://download.pytorch.org/whl/cpu` to avoid downloading multi-gigabyte CUDA binaries.
   - Installs dependencies from `api/requirements.txt`.
   - Upgrades `fsspec` to resolve known transitive vulnerabilities.

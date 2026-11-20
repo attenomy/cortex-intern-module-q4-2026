@@ -6,7 +6,7 @@
 
 ## 1. Scope and architectural decision
 
-The failing security scan showed that the Python 3.10 environment resolved vulnerable `filelock 4.1.0` and `pillow 12.3.0`. Their fixed releases require Python 3.11 or newer, so both CI and the Docker base image now target Python 3.11. `api/requirements.txt` constrains `filelock>=4.2.1` and `Pillow>=13.0.0`, so both CI and Docker resolve fixed releases.
+The failing security scan showed that the Python 3.10 environment resolved vulnerable `filelock 4.1.0` and `pillow 12.3.0`. Their fixed releases require Python 3.11 or newer, so both CI and the Docker base image now target Python 3.11. `api/requirements.txt` constrains `filelock>=4.2.1` and `Pillow>=13.0.0`, so both CI and Docker resolve fixed releases. CI also enforces `setuptools>=84.1.0` before dependency installation.
 
 ## 2. Infrastructure and security proof
 
