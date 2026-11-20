@@ -148,7 +148,7 @@ When `pip-audit` detects a CVE in an installed package:
 2. Check whether the package is a direct dependency in `api/requirements.txt` or a sub-module requirements file.
 3. **Primary Remediation (Upgrade)**:
    - If direct, update the version constraint in `api/requirements.txt` to or above the fix version.
-   - If transitive, upgrade it explicitly in `api/requirements.txt` or via a dedicated upgrade step in CI (similar to `pip install --upgrade fsspec "filelock>=4.2.1"`).
+   - If transitive, upgrade it explicitly in `api/requirements.txt` or via a dedicated install step in CI. Check the selected version against the CI Python version and rerun the security scan after changing a constraint.
 4. **Secondary Remediation (Documented Exception)**:
    - If an upstream fix is unavailable and the vulnerability is non-exploitable in Cortex runtime context, use `--ignore-vuln <VULN_ID>`.
    - Every `--ignore-vuln` flag must be accompanied by a documented exception comment in the workflow detailing the advisory ID, reason for exemption, date, and supervisor sign-off.
@@ -160,7 +160,7 @@ When `pip-audit` detects a CVE in an installed package:
 ## 8. Known Limitations & Edge Cases
 ### pip-audit Findings in CI Run 44747378034
 - The run flagged pillow 12.3.0 and filelock 4.1.0. Both are transitive dependencies (torchvision and pytesseract bring in pillow, torch brings in filelock).
-- The CI install step now upgrades them explicitly. This is not yet confirmed by a new green run: <FILL FROM REAL RUN>.
+- The CI workflow constrains `filelock` to `<=4.1.0` for the Python 3.10 compatibility correction. The local full pytest suite passes with 138 passed and 30 model-dependent skips (Python 3.12.4); this does not verify the CI dependency install or pip-audit result. Confirm the Python 3.10 install and security scan in GitHub Actions.
 - The Docker image installs from requirements.txt and is not covered by this CI-only upgrade.
 - A local virtual environment can show datasets and an old setuptools in pip-audit. CI does a fresh install, so these do not appear there.
 
