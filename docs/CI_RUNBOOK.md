@@ -158,11 +158,16 @@ When `pip-audit` detects a CVE in an installed package:
 ---
 
 ## 8. Known Limitations & Edge Cases
+### pip-audit Findings in CI Run 44747378034
+- The run flagged pillow 12.3.0 and filelock 4.1.0. Both are transitive dependencies (torchvision and pytesseract bring in pillow, torch brings in filelock).
+- The CI install step now upgrades them explicitly. This is not yet confirmed by a new green run: <FILL FROM REAL RUN>.
+- The Docker image installs from requirements.txt and is not covered by this CI-only upgrade.
+- A local virtual environment can show datasets and an old setuptools in pip-audit. CI does a fresh install, so these do not appear there.
 
 ### Intent Router Model Test Skips (30 Tests Skipped)
 - The test suite reports 138 passed and 30 skipped.
 - All 30 skipped tests originate from `api/tests/test_router.py` (3 tests) and `api/modules/intent_router/tests/test_intent_router.py` (27 tests).
-- Skip Reason: `model.onnx` (a 90MB binary), `tokenizer.json`, `labels.json`, and `calibration.json` are not committed to git (awaiting Git LFS or release asset hosting decision).
+- Skip Reason: `model.onnx`, `tokenizer.json`, `labels.json`, and `calibration.json` are not committed to git.
 - Pytest decorators skip these tests when the model file is not present. This skip behavior is expected both locally and in CI.
 - No tests skip due to missing system packages (such as tesseract-ocr) or services (such as Redis).
 
