@@ -86,7 +86,7 @@ Days 16-18: Pre-Warmed Lifespan & CI Tests -> Days 19-20: Docker & EDPR -> Day 2
     ```
 
 * **Days 19 to 20 (Thu-Fri): Multi-Stage Dockerfile, Profiling & Evidence-Driven PR**
-  * **Containerization**: Author multi-stage slim Dockerfile (`python:3.10-slim`) enforcing non-root user execution (`USER attenomy`, UID 10001), layer caching, and single-command startup.
+  * **Containerization**: Author multi-stage slim Dockerfile (`python:3.11-slim`) enforcing non-root user execution (`USER attenomy`, UID 10001), layer caching, and single-command startup.
   * **Prometheus Metrics**: Expose `GET /metrics` returning request counts and tail latency percentiles (p50, p95, p99).
   * **Latency Profiling**: Execute local load benchmark using Locust or cProfile, capturing verifiable proof that p95 latency remains strictly `< 50ms` on CPU.
   * **Video Walkthrough**: Record a 60-90 second Loom demo walking through terminal test execution, curl endpoint responses, and error-handling paths.
