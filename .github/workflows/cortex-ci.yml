@@ -57,7 +57,8 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
           pip install -r api/requirements.txt
-          pip install --upgrade fsspec "pillow>=13.0.0" "filelock>=4.2.1"
+          pip install --upgrade fsspec
+          pip install --upgrade "filelock>=4.2.1"
           pip install pytest pytest-cov httpx pip-audit==2.10.1
 
       - name: Security Scan with pip-audit
