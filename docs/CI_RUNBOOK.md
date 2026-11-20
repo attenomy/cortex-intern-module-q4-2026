@@ -146,13 +146,30 @@ If a cached wheel is corrupted or dependencies drift without file modification:
 When `pip-audit` detects a CVE in an installed package:
 1. Review the output table containing package name, current version, advisory ID, and fix version.
 2. Check whether the package is a direct dependency in `api/requirements.txt` or a sub-module requirements file.
-3. If direct, update the version constraint in `api/requirements.txt` to or above the fix version.
-4. If transitive, upgrade it explicitly in `api/requirements.txt` or via a dedicated upgrade step (similar to `pip install --upgrade fsspec`).
+3. **Primary Remediation (Upgrade)**:
+   - If direct, update the version constraint in `api/requirements.txt` to or above the fix version.
+   - If transitive, upgrade it explicitly in `api/requirements.txt` or via a dedicated upgrade step in CI (similar to `pip install --upgrade fsspec`).
+4. **Secondary Remediation (Documented Exception)**:
+   - If an upstream fix is unavailable and the vulnerability is non-exploitable in Cortex runtime context, use `--ignore-vuln <VULN_ID>`.
+   - Every `--ignore-vuln` flag must be accompanied by a documented exception comment in the workflow detailing the advisory ID, reason for exemption, date, and supervisor sign-off.
+   - Never quietly ignore vulnerabilities or add packages like `datasets` (which is not part of production requirements) to ignore lists.
 5. Run `.venv\Scripts\pip-audit.exe` locally to confirm the advisory is cleared and zero conflicts exist.
 
 ---
 
 ## 8. Known Limitations & Edge Cases
+
+### Intent Router Model Test Skips (30 Tests Skipped)
+- The test suite reports 138 passed and 30 skipped.
+- All 30 skipped tests originate from `api/tests/test_router.py` (3 tests) and `api/modules/intent_router/tests/test_intent_router.py` (27 tests).
+- Skip Reason: `model.onnx` (a 90MB binary), `tokenizer.json`, `labels.json`, and `calibration.json` are not committed to git (awaiting Git LFS or release asset hosting decision).
+- Pytest decorators skip these tests when the model file is not present. This skip behavior is expected both locally and in CI.
+- No tests skip due to missing system packages (such as tesseract-ocr) or services (such as Redis).
+
+### Python Version Discrepancy (CI 3.10 vs Local 3.12)
+- CI jobs execute under Python 3.10 to align with the production container base image (`python:3.10-slim`).
+- Local developer environments may run Python 3.12 (e.g. Windows virtual environments).
+- Both versions are supported by `pyproject.toml` (`requires-python = ">=3.10"`). When debugging environment-specific dependency issues, verify packages against Python 3.10 constraints.
 
 ### CPU PyTorch Wheels and pip-audit
 - PyTorch and torchvision CPU wheels are fetched from `https://download.pytorch.org/whl/cpu` and bear local version suffixes such as `torch (2.15.0+cpu)` and `torchvision (0.29.2+cpu)`.
