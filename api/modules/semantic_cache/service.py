@@ -12,6 +12,7 @@ from typing import Any
 
 import numpy as np
 import redis
+from modules.telemetry_obs.service import record_cache_hit
 
 
 class SemanticCacheService:
@@ -20,12 +21,12 @@ class SemanticCacheService:
     def __init__(self, redis_url: str | None = None):
         self.redis_url = redis_url or os.getenv(
             "REDIS_URL",
-            "redis://localhost:6379/0"
+            "redis://localhost:6379/0",
         )
 
         self.model_name = os.getenv(
             "SEMANTIC_CACHE_MODEL",
-            "sentence-transformers/all-MiniLM-L6-v2"
+            "sentence-transformers/all-MiniLM-L6-v2",
         )
 
         self.dimensions = int(
@@ -75,7 +76,7 @@ class SemanticCacheService:
             socket_connect_timeout=0.5,
             socket_timeout=0.5,
             retry_on_timeout=False,
-            health_check_interval=30
+            health_check_interval=30,
         )
 
     # --------------------------------------------------
@@ -108,7 +109,7 @@ class SemanticCacheService:
         query: str,
         ttl_seconds: int | None = None,
         wait_timeout_seconds: float | None = None,
-        poll_interval_seconds: float | None = None
+        poll_interval_seconds: float | None = None,
     ) -> str | None:
         """
         Acquire a distributed Redis lock for a normalized query.
@@ -163,7 +164,7 @@ class SemanticCacheService:
                     lock_key,
                     ownership_token,
                     nx=True,
-                    ex=ttl
+                    ex=ttl,
                 )
 
                 self.is_connected = True
@@ -181,14 +182,12 @@ class SemanticCacheService:
             if remaining <= 0:
                 return None
 
-            time.sleep(
-                min(poll_interval, remaining)
-            )
+            time.sleep(min(poll_interval, remaining))
 
     def release_query_lock(
         self,
         query: str,
-        ownership_token: str
+        ownership_token: str,
     ) -> bool:
         """
         Release a lock only when the supplied token owns it.
@@ -217,7 +216,7 @@ class SemanticCacheService:
                 release_script,
                 1,
                 lock_key,
-                ownership_token
+                ownership_token,
             )
 
             self.is_connected = True
@@ -235,7 +234,7 @@ class SemanticCacheService:
         query: str,
         ttl_seconds: int | None = None,
         wait_timeout_seconds: float | None = None,
-        poll_interval_seconds: float | None = None
+        poll_interval_seconds: float | None = None,
     ) -> Iterator[bool]:
         """
         Context manager for distributed query coordination.
@@ -249,7 +248,7 @@ class SemanticCacheService:
             query=query,
             ttl_seconds=ttl_seconds,
             wait_timeout_seconds=wait_timeout_seconds,
-            poll_interval_seconds=poll_interval_seconds
+            poll_interval_seconds=poll_interval_seconds,
         )
 
         acquired = token is not None
@@ -259,10 +258,7 @@ class SemanticCacheService:
 
         finally:
             if acquired:
-                self.release_query_lock(
-                    query,
-                    token
-                )
+                self.release_query_lock(query, token)
 
     # --------------------------------------------------
     # EMBEDDING MODEL
@@ -274,12 +270,11 @@ class SemanticCacheService:
         if self._model is None:
             with self._model_lock:
                 if self._model is None:
-
                     from sentence_transformers import SentenceTransformer
 
                     model = SentenceTransformer(
                         self.model_name,
-                        device="cpu"
+                        device="cpu",
                     )
 
                     if (
@@ -302,13 +297,10 @@ class SemanticCacheService:
         vector = model.encode(
             query,
             convert_to_numpy=True,
-            normalize_embeddings=True
+            normalize_embeddings=True,
         )
 
-        vector = np.asarray(
-            vector,
-            dtype=np.float32
-        )
+        vector = np.asarray(vector, dtype=np.float32)
 
         if vector.shape != (self.dimensions,):
             raise ValueError("Invalid embedding dimensions.")
@@ -323,6 +315,7 @@ class SemanticCacheService:
         Load the embedding model and execute a sample inference.
         Does not create or modify Redis cache entries.
         """
+
         self._embed(
             "Attenomy Cortex semantic cache startup warm-up"
         )
@@ -336,7 +329,7 @@ class SemanticCacheService:
         latency_ms: float,
         embedding_latency_ms: float = 0.0,
         redis_latency_ms: float = 0.0,
-        timings: dict[str, float] | None = None
+        timings: dict[str, float] | None = None,
     ) -> dict[str, Any]:
 
         result = {
@@ -346,7 +339,7 @@ class SemanticCacheService:
             "cached_payload": None,
             "latency_ms": latency_ms,
             "embedding_latency_ms": embedding_latency_ms,
-            "redis_latency_ms": redis_latency_ms
+            "redis_latency_ms": redis_latency_ms,
         }
 
         if timings is not None:
@@ -361,7 +354,7 @@ class SemanticCacheService:
     def lookup(
         self,
         query: str,
-        threshold: float = 0.95
+        threshold: float = 0.95,
     ) -> dict[str, Any]:
 
         started = time.perf_counter()
@@ -372,7 +365,7 @@ class SemanticCacheService:
             "metadata_pipeline_ms": 0.0,
             "similarity_calculation_ms": 0.0,
             "counter_update_ms": 0.0,
-            "cleanup_ms": 0.0
+            "cleanup_ms": 0.0,
         }
 
         embedding_latency_ms = 0.0
@@ -382,10 +375,7 @@ class SemanticCacheService:
             query = query.strip()
 
             if not query:
-                return self._empty_result(
-                    0.0,
-                    timings=timings
-                )
+                return self._empty_result(0.0, timings=timings)
 
             # STEP 1: Exact-query lookup.
 
@@ -408,22 +398,25 @@ class SemanticCacheService:
                 exact_script,
                 2,
                 exact_key,
-                self.hits_key
+                self.hits_key,
             )
 
             timings["exact_lookup_ms"] = round(
                 (time.perf_counter() - stage_started) * 1000,
-                3
+                3,
             )
 
             self.is_connected = True
 
             if exact_json is not None:
+                # Update Prometheus cache-hit counter.
+                record_cache_hit()
+
                 metadata = json.loads(exact_json)
 
                 elapsed_ms = round(
                     (time.perf_counter() - started) * 1000,
-                    3
+                    3,
                 )
 
                 return {
@@ -434,7 +427,7 @@ class SemanticCacheService:
                     "latency_ms": elapsed_ms,
                     "embedding_latency_ms": 0.0,
                     "redis_latency_ms": timings["exact_lookup_ms"],
-                    "timings": timings
+                    "timings": timings,
                 }
 
             # STEP 2: Generate query embedding.
@@ -445,7 +438,7 @@ class SemanticCacheService:
 
             embedding_latency_ms = round(
                 (time.perf_counter() - stage_started) * 1000,
-                3
+                3,
             )
 
             # STEP 3: Prepare Redis VSIM command.
@@ -463,20 +456,18 @@ class SemanticCacheService:
                 *vector_values,
                 "COUNT",
                 "20",
-                "WITHSCORES"
+                "WITHSCORES",
             ]
 
             # STEP 4: Execute vector similarity search.
 
             stage_started = time.perf_counter()
 
-            results = self.redis_client.execute_command(
-                *command
-            )
+            results = self.redis_client.execute_command(*command)
 
             timings["vsim_ms"] = round(
                 (time.perf_counter() - stage_started) * 1000,
-                3
+                3,
             )
 
             entry_ids = [
@@ -498,15 +489,13 @@ class SemanticCacheService:
                 ) as pipe:
 
                     for entry_id in entry_ids:
-                        pipe.get(
-                            self.entry_prefix + entry_id
-                        )
+                        pipe.get(self.entry_prefix + entry_id)
 
                     metadata_jsons = pipe.execute()
 
             timings["metadata_pipeline_ms"] = round(
                 (time.perf_counter() - stage_started) * 1000,
-                3
+                3,
             )
 
             # STEP 6: Validate metadata and calculate similarity.
@@ -531,18 +520,14 @@ class SemanticCacheService:
                     metadata = json.loads(metadata_json)
 
                     if not isinstance(metadata, dict):
-                        raise ValueError(
-                            "Invalid cache metadata."
-                        )
+                        raise ValueError("Invalid cache metadata.")
 
                     cached_vector = np.asarray(
                         metadata["embedding"],
-                        dtype=np.float32
+                        dtype=np.float32,
                     )
 
-                    if cached_vector.shape != (
-                        self.dimensions,
-                    ):
+                    if cached_vector.shape != (self.dimensions,):
                         raise ValueError(
                             "Invalid cached vector dimensions."
                         )
@@ -552,32 +537,19 @@ class SemanticCacheService:
                             "Cached vector contains invalid values."
                         )
 
-                    if not isinstance(
-                        metadata.get("payload"),
-                        dict
-                    ):
-                        raise ValueError(
-                            "Invalid cached payload."
-                        )
+                    if not isinstance(metadata.get("payload"), dict):
+                        raise ValueError("Invalid cached payload.")
 
-                    if not isinstance(
-                        metadata.get("query"),
-                        str
-                    ):
-                        raise ValueError(
-                            "Invalid cached query."
-                        )
+                    if not isinstance(metadata.get("query"), str):
+                        raise ValueError("Invalid cached query.")
 
                     cosine_score = float(
-                        np.dot(
-                            query_vector,
-                            cached_vector
-                        )
+                        np.dot(query_vector, cached_vector)
                     )
 
                     cosine_score = max(
                         -1.0,
-                        min(1.0, cosine_score)
+                        min(1.0, cosine_score),
                     )
 
                     if cosine_score > best_score:
@@ -588,14 +560,14 @@ class SemanticCacheService:
                     ValueError,
                     TypeError,
                     KeyError,
-                    OverflowError
+                    OverflowError,
                 ):
                     expired_ids.append(entry_id)
                     continue
 
             timings["similarity_calculation_ms"] = round(
                 (time.perf_counter() - stage_started) * 1000,
-                3
+                3,
             )
 
             # STEP 7: Remove expired or invalid vectors.
@@ -606,36 +578,29 @@ class SemanticCacheService:
                 self.redis_client.execute_command(
                     "VREM",
                     self.vector_key,
-                    *expired_ids
+                    *expired_ids,
                 )
 
             timings["cleanup_ms"] = round(
                 (time.perf_counter() - stage_started) * 1000,
-                3
+                3,
             )
 
             # STEP 8: Update hit/miss counters.
 
             stage_started = time.perf_counter()
 
-            if (
-                best_match is not None
-                and best_score >= threshold
-            ):
-                self.redis_client.incr(
-                    self.hits_key
-                )
+            if best_match is not None and best_score >= threshold:
+                self.redis_client.incr(self.hits_key)
                 hit = True
 
             else:
-                self.redis_client.incr(
-                    self.misses_key
-                )
+                self.redis_client.incr(self.misses_key)
                 hit = False
 
             timings["counter_update_ms"] = round(
                 (time.perf_counter() - stage_started) * 1000,
-                3
+                3,
             )
 
             self.is_connected = True
@@ -646,34 +611,34 @@ class SemanticCacheService:
                 + timings["metadata_pipeline_ms"]
                 + timings["cleanup_ms"]
                 + timings["counter_update_ms"],
-                3
+                3,
             )
 
             elapsed_ms = round(
                 (time.perf_counter() - started) * 1000,
-                3
+                3,
             )
 
             if hit:
+                # Update Prometheus cache-hit counter.
+                record_cache_hit()
+
                 return {
                     "hit": True,
                     "matched_query": best_match["query"],
-                    "similarity_score": round(
-                        best_score,
-                        6
-                    ),
+                    "similarity_score": round(best_score, 6),
                     "cached_payload": best_match["payload"],
                     "latency_ms": elapsed_ms,
                     "embedding_latency_ms": embedding_latency_ms,
                     "redis_latency_ms": redis_latency_ms,
-                    "timings": timings
+                    "timings": timings,
                 }
 
             return self._empty_result(
                 elapsed_ms,
                 embedding_latency_ms,
                 redis_latency_ms,
-                timings
+                timings,
             )
 
         except Exception:
@@ -681,14 +646,14 @@ class SemanticCacheService:
 
             elapsed_ms = round(
                 (time.perf_counter() - started) * 1000,
-                3
+                3,
             )
 
             return self._empty_result(
                 elapsed_ms,
                 embedding_latency_ms,
                 redis_latency_ms,
-                timings
+                timings,
             )
 
     # --------------------------------------------------
@@ -699,15 +664,13 @@ class SemanticCacheService:
         self,
         query: str,
         payload: dict[str, Any],
-        ttl_seconds: int | None = None
+        ttl_seconds: int | None = None,
     ) -> None:
 
         query = query.strip()
 
         if not query:
-            raise ValueError(
-                "Query cannot be empty."
-            )
+            raise ValueError("Query cannot be empty.")
 
         if not isinstance(payload, dict) or not payload:
             raise ValueError(
@@ -721,9 +684,7 @@ class SemanticCacheService:
         )
 
         if ttl <= 0:
-            raise ValueError(
-                "TTL must be greater than zero."
-            )
+            raise ValueError("TTL must be greater than zero.")
 
         entry_id = str(uuid.uuid4())
 
@@ -738,7 +699,7 @@ class SemanticCacheService:
                 "embedding": embedding.tolist(),
                 "payload": payload,
                 "created_at": created_at,
-                "expires_at": created_at + ttl
+                "expires_at": created_at + ttl,
             }
 
             metadata_json = json.dumps(metadata)
@@ -756,7 +717,7 @@ class SemanticCacheService:
                 "VALUES",
                 str(self.dimensions),
                 *vector_values,
-                entry_id
+                entry_id,
             )
 
             try:
@@ -769,13 +730,13 @@ class SemanticCacheService:
                     pipe.set(
                         self.entry_prefix + entry_id,
                         metadata_json,
-                        ex=ttl
+                        ex=ttl,
                     )
 
                     pipe.set(
                         self._exact_key(query),
                         metadata_json,
-                        ex=ttl
+                        ex=ttl,
                     )
 
                     pipe.execute()
@@ -784,7 +745,7 @@ class SemanticCacheService:
                 self.redis_client.execute_command(
                     "VREM",
                     self.vector_key,
-                    entry_id
+                    entry_id,
                 )
 
                 raise
@@ -806,20 +767,16 @@ class SemanticCacheService:
                 1
                 for _ in self.redis_client.scan_iter(
                     match=self.entry_prefix + "*",
-                    count=100
+                    count=100,
                 )
             )
 
             hits = int(
-                self.redis_client.get(
-                    self.hits_key
-                ) or 0
+                self.redis_client.get(self.hits_key) or 0
             )
 
             misses = int(
-                self.redis_client.get(
-                    self.misses_key
-                ) or 0
+                self.redis_client.get(self.misses_key) or 0
             )
 
             total_lookups = hits + misses
@@ -835,7 +792,7 @@ class SemanticCacheService:
             return {
                 "total_entries": total_entries,
                 "hit_rate": round(hit_rate, 4),
-                "redis_connected": True
+                "redis_connected": True,
             }
 
         except Exception:
@@ -844,5 +801,5 @@ class SemanticCacheService:
             return {
                 "total_entries": 0,
                 "hit_rate": 0.0,
-                "redis_connected": False
+                "redis_connected": False,
             }
